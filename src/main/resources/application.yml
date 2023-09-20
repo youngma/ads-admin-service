@@ -1,0 +1,104 @@
+server:
+  port: 8081
+  error:
+    path: /error
+  servlet:
+    context-path: /api
+
+
+spring:
+  application:
+    name: partner_center
+  profiles:
+    active: local
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/smart_ad
+    hikari:
+      username: local
+      password: local
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        session:
+          events:
+            log:
+              LOG_QUERIES_SLOWER_THAN_MS: 50000
+        connection:
+          autocommit: true
+#        show_sql: true
+        format_sql: true
+        highlight_sql: ture
+        use_sql_comments: true
+        order_inserts: true
+        order_updates: true
+        generate_statistics: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+  data:
+    redis:
+      default:
+        host: localhost
+        port: 6379
+        database: 9
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+#  cloud:
+#    config:
+#      enabled: false
+#      name: mk-service
+
+#  config:
+#    import: "optional:configserver:https://github.com/youngma/local-config"
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "refresh"
+
+logging:
+  file:
+    name: ./logs/${spring.application.name}.log
+  logback:
+    rollingpolicy:
+      max-history: 7
+      clean-history-on-start: true
+
+  charset:
+    file: UTF-8
+    console: UTF-8
+
+  level:
+    root: info
+    test: debug
+    web: debug
+    com:
+      smartad: debug
+    org:
+      hibernate:
+        stat: trace
+        SQL: debug
+        orm:
+#          results:
+#            loading:
+#              entity: debug
+          jdbc:
+            bind: trace
+app:
+  file:
+    uploadTempPath: /Users/bob/projects/file-upload/temp
+    uploadPath: /Users/bob/projects/file-upload/files
+
+
