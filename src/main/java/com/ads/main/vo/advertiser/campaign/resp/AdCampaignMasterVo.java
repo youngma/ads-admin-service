@@ -157,4 +157,5 @@ public class AdCampaignMasterVo implements Serializable {
 
 
     private AdSmartStoreVo smartStore;
+    private AdQuizVo quiz;
 }

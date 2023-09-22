@@ -54,7 +54,10 @@ public class PartnerAdGroupSearchVo implements Serializable {
 
 
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(partnerAdGroupEntity.partnerEntity.partnerSeq.in(this.partnerSeq));
+
+        if (this.partnerSeq !=null && !this.partnerSeq.isEmpty()) {
+            builder.and(partnerAdGroupEntity.partnerEntity.partnerSeq.in(this.partnerSeq));
+        }
 
         if (this.groupSeq != null) {
             builder.and(partnerAdGroupEntity.groupSeq.eq(this.groupSeq));

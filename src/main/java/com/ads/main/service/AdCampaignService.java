@@ -6,6 +6,7 @@ import com.ads.main.core.utils.PageMapper;
 import com.ads.main.entity.AdCampaignMasterEntity;
 import com.ads.main.entity.AdvertiserEntity;
 import com.ads.main.entity.mapper.AdCampaignMasterConvert;
+import com.ads.main.entity.mapper.AdQuizConvert;
 import com.ads.main.entity.mapper.AdSmartStoreConvert;
 import com.ads.main.repository.jpa.AdCampaignMasterRepository;
 import com.ads.main.repository.jpa.AdvertiserRepository;
@@ -53,6 +54,7 @@ public class AdCampaignService {
 //    private final AdCampaignConvert adCampaignConvert;
     private final AdCampaignMasterConvert adCampaignMasterConvert;
     private final AdSmartStoreConvert adSmartStoreConvert;
+    private final AdQuizConvert adQuizConvert;
     private PageMapper<AdCampaignMasterVo, AdCampaignMasterEntity> pageMapper;
 
     @PostConstruct
@@ -110,6 +112,17 @@ public class AdCampaignService {
             fileService.move(filesVo);
         }
 
+        if (adCampaignEntity.getAdQuizEntity() != null) {
+            FilesVo mainImage = adCampaignRegVo.getQuiz().getMainImage();
+            FilesVo detailImage1 = adCampaignRegVo.getQuiz().getDetailImage1();
+            FilesVo detailImage2 = adCampaignRegVo.getQuiz().getDetailImage2();
+
+            fileService.move(mainImage);
+            fileService.move(detailImage1);
+            fileService.move(detailImage2);
+        }
+
+
         adCampaignEntity.setCampaignCode(campaignCode);
 
         adCampaignEntity = advertiserEntity.addCampaign(adCampaignEntity);
@@ -134,6 +147,18 @@ public class AdCampaignService {
                 FilesVo filesVo = adCampaignVo.getSmartStore().getImage();
                 fileService.move(filesVo);
             }
+
+            if (adCampaignMasterEntity.getAdQuizEntity() != null) {
+                adQuizConvert.updateFromDto(adCampaignVo.getQuiz(), adCampaignMasterEntity.getAdQuizEntity());
+                FilesVo mainImage = adCampaignVo.getQuiz().getMainImage();
+                FilesVo detailImage1 = adCampaignVo.getQuiz().getDetailImage1();
+                FilesVo detailImage2 = adCampaignVo.getQuiz().getDetailImage2();
+
+                fileService.move(mainImage);
+                fileService.move(detailImage1);
+                fileService.move(detailImage2);
+            }
+
             adCampaignMasterRepository.save(adCampaignMasterEntity);
 
         }, () -> { throw AD_NOT_FOUND.throwErrors(); });

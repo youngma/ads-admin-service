@@ -36,7 +36,13 @@ public class QAdvertiserCampaignMasterRepository {
                 .from(adCampaignMasterEntity)
                 .leftJoin(adCampaignMasterEntity.adSmartStoreEntity).fetchJoin()
                 .leftJoin(adCampaignMasterEntity.advertiserEntity).fetchJoin()
+
                 .leftJoin(adCampaignMasterEntity.advertiserEntity.filesEntity).fetchJoin()
+                .leftJoin(adCampaignMasterEntity.adQuizEntity).fetchJoin()
+
+                .leftJoin(adCampaignMasterEntity.adQuizEntity.mainImage).fetchJoin()
+                .leftJoin(adCampaignMasterEntity.adQuizEntity.detailImage1).fetchJoin()
+                .leftJoin(adCampaignMasterEntity.adQuizEntity.detailImage2).fetchJoin()
                 .where(searchVo.where())
                 .orderBy(adCampaignMasterEntity.seq.desc())
                 .offset(pageable.getOffset())

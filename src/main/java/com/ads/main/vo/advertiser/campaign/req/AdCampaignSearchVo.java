@@ -81,7 +81,7 @@ public class AdCampaignSearchVo implements Serializable {
 
         BooleanBuilder builder = new BooleanBuilder();
 
-        if (!this.advertiserSeqList.isEmpty()) {
+        if (this.advertiserSeqList != null && !this.advertiserSeqList.isEmpty()) {
             builder.and(adCampaignMasterEntity.advertiserEntity.advertiserSeq.in(this.advertiserSeqList));
         }
 

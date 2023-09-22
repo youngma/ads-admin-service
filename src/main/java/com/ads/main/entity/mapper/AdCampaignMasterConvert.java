@@ -21,7 +21,9 @@ import java.util.List;
 @Mapper(
         componentModel = "spring",
         uses = {
-            AdSmartStoreConvert.class, FilesConverter.class, AdvertiserConvert.class
+            AdSmartStoreConvert.class, AdQuizConvert.class,
+            FilesConverter.class,
+            AdvertiserConvert.class
         }
 )
 public interface AdCampaignMasterConvert extends GenericMapper<AdCampaignMasterVo, AdCampaignMasterEntity>  {
@@ -30,11 +32,13 @@ public interface AdCampaignMasterConvert extends GenericMapper<AdCampaignMasterV
     @Mapping(target = "campaignStatusName", ignore = true)
     @Mapping(target = "advertiser", source = "advertiserEntity")
     @Mapping(target = "smartStore", source = "adSmartStoreEntity")
+    @Mapping(target = "quiz", source = "adQuizEntity")
     @Mapping(target = "campaignType", source = "campaignType", qualifiedByName = "campaignTypeToValue")
     @Mapping(target = "campaignStatus", source = "campaignStatus", qualifiedByName = "campaignStatusToValue")
     @Override
     AdCampaignMasterVo toDto(AdCampaignMasterEntity e);
 
+    @Mapping(target = "adQuizEntity", ignore = true)
     @Mapping(target = "advertiserEntity", ignore = true)
     @Mapping(target = "adSmartStoreEntity", ignore = true)
     @Mapping(target = "campaignType", source = "campaignType", qualifiedByName = "campaignTypeToEnum")
@@ -58,6 +62,7 @@ public interface AdCampaignMasterConvert extends GenericMapper<AdCampaignMasterV
     @Mapping(target = "approvalAt", ignore = true)
     @Mapping(target = "advertiserEntity", ignore = true)
     @Mapping(target = "adSmartStoreEntity", source = "smartStore")
+    @Mapping(target = "adQuizEntity", source = "quiz")
     @Mapping(target = "campaignType", source = "campaignType", qualifiedByName = "campaignTypeToEnum")
     AdCampaignMasterEntity toEntity(AdCampaignMasterRegisterVo d);
 
@@ -81,6 +86,7 @@ public interface AdCampaignMasterConvert extends GenericMapper<AdCampaignMasterV
     @Mapping(target = "approvalAt", ignore = true)
     @Mapping(target = "advertiserEntity", ignore = true)
     @Mapping(target = "adSmartStoreEntity", ignore = true)
+    @Mapping(target = "adQuizEntity", ignore = true)
     @Mapping(target = "campaignType", source = "campaignType", qualifiedByName = "campaignTypeToEnum")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(AdCampaignMasterModifyVo adCampaignMasterModifyVo, @MappingTarget AdCampaignMasterEntity adCampaignMasterEntity);

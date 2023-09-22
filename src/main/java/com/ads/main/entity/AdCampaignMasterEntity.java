@@ -117,6 +117,10 @@ public class AdCampaignMasterEntity  extends BaseEntity implements Serializable 
         if (this.adSmartStoreEntity != null) {
             this.adSmartStoreEntity.setAdCampaignMasterEntity(this);
         }
+
+        if (this.adQuizEntity != null) {
+            this.adQuizEntity.setAdCampaignMasterEntity(this);
+        }
     }
 
     public void approval() {
@@ -176,6 +180,10 @@ public class AdCampaignMasterEntity  extends BaseEntity implements Serializable 
 
     @OneToOne(mappedBy = "adCampaignMasterEntity", cascade = CascadeType.ALL)
     private AdSmartStoreEntity adSmartStoreEntity;
+
+
+    @OneToOne(mappedBy = "adCampaignMasterEntity", cascade = CascadeType.ALL)
+    private AdQuizEntity adQuizEntity;
 
     @Override
     public final boolean equals(Object o) {

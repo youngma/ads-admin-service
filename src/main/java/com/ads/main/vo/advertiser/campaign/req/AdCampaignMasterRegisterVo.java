@@ -90,6 +90,8 @@ public class AdCampaignMasterRegisterVo implements Serializable {
 
     private AdSmartStoreRegisterVo smartStore;
 
+    private AdQuizRegisterVo quiz;
+
 
     public void validCheck() {
 //        if (this.getCampaignType()  == CampaignType.Type1) {

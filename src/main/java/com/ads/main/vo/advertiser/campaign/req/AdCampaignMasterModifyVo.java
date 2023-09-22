@@ -95,6 +95,7 @@ public class AdCampaignMasterModifyVo implements Serializable {
     private LocalDateTime adEndDate;
 
     private AdSmartStoreModifyVo smartStore;
+    private AdQuizModifyVo quiz;
 
 
     public void validCheck() {
