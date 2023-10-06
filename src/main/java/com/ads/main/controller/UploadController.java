@@ -89,7 +89,6 @@ public class UploadController {
                     throw new RuntimeException("file Save Error");
                 }
 
-
                 fileVO.setOriginFileName(fileName); // file
                 fileVO.setNewFileName(uuidFile); // new file
                 fileVO.setTarget(target); // new file
@@ -102,5 +101,4 @@ public class UploadController {
 
         return new RespVo<>(fileList);
     }
-
 }

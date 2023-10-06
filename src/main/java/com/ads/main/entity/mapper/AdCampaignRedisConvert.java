@@ -4,16 +4,9 @@ import com.ads.main.core.config.convert.GenericMapper;
 import com.ads.main.core.enums.campaign.CampaignStatus;
 import com.ads.main.core.enums.campaign.CampaignType;
 import com.ads.main.entity.AdCampaignMasterEntity;
-import com.ads.main.entity.AdSmartStoreEntity;
-import com.ads.main.entity.PartnerAdGroupEntity;
-import com.ads.main.entity.mapper.AdSmartStoreConvert;
-import com.ads.main.entity.mapper.AdvertiserConvert;
-import com.ads.main.entity.mapper.FilesConverter;
 import com.ads.main.vo.advertiser.campaign.req.AdCampaignMasterModifyVo;
 import com.ads.main.vo.advertiser.campaign.req.AdCampaignMasterRegisterVo;
 import com.ads.main.vo.advertiser.campaign.resp.AdCampaignMasterVo;
-import com.ads.main.vo.advertiser.campaign.resp.AdSmartStoreVo;
-import com.ads.main.vo.partner.adGroup.PartnerAdGroupModifyVo;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -26,11 +19,11 @@ import java.util.List;
             AdvertiserConvert.class
         }
 )
-public interface AdCampaignMasterConvert extends GenericMapper<AdCampaignMasterVo, AdCampaignMasterEntity>  {
+public interface AdCampaignRedisConvert extends GenericMapper<AdCampaignMasterVo, AdCampaignMasterEntity>  {
 
     @Mapping(target = "campaignTypeName", ignore = true)
     @Mapping(target = "campaignStatusName", ignore = true)
-    @Mapping(target = "advertiser", source = "advertiserEntity")
+    @Mapping(target = "advertiser", ignore = true)
     @Mapping(target = "smartStore", source = "adSmartStoreEntity")
     @Mapping(target = "quiz", source = "adQuizEntity")
     @Mapping(target = "campaignType", source = "campaignType", qualifiedByName = "campaignTypeToValue")

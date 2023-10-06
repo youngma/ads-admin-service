@@ -95,13 +95,13 @@ public class AdCampaignMasterEntity  extends BaseEntity implements Serializable 
      * 광고 시작 일자
      */
     @Column(name = "AD_START_DATE", nullable = false)
-    private Date adStartDate;
+    private LocalDateTime adStartDate;
 
     /**
      * 광고 종료 일자
      */
     @Column(name = "AD_END_DATE", nullable = false)
-    private Date adEndDate;
+    private LocalDateTime adEndDate;
 
     /**
      * 캠페인 상태

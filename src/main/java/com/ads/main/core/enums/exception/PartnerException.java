@@ -21,9 +21,10 @@ public enum PartnerException {
     }
 
 
-    public UsernameNotFoundException throwErrors() {
-        return new UsernameNotFoundException(this.message);
+    public RuntimeException throwErrors() {
+        return new RuntimeException(this.message);
     }
+
 
 
 }

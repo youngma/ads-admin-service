@@ -1,5 +1,7 @@
 package com.ads.main.repository.querydsl;
 
+import com.ads.main.core.enums.campaign.CampaignStatus;
+import com.ads.main.core.enums.campaign.CampaignType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ads.main.entity.AdCampaignEntity;
 import com.ads.main.entity.AdCampaignMasterEntity;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -43,6 +46,7 @@ public class QAdvertiserCampaignMasterRepository {
                 .leftJoin(adCampaignMasterEntity.adQuizEntity.mainImage).fetchJoin()
                 .leftJoin(adCampaignMasterEntity.adQuizEntity.detailImage1).fetchJoin()
                 .leftJoin(adCampaignMasterEntity.adQuizEntity.detailImage2).fetchJoin()
+
                 .where(searchVo.where())
                 .orderBy(adCampaignMasterEntity.seq.desc())
                 .offset(pageable.getOffset())
@@ -73,5 +77,47 @@ public class QAdvertiserCampaignMasterRepository {
                 .orderBy(adCampaignMasterEntity.seq.desc())
                 .stream().findFirst();
     }
+
+    public Long findCountByCampaignType(CampaignType campaignType) {
+
+        return jpaQueryFactory.select(adCampaignMasterEntity.count())
+                .from(adCampaignMasterEntity)
+                .where(
+                        adCampaignMasterEntity.campaignStatus.eq(CampaignStatus.Approval)
+                                .and(adCampaignMasterEntity.campaignType.eq(campaignType))
+                                .and(adCampaignMasterEntity.adStartDate.before(LocalDateTime.now()))
+                                .and(adCampaignMasterEntity.adEndDate.after(LocalDateTime.now()))
+                )
+                .fetchOne();
+    }
+
+    public List<AdCampaignMasterEntity> findAllByCampaignType(CampaignType campaignType, Pageable pageable) {
+
+        return jpaQueryFactory.select(
+                    adCampaignMasterEntity
+                )
+                .from(adCampaignMasterEntity)
+                .innerJoin(adCampaignMasterEntity.advertiserEntity)
+                .leftJoin(adCampaignMasterEntity.adSmartStoreEntity).fetchJoin()
+                .leftJoin(adCampaignMasterEntity.adSmartStoreEntity.image).fetchJoin()
+                .leftJoin(adCampaignMasterEntity.adQuizEntity).fetchJoin()
+                .leftJoin(adCampaignMasterEntity.adQuizEntity.mainImage).fetchJoin()
+                .leftJoin(adCampaignMasterEntity.adQuizEntity.detailImage1).fetchJoin()
+                .leftJoin(adCampaignMasterEntity.adQuizEntity.detailImage2).fetchJoin()
+
+                .where(
+                        adCampaignMasterEntity.campaignStatus.eq(CampaignStatus.Approval)
+                                .and(adCampaignMasterEntity.campaignType.eq(campaignType))
+                                .and(adCampaignMasterEntity.adStartDate.before(LocalDateTime.now()))
+                                .and(adCampaignMasterEntity.adEndDate.after(LocalDateTime.now()))
+                )
+                .orderBy(adCampaignMasterEntity.seq.desc())
+
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+
+                .fetch();
+    }
+
 
 }

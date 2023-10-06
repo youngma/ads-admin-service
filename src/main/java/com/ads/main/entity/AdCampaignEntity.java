@@ -14,10 +14,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -139,13 +141,13 @@ public class AdCampaignEntity extends BaseEntity implements Serializable {
      * 광고 시작 일자
      */
     @Column(name = "AD_START_DATE", nullable = false)
-    private Date adStartDate;
+    private LocalDateTime adStartDate;
 
     /**
      * 광고 종료 일자
      */
     @Column(name = "AD_END_DATE", nullable = false)
-    private Date adEndDate;
+    private LocalDateTime adEndDate;
 
     /**
      * 캠페인 상태
