@@ -24,6 +24,8 @@ public class RedissonConfig {
     @Bean("redissonClient")
     public RedissonClient redissonClient() {
         Config config = new Config();
+
+
         config.useSingleServer()
                 .setAddress(REDISSON_HOST_PREFIX + redisHost + ":" + redisPort)
                 .setDatabase(database);

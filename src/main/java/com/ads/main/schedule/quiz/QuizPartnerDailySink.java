@@ -18,11 +18,11 @@ public class QuizPartnerDailySink {
 
     private final RptQuizPartnerDailyTemplate rptQuizPartnerDailyTemplate;
 
-    @Scheduled(cron = "1 * * * * ?")
+    @Scheduled(cron = "0 */60 * * * *")
     public void rawSink() {
 
         DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
-        LocalDateTime data = LocalDateTime.now();
+        LocalDateTime data = LocalDateTime.now().minusHours(1);
 
         String startDateH = data.format(formatter) + ":00:00";
         String endDateH = data.format(formatter)+ ":59:59";

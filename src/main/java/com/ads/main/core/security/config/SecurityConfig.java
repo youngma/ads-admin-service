@@ -22,6 +22,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -54,7 +55,7 @@ public class SecurityConfig {
                 .requestMatchers(
                 "/v3/api-docs/**",
                 "/swagger-ui/**",
-                "/xauth/**",
+                "/admin/xauth/**",
                 "/error"
                 )
                 ;
@@ -117,7 +118,7 @@ public class SecurityConfig {
      */
     @Bean
     protected CustomAuthenticationProvider authProvider() {
-        return new CustomAuthenticationProvider(userDetailsService, bCryptPasswordEncoder());
+        return new CustomAuthenticationProvider(userDetailsService, SCryptPasswordEncoder.defaultsForSpringSecurity_v5_8());
     }
 
     /**

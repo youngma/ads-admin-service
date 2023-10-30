@@ -207,7 +207,7 @@ public class AdvertiserService {
         // 광고주 사용자 등록 validation
         userService.registerValid(Role.ADVERTISER, registerVo.getAdvertiserSeq(), userVo.getUserId());
 
-        advertiserEntity.addUser(userConverter.toEntity(userVo));
+        advertiserEntity.addUser(userService.convertUser(userVo));
 
         // 광고주 - 사용자 맵핑 정보 저장.
         return advertiserUserConvert.toDtoList(advertiserUserRepository.saveAll(advertiserEntity.getAdvertiserUserEntities()))

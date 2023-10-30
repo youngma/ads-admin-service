@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -21,7 +22,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider  {
 
     private final CustomUserDetailsService userDetailsService;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final SCryptPasswordEncoder sCryptPasswordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -45,7 +46,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider  {
     }
 
     private boolean compare(UserDetails userVo, String userId , String userPw){
-        return userVo.getUsername().equals(userId) && userVo.getPassword().equals(userPw);
+        return userVo.getUsername().equals(userId) && sCryptPasswordEncoder.matches(userPw, userVo.getPassword());
     }
 
     @Override

@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,7 @@ public class UserService {
     private final QAdvertiserUserRepository qAdvertiserUserRepository;
     private final QPartnerUserRepository qPartnerUserRepository;
 
+    private final SCryptPasswordEncoder sCryptPasswordEncoder = SCryptPasswordEncoder.defaultsForSpringSecurity_v5_8();
 
 
     private PageMapper<UserVo, UserEntity> pageMapper;
@@ -119,7 +121,7 @@ public class UserService {
 
         registerValid(userVo);
 
-        UserEntity userEntity = userConverter.toEntity(userVo);
+        UserEntity userEntity = convertUser(userVo);
         userEntity.enable();
 
         userRepository.save(userEntity);
@@ -177,8 +179,7 @@ public class UserService {
         Optional<UserEntity> optionalUserEntity = findUserEntityBySeq(userPasswordVo.getUsrSeq());
         UserEntity userEntity = optionalUserEntity.orElseThrow(USER_NOT_FOUND::throwErrors);
 
-
-        if (userEntity.comparePassword(userPasswordVo.getCurrentUserPassword())) {
+        if (userEntity.comparePassword(sCryptPasswordEncoder, userPasswordVo.getCurrentUserPassword())) {
             userEntity.setUserPassword(userPasswordVo.getNextUserPassword());
 
         userRepository.save(userEntity);
@@ -187,6 +188,13 @@ public class UserService {
         } else {
             throw PASSWORD_MISS_MATCH.throwErrors();
         }
+    }
 
+    public UserEntity convertUser(UserVo userVo) {
+
+        String password = sCryptPasswordEncoder.encode(userVo.getUserPassword());
+        userVo.setUserPassword(password);
+
+        return userConverter.toEntity(userVo);
     }
 }

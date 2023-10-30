@@ -99,10 +99,11 @@ public class AdCampaignMasterModifyVo implements Serializable {
 
 
     public void validCheck() {
-        if (campaignType.equals(CampaignType.Type1.getCode())) {
-            if (smartStore == null) {
-                throw AD_SMART_AD_VALID_ERROR.throwErrors();
-            }
-        }
+
+//        if (campaignType.equals(CampaignType.Type1.getCode())) {
+//            if (smartStore == null) {
+//                throw AD_SMART_AD_VALID_ERROR.throwErrors();
+//            }
+//        }
     }
 }

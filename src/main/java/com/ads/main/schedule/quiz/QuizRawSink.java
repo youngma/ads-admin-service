@@ -20,13 +20,12 @@ public class QuizRawSink {
     @Scheduled(cron = "1 * * * * ?")
     public void rawSink() {
 
-        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
+        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-//        LocalDateTime data = LocalDateTime.now().minusHours(1);
-        LocalDateTime data = LocalDateTime.now();
+        LocalDateTime data = LocalDateTime.now().minusSeconds(10);
 
-        String startDateH = data.format(formatter) + ":00:00";
-        String endDateH = data.format(formatter)+ ":59:59";
+        String startDateH = data.format(formatter) + ":00";
+        String endDateH = data.format(formatter)+ ":59";
         log.info("# QuizRawSink {} ~ {}", startDateH, endDateH);
 
         log.info("# Start Sink Quiz Request");

@@ -16,6 +16,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RMap;
+import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.codec.TypedJsonJacksonCodec;
@@ -28,6 +29,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor
@@ -70,21 +72,25 @@ public class QuizAdSchedule {
         while (count > (long) page * size) {
             List<AdCampaignMasterEntity> entities = qAdvertiserCampaignMasterRepository.findAllByCampaignType(CampaignType.Quiz01, PageRequest.of(page, size));
             entities.forEach(t -> {
-                if(!campaignCodeSet.contains(t.getCampaignCode())) {
-                    AdCampaignMasterVo adCampaignMasterVo = adCampaignRedisConvert.toDto(t);
-                    boolean isNewKey = false;
-                    try {
-                        isNewKey = maps.fastPut(adCampaignMasterVo.getCampaignCode(), objectMapper.writeValueAsString(adCampaignMasterVo));
-                    } catch (JsonProcessingException e) {
-                        throw new RuntimeException(e);
-                    }
-                    log.info("# Quiz Add => {} ", isNewKey);
+                campaignCodeSet.remove(t.getCampaignCode());
+                AdCampaignMasterVo adCampaignMasterVo = adCampaignRedisConvert.toDto(t);
+                boolean isNewKey = false;
+                try {
+                    isNewKey = maps.fastPut(adCampaignMasterVo.getCampaignCode(), objectMapper.writeValueAsString(adCampaignMasterVo));
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
                 }
+//                log.info("# Quiz Add => {} ", isNewKey);
             });
             log.info("# Quiz Ad Sink => {}, {} ", page, size);
             page += 1;
         }
-        campaignCodeSet.forEach(maps::remove);
+
+
+        log.info("# Quiz Ad Remove => {}", campaignCodeSet.size());
+        // 종료된 광고 삭제
+        campaignCodeSet
+                .forEach(maps::remove);
     }
 
 }

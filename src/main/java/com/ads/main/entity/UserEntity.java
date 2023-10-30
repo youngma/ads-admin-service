@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -61,6 +62,10 @@ public class UserEntity extends BaseEntity implements Serializable {
     @Column(name = "USER_PASSWORD", nullable = false)
     private String userPassword;
 
+    public void setUserPassword(SCryptPasswordEncoder encoder, String userPassword) {
+        this.userPassword = encoder.encode(userPassword);
+    }
+
     /**
      * 사용자 전화 번호
      */
@@ -103,7 +108,7 @@ public class UserEntity extends BaseEntity implements Serializable {
     }
 
 
-    public boolean comparePassword(String password) {
-        return this.userPassword.equals(password);
+    public boolean comparePassword(SCryptPasswordEncoder encoder, String password) {
+        return  encoder.matches(this.userPassword, password);
     }
 }

@@ -22,7 +22,7 @@ import java.util.Set;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/xauth")
+@RequestMapping("/admin/xauth")
 public class GlobalController {
 
     @GetMapping("/codes")

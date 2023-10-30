@@ -1,11 +1,14 @@
 package com.ads.main.repository.jpa;
 
+import com.ads.main.core.enums.advertiser.AdGroupStatus;
+import com.ads.main.core.enums.campaign.CampaignStatus;
 import com.ads.main.entity.PartnerAdGroupEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface PartnerAdGroupRepository extends JpaRepository<PartnerAdGroupEntity, Long>, JpaSpecificationExecutor<PartnerAdGroupEntity> {
@@ -17,4 +20,7 @@ public interface PartnerAdGroupRepository extends JpaRepository<PartnerAdGroupEn
     @EntityGraph(attributePaths = { "logoFileEntity",  "pointIconFileEntity" })
     Optional<PartnerAdGroupEntity> findOneByGroupSeqAndPartnerEntity_PartnerSeq(Long groupSeq, Long partnerSeq);
     Optional<PartnerAdGroupEntity> findOneByGroupCode(String groupSeq);
+
+    Long countByGroupStatus(AdGroupStatus groupStatus);
+
 }

@@ -12,8 +12,8 @@ import java.util.List;
 public enum CampaignType {
 
     Quiz01("QUIZ01", "정답형 퀴즈", 1),
-    Type1("TYPE1", "캠페인 타입 1", 2),
-    Type2("TYPE2", "캠페인 타입 2", 3),
+//    Type1("TYPE1", "캠페인 타입 1", 2),
+//    Type2("TYPE2", "캠페인 타입 2", 3),
 
     ;
 

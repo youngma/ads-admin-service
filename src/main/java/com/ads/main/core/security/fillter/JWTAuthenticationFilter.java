@@ -11,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +28,7 @@ import static java.util.Date.from;
 
 
 @AllArgsConstructor
+@Slf4j
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 
@@ -38,10 +40,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             LoginInfo user = objectMapper.readValue(request.getReader(), LoginInfo.class);
-
-            return authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.userId(), user.password())
-            );
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.userId(), user.password()));
         } catch (IOException e) {
             throw new AuthenticationServiceException(e.getMessage());
         }

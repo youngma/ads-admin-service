@@ -14,5 +14,8 @@ public interface PartnerRepository extends JpaRepository<PartnerEntity, Long>, J
     Optional<PartnerEntity> findPartnerEntityByPartnerSeq(Long partnerSeq);
 
     Optional<PartnerEntity> findPartnerEntityByBusinessNumber(String businessNumber);
+
+    Long countBy();
+
 }
 

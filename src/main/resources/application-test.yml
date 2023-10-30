@@ -8,16 +8,14 @@ server:
 
 spring:
   application:
-    name: partner_center
-  profiles:
-    active: local
+    name: admin-service
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/smart_ad
+    url: jdbc:mysql://223.130.139.66:3306/quiz_ad
     hikari:
-      username: local
-      password: local
+      username: ad_user
+      password: password
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -43,11 +41,12 @@ spring:
   data:
     redis:
       default:
-        host: 127.0.0.1
+        host: 223.130.139.66
         port: 6379
         database: 2
       repositories:
         enabled: false
+
   mvc:
     throw-exception-if-no-handler-found: true
   web:
@@ -72,7 +71,7 @@ spring:
 
 logging:
   file:
-    name: ./logs/${spring.application.name}.log
+    name: /home/ads/logs/admin/${spring.application.name}.log
   logback:
     rollingpolicy:
       max-history: 7
@@ -100,7 +99,6 @@ logging:
             bind: trace
 app:
   file:
-    uploadTempPath: /Users/bob/projects/file-upload/temp
-    uploadPath: /Users/bob/projects/file-upload/files
-
+    uploadTempPath: /home/ads/uploads/temp
+    uploadPath: /home/ads/uploads/files
 

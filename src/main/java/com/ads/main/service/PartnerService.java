@@ -199,17 +199,19 @@ public class PartnerService {
             throw PARTNER_NOT_FOUND.throwErrors();
         }
 
-        PartnerEntity advertiserEntity = partnerEntityOptional.get();
+        PartnerEntity partnerEntity = partnerEntityOptional.get();
 
         UserVo userVo = registerVo.toUser(Role.PARTNER, UserStatus.Enable);
 
         // 광고주 사용자 등록 validation
         userService.registerValid(Role.PARTNER, registerVo.getPartnerSeq(), userVo.getUserId());
 
-        advertiserEntity.addUser(userConverter.toEntity(userVo));
+//        partnerEntity.addUser(userConverter.toEntity(userVo));
+        partnerEntity.addUser(userService.convertUser(userVo));
+
 
         // 광고주 - 사용자 맵핑 정보 저장.
-        return partnerUserConvert.toDtoList(partnerUserRepository.saveAll(advertiserEntity.getPartnerUserEntities()))
+        return partnerUserConvert.toDtoList(partnerUserRepository.saveAll(partnerEntity.getPartnerUserEntities()))
                 .stream()
                 .filter(t -> t.getUser().getUserId().equals(userVo.getUserId()))
                 .findFirst().get();
