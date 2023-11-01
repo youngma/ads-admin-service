@@ -2,12 +2,9 @@ package com.ads.main.repository.querydsl;
 
 import com.ads.main.core.enums.campaign.CampaignStatus;
 import com.ads.main.core.enums.campaign.CampaignType;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ads.main.entity.AdCampaignEntity;
 import com.ads.main.entity.AdCampaignMasterEntity;
-import com.ads.main.entity.QAdCampaignMasterEntity;
-import com.ads.main.entity.QAdSmartStoreEntity;
 import com.ads.main.vo.advertiser.campaign.req.AdCampaignSearchVo;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +17,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.ads.main.entity.QAdCampaignEntity.adCampaignEntity;
 import static com.ads.main.entity.QAdCampaignMasterEntity.adCampaignMasterEntity;
 import static com.ads.main.entity.QAdSmartStoreEntity.adSmartStoreEntity;
 
@@ -107,9 +103,10 @@ public class QAdvertiserCampaignMasterRepository {
 
                 .where(
                         adCampaignMasterEntity.campaignStatus.eq(CampaignStatus.Approval)
-                                .and(adCampaignMasterEntity.campaignType.eq(campaignType))
-                                .and(adCampaignMasterEntity.adStartDate.before(LocalDateTime.now()))
-                                .and(adCampaignMasterEntity.adEndDate.after(LocalDateTime.now()))
+                        .and(adCampaignMasterEntity.exposureStatus.eq(true))
+                        .and(adCampaignMasterEntity.campaignType.eq(campaignType))
+                        .and(adCampaignMasterEntity.adStartDate.before(LocalDateTime.now()))
+                        .and(adCampaignMasterEntity.adEndDate.after(LocalDateTime.now()))
                 )
                 .orderBy(adCampaignMasterEntity.seq.desc())
 

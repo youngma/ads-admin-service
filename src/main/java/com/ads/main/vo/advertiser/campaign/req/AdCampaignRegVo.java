@@ -120,7 +120,7 @@ public class AdCampaignRegVo implements Serializable {
      */
     @Min(value = 0, message = "제한 인원이 음수일수 없습니다.")
     @NumberFormat(style = NumberFormat.Style.NUMBER)
-    @NotNull(message = "일일 참여제한 횟수 은 필수 입니다.")
+    @NotNull(message = "일일 참여 제한 횟수 은 필수 입니다.")
     private Integer dayParticipationLimit;
 
 
@@ -129,7 +129,7 @@ public class AdCampaignRegVo implements Serializable {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @NotNull(message = "광고시작일자 은 필수 입니다.")
+    @NotNull(message = "광고 시작 일자 은 필수 입니다.")
     private LocalDateTime adStartDate;
 
 
@@ -138,7 +138,7 @@ public class AdCampaignRegVo implements Serializable {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @NotNull(message = "광고종료일자 은 필수 입니다.")
+    @NotNull(message = "광고 종료 일자 은 필수 입니다.")
     private LocalDateTime adEndDate;
 
 

@@ -176,6 +176,8 @@ public class AdCampaignService {
                 case Approval -> adCampaignMasterEntity.approval();
                 case Reject -> adCampaignMasterEntity.reject(adCampaignStatusVo.getMessage());
                 case Hold -> adCampaignMasterEntity.hold(adCampaignStatusVo.getMessage());
+                case Exposure -> adCampaignMasterEntity.exposure();
+                case NonExposure -> adCampaignMasterEntity.non_exposure();
                 default -> throw AD_CAMPAIGN_STATUS_NOT_CHANGE.throwErrors();
             }
 

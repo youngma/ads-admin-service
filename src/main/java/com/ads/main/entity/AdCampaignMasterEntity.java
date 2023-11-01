@@ -110,6 +110,12 @@ public class AdCampaignMasterEntity  extends BaseEntity implements Serializable 
     @Convert(converter = CampaignStatusConvert.class)
     private CampaignStatus campaignStatus;
 
+    /**
+     * 노출 상태
+     */
+    @Column(name = "EXPOSURE_STATUS")
+    private boolean exposureStatus;
+
     public void request() {
         this.campaignStatus = CampaignStatus.Request;
         this.requestAt = LocalDateTime.now();
@@ -126,18 +132,29 @@ public class AdCampaignMasterEntity  extends BaseEntity implements Serializable 
     public void approval() {
         this.campaignStatus = CampaignStatus.Approval;
         this.approvalAt = LocalDateTime.now();
+        exposure();
     }
 
     public void hold(String message) {
         this.campaignStatus = CampaignStatus.Hold;
         this.holdAt = LocalDateTime.now();
         this.holdMessage = message;
+        non_exposure();
     }
 
     public void reject(String message) {
         this.campaignStatus = CampaignStatus.Reject;
         this.rejectAt = LocalDateTime.now();
         this.rejectMessage = message;
+        non_exposure();
+    }
+
+    public void exposure() {
+        this.exposureStatus = true;
+    }
+
+    public void non_exposure() {
+        this.exposureStatus = false;
     }
 
     /**

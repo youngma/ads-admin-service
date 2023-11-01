@@ -1,8 +1,6 @@
 package com.ads.main.vo.advertiser.campaign.req;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ads.main.core.enums.campaign.CampaignType;
-import com.ads.main.vo.advertiser.campaign.req.AdSmartStoreModifyVo;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,8 +11,6 @@ import org.springframework.format.annotation.NumberFormat;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import static com.ads.main.core.enums.exception.AdCampaignException.AD_SMART_AD_VALID_ERROR;
 
 
 @Data

@@ -35,6 +35,7 @@ public class AdCampaignController {
             @RequestParam(value = "campaignType", required = false) String campaignType,
             @RequestParam(value = "campaignName", required = false) String campaignName,
             @RequestParam(value = "campaignCode", required = false) String campaignCode,
+            @RequestParam(value = "exposureStatus", required = false) String exposureStatus,
             @RequestParam(value = "paymentTerms", required = false) String paymentTerms
     ) {
 
@@ -43,6 +44,7 @@ public class AdCampaignController {
                 .campaignName(campaignName)
                 .campaignCode(campaignCode)
                 .campaignType(CampaignType.of(campaignType))
+                .exposureStatus(exposureStatus)
 //                .targetUrl(targetUrl)
 //                .goodsCode(goodsCode)
                 .paymentTerms(PaymentTerms.of(paymentTerms))
@@ -82,6 +84,18 @@ public class AdCampaignController {
     @PutMapping("/hold")
     public RespVo<AdCampaignMasterVo> hold(@RequestBody @Validated @NotNull AdCampaignStatusVo adCampaignStatusVo) {
         AdCampaignMasterVo registered = adCampaignService.status(CampaignStatus.Hold, adCampaignStatusVo);
+        return new RespVo<>(registered);
+    }
+
+    @PutMapping("/exposure")
+    public RespVo<AdCampaignMasterVo> exposure(@RequestBody @Validated @NotNull AdCampaignStatusVo adCampaignStatusVo) {
+        AdCampaignMasterVo registered = adCampaignService.status(CampaignStatus.Exposure, adCampaignStatusVo);
+        return new RespVo<>(registered);
+    }
+
+    @PutMapping("/non-exposure")
+    public RespVo<AdCampaignMasterVo> nonExposure(@RequestBody @Validated @NotNull AdCampaignStatusVo adCampaignStatusVo) {
+        AdCampaignMasterVo registered = adCampaignService.status(CampaignStatus.NonExposure, adCampaignStatusVo);
         return new RespVo<>(registered);
     }
 }

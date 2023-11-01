@@ -59,6 +59,9 @@ public class AdCampaignSearchVo implements Serializable {
      */
     private PaymentTerms paymentTerms;
 
+
+    private String exposureStatus;
+
     /**
      * 광고 시작 일자
      */
@@ -95,6 +98,10 @@ public class AdCampaignSearchVo implements Serializable {
 
         if (campaignType != null) {
             builder.and(adCampaignMasterEntity.campaignType.eq(campaignType));
+        }
+
+        if (exposureStatus != null && !exposureStatus.isBlank()) {
+            builder.and(adCampaignMasterEntity.exposureStatus.eq(exposureStatus.equals("1")));
         }
 
         return builder;

@@ -11,8 +11,8 @@ import java.util.List;
 @Getter
 public enum CampaignStatus {
 
-    Enable("ENABLE", "노출", 1),
-    Disable("DISABLE", "비노출", 2),
+    Exposure("EXPOSURE", "노출", 1),
+    NonExposure("NON-EXPOSURE", "비노출", 2),
 
     Request("REQUEST", "승인 요청", 1),
     Approval("APPROVAL", "승인", 2),

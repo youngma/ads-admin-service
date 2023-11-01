@@ -21,6 +21,7 @@ import java.util.List;
 )
 public interface AdCampaignRedisConvert extends GenericMapper<AdCampaignMasterVo, AdCampaignMasterEntity>  {
 
+    @Mapping(target = "exposureStatusName", ignore = true)
     @Mapping(target = "campaignTypeName", ignore = true)
     @Mapping(target = "campaignStatusName", ignore = true)
     @Mapping(target = "advertiser", ignore = true)
@@ -40,6 +41,7 @@ public interface AdCampaignRedisConvert extends GenericMapper<AdCampaignMasterVo
     AdCampaignMasterEntity toEntity(AdCampaignMasterVo d);
 
 
+    @Mapping(target = "exposureStatus", ignore = true)
     @Mapping(target = "updatedId", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "insertedId", ignore = true)
@@ -65,6 +67,7 @@ public interface AdCampaignRedisConvert extends GenericMapper<AdCampaignMasterVo
     @Override
     List<AdCampaignMasterEntity> toEntities(List<AdCampaignMasterVo> d);
 
+    @Mapping(target = "exposureStatus", ignore = true)
     @Mapping(target = "updatedId", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "requestAt", ignore = true)

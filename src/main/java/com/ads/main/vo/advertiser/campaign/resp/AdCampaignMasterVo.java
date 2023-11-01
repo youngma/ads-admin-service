@@ -96,6 +96,17 @@ public class AdCampaignMasterVo implements Serializable {
     }
 
     /**
+     * 노출 상태
+     */
+    private boolean exposureStatus;
+    private String exposureStatusName;
+    public String getExposureStatusName() {
+        return this.exposureStatus ? "노출" : "미노출";
+    }
+
+
+
+    /**
      * 등록일자
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
