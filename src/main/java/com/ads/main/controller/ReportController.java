@@ -7,6 +7,7 @@ import com.ads.main.core.vo.RespVo;
 import com.ads.main.service.ReportService;
 import com.ads.main.vo.report.req.RptSearchVo;
 import com.ads.main.vo.report.resp.RptDashboard;
+import com.ads.main.vo.report.resp.RptQuizAdminDailyVo;
 import com.ads.main.vo.report.resp.RptQuizAdvertiserDailyVo;
 import com.ads.main.vo.report.resp.RptQuizPartnerDailyVo;
 import lombok.Getter;
@@ -84,6 +85,25 @@ public class ReportController {
                 .build();
 
         Page<RptQuizPartnerDailyVo> list = reportService.searchPartnerRpt(rptSearchVo, PageRequest.of(page - 1, size));
+
+        return new RespVo<>(list);
+    }
+
+    @GetMapping("/quiz/admin/daily")
+    public RespVo<Page<RptQuizAdminDailyVo>> rptQuizAdmin(
+            @RequestParam("startDate") String start,
+            @RequestParam("endDate") String end,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "20") int size
+    ) {
+
+        RptSearchVo rptSearchVo = RptSearchVo.builder()
+                .role(Role.ADMIN)
+                .searchStartDt(start)
+                .searchEndDt(end)
+                .build();
+
+        Page<RptQuizAdminDailyVo> list = reportService.searchAdminRpt(rptSearchVo, PageRequest.of(page - 1, size));
 
         return new RespVo<>(list);
     }

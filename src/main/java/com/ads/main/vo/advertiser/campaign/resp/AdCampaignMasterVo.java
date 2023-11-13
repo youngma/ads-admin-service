@@ -10,6 +10,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -105,6 +106,28 @@ public class AdCampaignMasterVo implements Serializable {
     }
 
 
+    /**
+     * 총 예산
+     */
+    private BigDecimal totalBudget;
+
+
+    /**
+     * 광고 단가
+     */
+    private BigDecimal adPrice;
+
+
+    /**
+     * 수수로 비율
+     */
+    private BigDecimal commissionRate;
+
+    /**
+     * 수수로 비율(사용자)
+     */
+    private BigDecimal userCommissionRate;
+
 
     /**
      * 등록일자
@@ -165,6 +188,8 @@ public class AdCampaignMasterVo implements Serializable {
      * 거절 메시지
      */
     private String rejectMessage;
+
+
 
 
     private AdSmartStoreVo smartStore;

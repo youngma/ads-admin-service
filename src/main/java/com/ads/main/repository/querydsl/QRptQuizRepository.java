@@ -3,6 +3,7 @@ package com.ads.main.repository.querydsl;
 
 import com.ads.main.entity.QAdvertiserEntity;
 import com.ads.main.vo.report.req.RptSearchVo;
+import com.ads.main.vo.report.resp.RptQuizAdminDailyVo;
 import com.ads.main.vo.report.resp.RptQuizAdvertiserDailyVo;
 import com.ads.main.vo.report.resp.RptQuizPartnerDailyVo;
 import com.querydsl.core.types.Projections;
@@ -18,10 +19,10 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.ads.main.entity.QAdCampaignMasterEntity.adCampaignMasterEntity;
-import static com.ads.main.entity.QAdvertiserEntity.advertiserEntity;
 import static com.ads.main.entity.QPartnerAdGroupEntity.partnerAdGroupEntity;
 import static com.ads.main.entity.QRptQuizAdvertiserDailyEntity.rptQuizAdvertiserDailyEntity;
 import static com.ads.main.entity.QRptQuizPartnerDailyEntity.rptQuizPartnerDailyEntity;
+import static com.ads.main.entity.QRptQuizAdminDailyEntity.rptQuizAdminDailyEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class QRptQuizRepository {
 
     public Page<RptQuizAdvertiserDailyVo> searchRptQuizAdvertiserDaily(RptSearchVo searchVo, Pageable pageable) {
 
-        List<RptQuizAdvertiserDailyVo> users = jpaQueryFactory.select(
+        List<RptQuizAdvertiserDailyVo> reports = jpaQueryFactory.select(
                         Projections.bean(RptQuizAdvertiserDailyVo.class,
                                 rptQuizAdvertiserDailyEntity.rptDate,
                                 adCampaignMasterEntity.advertiserEntity.advertiserSeq,
@@ -63,12 +64,12 @@ public class QRptQuizRepository {
                 .where(searchVo.where())
                 .fetchOne();
 
-        return new PageImpl<>(users, pageable, Objects.requireNonNullElse(count, 0L));
+        return new PageImpl<>(reports, pageable, Objects.requireNonNullElse(count, 0L));
     }
 
     public Page<RptQuizPartnerDailyVo> searchRptQuizPartnerDaily(RptSearchVo searchVo, Pageable pageable) {
 
-        List<RptQuizPartnerDailyVo> users = jpaQueryFactory.select(
+        List<RptQuizPartnerDailyVo> reports = jpaQueryFactory.select(
                         Projections.bean(RptQuizPartnerDailyVo.class,
                                 rptQuizPartnerDailyEntity.rptDate,
                                 rptQuizPartnerDailyEntity.groupCode,
@@ -96,6 +97,40 @@ public class QRptQuizRepository {
                 .where(searchVo.where())
                 .fetchOne();
 
-        return new PageImpl<>(users, pageable, Objects.requireNonNullElse(count, 0L));
+        return new PageImpl<>(reports, pageable, Objects.requireNonNullElse(count, 0L));
+    }
+
+
+    public Page<RptQuizAdminDailyVo> searchRptQuizAdminDaily(RptSearchVo searchVo, Pageable pageable) {
+
+        List<RptQuizAdminDailyVo> reports = jpaQueryFactory.select(
+                        Projections.bean(RptQuizAdminDailyVo.class,
+                                rptQuizAdminDailyEntity.rptDate,
+                                rptQuizAdminDailyEntity.advertiserCnt,
+                                rptQuizAdminDailyEntity.campaignCnt,
+                                rptQuizAdminDailyEntity.partnerCnt,
+                                rptQuizAdminDailyEntity.adGroupCnt,
+                                rptQuizAdminDailyEntity.reqCnt,
+                                rptQuizAdminDailyEntity.impressionCnt,
+                                rptQuizAdminDailyEntity.answerCnt,
+                                rptQuizAdminDailyEntity.hintCnt,
+                                rptQuizAdminDailyEntity.clickCnt,
+                                rptQuizAdminDailyEntity.partnerCommission,
+                                rptQuizAdminDailyEntity.userCommission
+                        )
+                )
+                .from(rptQuizAdminDailyEntity)
+                .where(searchVo.where())
+                .orderBy(rptQuizAdminDailyEntity.rptDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long count = jpaQueryFactory.select(rptQuizAdminDailyEntity.count())
+                .from(rptQuizAdminDailyEntity)
+                .where(searchVo.where())
+                .fetchOne();
+
+        return new PageImpl<>(reports, pageable, Objects.requireNonNullElse(count, 0L));
     }
 }

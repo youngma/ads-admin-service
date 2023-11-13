@@ -17,6 +17,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
@@ -116,6 +117,19 @@ public class AdCampaignMasterEntity  extends BaseEntity implements Serializable 
     @Column(name = "EXPOSURE_STATUS")
     private boolean exposureStatus;
 
+
+    /**
+     * 총 예산
+     */
+    @Column(name = "TOTAL_BUDGET")
+    private BigDecimal totalBudget;
+
+    /**
+     * 광고 단가
+     */
+    @Column(name = "AD_PRICE")
+    private BigDecimal adPrice;
+
     public void request() {
         this.campaignStatus = CampaignStatus.Request;
         this.requestAt = LocalDateTime.now();
@@ -201,6 +215,19 @@ public class AdCampaignMasterEntity  extends BaseEntity implements Serializable 
 
     @OneToOne(mappedBy = "adCampaignMasterEntity", cascade = CascadeType.ALL)
     private AdQuizEntity adQuizEntity;
+
+
+    /**
+     * 사용자 수수료 비율
+     */
+    @Column(name = "USER_COMMISSION_RATE", nullable = false)
+    private Integer userCommissionRate;
+
+    /**
+     * 매체사 수수료 비율
+     */
+    @Column(name = "COMMISSION_RATE", nullable = false)
+    private Integer commissionRate;
 
     @Override
     public final boolean equals(Object o) {

@@ -80,10 +80,15 @@ public class PartnerAdGroupVo implements Serializable {
 
 
     /**
-     * 수수료 율
+     * 수수료 비율(매체사)
      */
     private Integer commissionRate;
 
+
+    /**
+     * 수수료 비율(사용자)
+     */
+    private Integer userCommissionRate;
 
     /**
      * 포인트 교환 비율

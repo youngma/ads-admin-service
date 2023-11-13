@@ -11,9 +11,10 @@ import java.util.List;
 @Getter
 public enum CampaignType {
 
-    Quiz01("QUIZ01", "정답형 퀴즈", 1),
-//    Type1("TYPE1", "캠페인 타입 1", 2),
-//    Type2("TYPE2", "캠페인 타입 2", 3),
+
+    All("ALL", "전체", 1, false, new String[] { "QUIZ01", "QUIZ02" }),
+    Quiz01("QUIZ01", "정답형 퀴즈(비율)", 1, true, new String[] { "QUIZ01" }),
+    Quiz02("QUIZ02", "정답형 퀴즈(고정)", 2, true, new String[] { "QUIZ02" }),
 
     ;
 
@@ -21,13 +22,16 @@ public enum CampaignType {
     private final String code;
     private final String name;
     private final int order;
+    private final boolean visible;
+    private final List<String> types;
 
 
-    CampaignType(String code, String name, int order) {
+    CampaignType(String code, String name, int order, boolean visible, String[] types) {
         this.code = code;
         this.name = name;
-        this.order= order;
-
+        this.order = order;
+        this.visible = visible;
+        this.types = Arrays.stream(types).toList();
     }
 
 
@@ -42,7 +46,12 @@ public enum CampaignType {
     public static List<CodeVo> getCodes() {
         return Arrays.stream(CampaignType.values())
                 .sorted(Comparator.comparing(CampaignType::getOrder))
+                .filter(CampaignType::isVisible)
                 .map(t -> new CodeVo(t.getCode(), t.getName()))
                 .toList();
+    }
+
+    public List<CampaignType> getTypes() {
+        return this.types.stream().map(CampaignType::of).toList();
     }
 }

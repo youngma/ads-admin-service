@@ -70,7 +70,7 @@ public class QuizAdSchedule {
         log.info("# Quiz Ad Set => {}", campaignCodeSet);
 
         while (count > (long) page * size) {
-            List<AdCampaignMasterEntity> entities = qAdvertiserCampaignMasterRepository.findAllByCampaignType(CampaignType.Quiz01, PageRequest.of(page, size));
+            List<AdCampaignMasterEntity> entities = qAdvertiserCampaignMasterRepository.findAllByCampaignType(CampaignType.All, PageRequest.of(page, size));
             entities.forEach(t -> {
                 campaignCodeSet.remove(t.getCampaignCode());
                 AdCampaignMasterVo adCampaignMasterVo = adCampaignRedisConvert.toDto(t);

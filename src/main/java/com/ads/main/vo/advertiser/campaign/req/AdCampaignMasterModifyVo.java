@@ -10,6 +10,7 @@ import org.springframework.format.annotation.NumberFormat;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -72,6 +73,29 @@ public class AdCampaignMasterModifyVo implements Serializable {
     @NotNull(message = "일일 참여 제한 횟수 은 필수 입니다.")
     private Integer dayParticipationLimit;
 
+
+    /**
+     * 총 예산
+     */
+    @Min(value = 1, message = "총 예산 금액의 최소액은 1원 이상 입니다.")
+    private BigDecimal totalBudget;
+
+
+    /**
+     * 광고 단가
+     */
+    @Min(value = 1, message = "광고 단가의 최소 금액은 1원 이상 입니다.")
+    private BigDecimal adPrice;
+
+    /**
+     * 수수로 비율
+     */
+    private BigDecimal commissionRate;
+
+    /**
+     * 수수로 비율(사용자)
+     */
+    private BigDecimal userCommissionRate;
 
     /**
      * 광고 시작 일자

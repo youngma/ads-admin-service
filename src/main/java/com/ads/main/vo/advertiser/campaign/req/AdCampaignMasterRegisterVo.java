@@ -1,6 +1,7 @@
 package com.ads.main.vo.advertiser.campaign.req;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import org.springframework.format.annotation.NumberFormat;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -81,6 +83,31 @@ public class AdCampaignMasterRegisterVo implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "광고 종료 일자 은 필수 입니다.")
     private LocalDateTime adEndDate;
+
+    /**
+     * 총 예산
+     */
+    @Min(value = 1, message = "총 예산 금액의 최소액은 1원 이상 입니다.")
+    private BigDecimal totalBudget;
+
+
+    /**
+     * 광고 단가
+     */
+    @Min(value = 1, message = "광고 단가의 최소 금액은 1원 이상 입니다.")
+    private BigDecimal adPrice;
+
+
+    /**
+     * 수수로 비율
+     */
+    private BigDecimal commissionRate;
+
+    /**
+     * 수수로 비율(사용자)
+     */
+    private BigDecimal userCommissionRate;
+
 
     private AdSmartStoreRegisterVo smartStore;
 

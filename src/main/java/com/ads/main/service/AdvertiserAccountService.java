@@ -95,7 +95,7 @@ public class AdvertiserAccountService {
         advertiserEntity.addAccount(advertiserAccountConvert.toEntity(advertiserAccountVo));
 
         FilesVo filesVo = advertiserAccountVo.getFile();
-        fileService.move(filesVo);
+        fileService.move(filesVo, "계좌 파일");
 
         advertiserRepository.save(advertiserEntity);
 

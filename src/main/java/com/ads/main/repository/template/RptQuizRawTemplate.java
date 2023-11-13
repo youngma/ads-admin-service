@@ -30,11 +30,15 @@ public class RptQuizRawTemplate {
                         null,              /* hint at */
                         null,              /* detail at */
                         null,              /* answer at */
-                        null               /* click at */
+                        null,               /* click at */
+                        0,
+                        0,
+                        0,
+                        0
                     from RPT_AD_REQUEST REQ
-                    join PARTNER_AD_GROUP AD_GROUP\s
+                    join PARTNER_AD_GROUP AD_GROUP
                      on REQ.GROUP_CODE = AD_GROUP.GROUP_CODE
-                     and AD_GROUP.AD_TYPE = 'QUIZ01'
+                     and AD_GROUP.AD_TYPE in ('QUIZ01','QUIZ02')
                     where REQ.REQUEST_AT between ? and ?
                     ON DUPLICATE KEY UPDATE  REQ_CNT = values(REQ_CNT)
                     ;
@@ -63,7 +67,11 @@ public class RptQuizRawTemplate {
                         null,              /* hint at */
                         null, /* detail at */
                         null,              /* answer at */
-                        null               /* click at */
+                        null,               /* click at */
+                        0,
+                        0,
+                        0,
+                        0
                     from RPT_QUIZ_RAW RAW
                     inner join (
                         select
@@ -104,7 +112,11 @@ public class RptQuizRawTemplate {
                         null,              /* hint at */
                         current_timestamp as DETAIL_AT, /* detail at */
                         null,              /* answer at */
-                        null               /* click at */
+                        null,               /* click at */
+                        0,
+                        0,
+                        0,
+                        0
                     from RPT_QUIZ_RAW RAW
                     inner join (
                         select
@@ -143,7 +155,11 @@ public class RptQuizRawTemplate {
                         current_timestamp as HINT_AT, /* hint at */
                         null,              /* detail at */
                         null,              /* answer at */
-                        null               /* click at */
+                        null,               /* click at */
+                        0,
+                        0,
+                        0,
+                        0
                     from RPT_QUIZ_RAW RAW
                     inner join (
                         select
@@ -183,7 +199,11 @@ public class RptQuizRawTemplate {
                         null,              /* hint at */
                         null,              /* detail at */
                         null,              /* answer at */
-                        current_timestamp as CLICK_AT  /* click at */
+                        current_timestamp as CLICK_AT,  /* click at */
+                        0,
+                        0,
+                        0,
+                        0
                     from RPT_QUIZ_RAW RAW
                     inner  join (
                         select
@@ -222,7 +242,11 @@ public class RptQuizRawTemplate {
                         null,              /* hint at */
                         null,              /* detail at */
                         current_timestamp as ANSWER_AT,  /* answer at */
-                        null                 /* click at */
+                        null,  /* click at */
+                        REQUEST.AD_PRICE,
+                        REQUEST.PARTNER_COMMISSION,
+                        REQUEST.USER_COMMISSION,
+                        REQUEST.AD_REWORD
                     from RPT_QUIZ_RAW RAW
                     inner join (
                         select
@@ -231,9 +255,15 @@ public class RptQuizRawTemplate {
                         from RPT_AD_ANSWER
                     ) ANSWER
                        on RAW.REQUEST_ID = ANSWER_ID
+                    inner join RPT_AD_REQUEST REQUEST
+                       on RAW.REQUEST_ID = REQUEST.REQUEST_ID
                     where ANSWER.ANSWER_AT between ? and ?
                     ON DUPLICATE KEY UPDATE  ANSWER_CNT = values(ANSWER_CNT)
                     , ANSWER_AT = values(ANSWER_AT)
+                    , AD_PRICE = values(AD_PRICE)
+                    , PARTNER_COMMISSION = values(PARTNER_COMMISSION)
+                    , USER_COMMISSION = values(USER_COMMISSION)
+                    , AD_REWORD = values(AD_REWORD)
                     ;
                     """
                 ,startDate, endDate

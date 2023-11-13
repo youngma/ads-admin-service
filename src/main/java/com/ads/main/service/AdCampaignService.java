@@ -109,7 +109,7 @@ public class AdCampaignService {
 
         if (adCampaignEntity.getAdSmartStoreEntity() != null) {
             FilesVo filesVo = adCampaignRegVo.getSmartStore().getImage();
-            fileService.move(filesVo);
+            fileService.move(filesVo, "스마트 스토어 광고 이미지");
         }
 
         if (adCampaignEntity.getAdQuizEntity() != null) {
@@ -117,9 +117,9 @@ public class AdCampaignService {
             FilesVo detailImage1 = adCampaignRegVo.getQuiz().getDetailImage1();
             FilesVo detailImage2 = adCampaignRegVo.getQuiz().getDetailImage2();
 
-            fileService.move(mainImage);
-            fileService.move(detailImage1);
-            fileService.move(detailImage2);
+            fileService.move(mainImage, "퀴즈 광고 메인(썸네일)");
+            fileService.move(detailImage1, "퀴즈 광고 상세1");
+//            fileService.move(detailImage2, "퀴즈 광고 상세2");
         }
 
 
@@ -145,7 +145,7 @@ public class AdCampaignService {
             if (adCampaignMasterEntity.getAdSmartStoreEntity() != null) {
                 adSmartStoreConvert.updateFromDto(adCampaignVo.getSmartStore(), adCampaignMasterEntity.getAdSmartStoreEntity());
                 FilesVo filesVo = adCampaignVo.getSmartStore().getImage();
-                fileService.move(filesVo);
+                fileService.move(filesVo, "스마트 스토어 광고 이미지");
             }
 
             if (adCampaignMasterEntity.getAdQuizEntity() != null) {
@@ -154,9 +154,9 @@ public class AdCampaignService {
                 FilesVo detailImage1 = adCampaignVo.getQuiz().getDetailImage1();
                 FilesVo detailImage2 = adCampaignVo.getQuiz().getDetailImage2();
 
-                fileService.move(mainImage);
-                fileService.move(detailImage1);
-                fileService.move(detailImage2);
+                fileService.move(mainImage, "퀴즈 광고 메인(썸네일)");
+                fileService.move(detailImage1, "퀴즈 광고 상세1");
+//                fileService.move(detailImage2, "퀴즈 광고 상세2");
             }
 
             adCampaignMasterRepository.save(adCampaignMasterEntity);

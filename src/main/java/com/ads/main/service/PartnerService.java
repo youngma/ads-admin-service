@@ -117,7 +117,7 @@ public class PartnerService {
         }
 
         FilesVo filesVo = partnerVo.getFile();
-        fileService.move(filesVo);
+        fileService.move(filesVo, "사업자 등록증");
 
         PartnerEntity advertiserEntity = partnerConvert.toEntity(partnerVo);
         partnerRepository.save(advertiserEntity);

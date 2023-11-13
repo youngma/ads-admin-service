@@ -101,7 +101,13 @@ public class PartnerAdGroupEntity extends BaseEntity implements Serializable {
     private String callBackUrl;
 
     /**
-     * 포인트 교환 비율
+     * 사용자 수수료 비율
+     */
+    @Column(name = "USER_COMMISSION_RATE", nullable = false)
+    private Integer userCommissionRate;
+
+    /**
+     * 매체사 수수료 비율
      */
     @Column(name = "COMMISSION_RATE", nullable = false)
     private Integer commissionRate;

@@ -89,8 +89,8 @@ public class PartnerAdGroupService {
 
         registerVo.setGroupCode(adGroupCode);
 
-        fileService.move(registerVo.getLogoFile());
-        fileService.move(registerVo.getPointIconFile());
+        fileService.move(registerVo.getLogoFile(), "광고지면 - 로그 이미지");
+        fileService.move(registerVo.getPointIconFile(), "광고지면 - 포인트 이미지");
 
         PartnerEntity partner = partnerEntityOptional.get();
         PartnerAdGroupEntity adGroupEntity =  partner.addAdGroup(partnerAdGroupConvert.toEntity(registerVo));
@@ -131,8 +131,12 @@ public class PartnerAdGroupService {
         }
 
         partnerAdGroupEntityOptional.ifPresent((partnerAdGroupEntity) -> {
+
+            fileService.move(modifyVo.getLogoFile(), "광고지면 - 로그 이미지");
+            fileService.move(modifyVo.getPointIconFile(), "광고지면 - 포인트 이미지");
+
             partnerAdGroupConvert.updateFromDto(modifyVo, partnerAdGroupEntity);
-            partnerAdGroupEntity.approval();
+
             partnerAdGroupRepository.save(partnerAdGroupEntity);
         });
 

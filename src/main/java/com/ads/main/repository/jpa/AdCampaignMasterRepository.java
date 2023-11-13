@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface AdCampaignMasterRepository extends JpaRepository<AdCampaignMasterEntity, Long>, JpaSpecificationExecutor<AdCampaignMasterEntity> {
 
     Optional<AdCampaignMasterEntity> findFirstByCampaignCode(String campaignCode);
-    Long countByAdEndDateBeforeAndAdStartDateAfterAndCampaignStatusAndExposureStatus(LocalDateTime adStartDate, LocalDateTime adEndDate, CampaignStatus status, Boolean exposure);
+    Long countByAdEndDateAfterAndAdStartDateBeforeAndCampaignStatusAndExposureStatus(LocalDateTime adStartDate, LocalDateTime adEndDate, CampaignStatus status, Boolean exposure);
 
 }

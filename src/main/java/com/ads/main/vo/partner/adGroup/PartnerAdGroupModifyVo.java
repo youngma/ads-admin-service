@@ -73,6 +73,12 @@ public class PartnerAdGroupModifyVo implements Serializable {
     @Max(value = 100, message = "수수로 비율 100보다 작아야 합니다.")
     private Integer commissionRate;
 
+    /**
+     * 수수로 비율(사용자)
+     */
+    @Min(value = 0, message = "수수로 비율 0보다 커다 합니다.")
+    @Max(value = 100, message = "수수로 비율 100보다 작아야 합니다.")
+    private Integer userCommissionRate;
 
     /**
      * 포인트 교환 비율

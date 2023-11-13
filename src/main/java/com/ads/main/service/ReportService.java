@@ -1,12 +1,14 @@
 package com.ads.main.service;
 
-import com.ads.main.core.security.config.dto.Role;
+import com.ads.main.core.enums.common.SinkSchedule;
+import com.ads.main.entity.RptQuizAdminDailyEntity;
+import com.ads.main.entity.RptSinkTimeEntity;
+import com.ads.main.entity.mapper.RptSinkTimeConvert;
+import com.ads.main.repository.jpa.RptSinkTimeRepository;
 import com.ads.main.repository.querydsl.QRptQuizRepository;
+import com.ads.main.vo.report.RptSinkTimeVo;
 import com.ads.main.vo.report.req.RptSearchVo;
-import com.ads.main.vo.report.resp.RptDashboard;
-import com.ads.main.vo.report.resp.RptQuizAdvertiserDailyVo;
-import com.ads.main.vo.report.resp.RptQuizDailyVo;
-import com.ads.main.vo.report.resp.RptQuizPartnerDailyVo;
+import com.ads.main.vo.report.resp.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,24 +18,34 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class ReportService {
 
+    private final RptSinkTimeRepository rptSinkTimeRepository;
+    private final RptSinkTimeConvert rptSinkTimeConvert;
 
     private final ReportCacheService reportCacheService;
 
     private final QRptQuizRepository qRptQuizRepository;
 
 
-    public RptDashboard getDashboard(String start, String end) {
+
+
+    public RptDashboard getDashboardToday() {
 
         DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime data = LocalDateTime.now();
 
-        RptDashboard dashboard = reportCacheService.findDashboard(data.format(formatter));
+        return reportCacheService.findDashboard(data.format(formatter));
+    }
+
+    public RptDashboard getDashboard(String start, String end) {
+
+        RptDashboard dashboard = getDashboardToday();
         List<RptQuizDailyVo> dailyList = reportCacheService.findDashboardList(start, end);
         dashboard.setRptQuizDailyList(dailyList);
 
@@ -56,5 +68,33 @@ public class ReportService {
             case ADVERTISER -> null;
         };
     }
+
+    public Page<RptQuizAdminDailyVo> searchAdminRpt(RptSearchVo rptSearchVo, Pageable pageable) {
+        return switch (rptSearchVo.getRole()) {
+            case ADMIN -> qRptQuizRepository.searchRptQuizAdminDaily(rptSearchVo, pageable);
+            case PARTNER -> null;
+            case ADVERTISER -> null;
+        };
+    }
+
+    public RptSinkTimeVo loadSinkSchedule(SinkSchedule schedule, String defaultSinkTime) {
+
+        Optional<RptSinkTimeEntity> rptSinkTimeEntityOptional = rptSinkTimeRepository.findByScheduleName(schedule.getName());
+        RptSinkTimeEntity rptSinkTimeEntity = rptSinkTimeEntityOptional.orElseGet( () -> {
+            RptSinkTimeEntity newRptSinkTimeEntity = new RptSinkTimeEntity();
+            newRptSinkTimeEntity.setScheduleName(schedule.getName());
+            newRptSinkTimeEntity.setLastSink(defaultSinkTime);
+            return newRptSinkTimeEntity;
+        });
+
+
+        return rptSinkTimeConvert.toDto(rptSinkTimeEntity);
+    }
+
+    public void saveSinkSchedule(RptSinkTimeVo rptSinkTimeVo) {
+        RptSinkTimeEntity rptSinkTimeEntity  =  rptSinkTimeConvert.toEntity(rptSinkTimeVo);
+        rptSinkTimeRepository.save(rptSinkTimeEntity);
+    }
+
 }
 

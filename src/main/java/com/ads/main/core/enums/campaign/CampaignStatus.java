@@ -11,13 +11,13 @@ import java.util.List;
 @Getter
 public enum CampaignStatus {
 
-    Exposure("EXPOSURE", "노출", 1),
-    NonExposure("NON-EXPOSURE", "비노출", 2),
+    Exposure("EXPOSURE", "노출", 1, false),
+    NonExposure("NON-EXPOSURE", "비노출", 2, false),
 
-    Request("REQUEST", "승인 요청", 1),
-    Approval("APPROVAL", "승인", 2),
-    Hold("HOLD", "보류", 3),
-    Reject("REJECT", "거절", 4),
+    Request("REQUEST", "승인 요청", 1, true),
+    Approval("APPROVAL", "승인", 2, true),
+    Hold("HOLD", "보류", 3, true),
+    Reject("REJECT", "거절", 4, true),
 
     ;
 
@@ -25,12 +25,14 @@ public enum CampaignStatus {
     private final String code;
     private final String name;
     private final int order;
+    private final boolean visible;
 
 
-    CampaignStatus(String code, String name, int order) {
+    CampaignStatus(String code, String name, int order, boolean visible) {
         this.code = code;
         this.name = name;
         this.order = order;
+        this.visible = visible;
     }
 
 
@@ -44,6 +46,7 @@ public enum CampaignStatus {
     public static List<CodeVo> getCodes() {
         return Arrays.stream(CampaignStatus.values())
                 .sorted(Comparator.comparing(CampaignStatus::getOrder))
+                .filter(CampaignStatus::isVisible)
                 .map(t -> new CodeVo(t.getCode(), t.getName()))
                 .toList();
     }

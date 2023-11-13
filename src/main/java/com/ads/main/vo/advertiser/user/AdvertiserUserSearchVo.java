@@ -1,13 +1,12 @@
 package com.ads.main.vo.advertiser.user;
 
-import com.querydsl.core.BooleanBuilder;
 import com.ads.main.core.enums.user.UserStatus;
+import com.querydsl.core.BooleanBuilder;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import static com.ads.main.entity.QAdvertiserUserEntity.advertiserUserEntity;
-import static com.ads.main.entity.QUserEntity.userEntity;
 
 
 @Getter

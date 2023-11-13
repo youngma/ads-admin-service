@@ -123,7 +123,7 @@ public class AdvertiserService {
 
 
         FilesVo filesVo = advertiserVo.getFile();
-        fileService.move(filesVo);
+        fileService.move(filesVo, "사업자 등록증");
 
         AdvertiserEntity advertiserEntity = advertiserConvert.toEntity(advertiserVo);
         advertiserRepository.save(advertiserEntity);
@@ -140,7 +140,7 @@ public class AdvertiserService {
         }
 
         FilesVo filesVo = advertiserVo.getFile();
-        fileService.move(filesVo);
+        fileService.move(filesVo, "사업자 등록증");
 
         AdvertiserEntity advertiserEntity = advertiserEntityOptional.get();
         advertiserConvert.updateFromDto(advertiserVo, advertiserEntity);

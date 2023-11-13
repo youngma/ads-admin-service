@@ -96,7 +96,7 @@ public class PartnerAccountService {
         partnerEntity.addAccount(partnerAccountConvert.toEntity(partnerAccountVo));
 
         FilesVo filesVo = partnerAccountVo.getFile();
-        fileService.move(filesVo);
+        fileService.move(filesVo, "계좌");
 
         partnerRepository.save(partnerEntity);
 

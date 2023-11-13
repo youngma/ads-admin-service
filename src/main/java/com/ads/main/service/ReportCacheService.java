@@ -48,7 +48,7 @@ public class ReportCacheService {
 
         Long advertiserCount = advertiserRepository.countBy();
         Long partnerCount = partnerRepository.countBy();
-        Long campaignCount = adCampaignMasterRepository.countByAdEndDateBeforeAndAdStartDateAfterAndCampaignStatusAndExposureStatus(
+        Long campaignCount = adCampaignMasterRepository.countByAdEndDateAfterAndAdStartDateBeforeAndCampaignStatusAndExposureStatus(
                 LocalDateTime.now(), LocalDateTime.now(), CampaignStatus.Approval, true
         );
         Long adgroupCount = partnerAdGroupRepository.countByGroupStatus(AdGroupStatus.Approval);
