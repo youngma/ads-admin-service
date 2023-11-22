@@ -62,6 +62,17 @@ public class ReportService {
         };
     }
 
+
+    public DailyReportVo searchReportByDailySummary(RptSearchVo rptSearchVo) {
+        return switch (rptSearchVo.getRole()) {
+            case ADMIN -> qRptQuizReportRepository.searchRptQuizAdminDailySummary(rptSearchVo);
+            case PARTNER -> qRptQuizReportRepository.searchRptQuizPartnerDailySummary(rptSearchVo);
+            case ADVERTISER -> qRptQuizReportRepository.searchRptQuizAdvertiserSummary(rptSearchVo);
+            case USER -> qRptQuizRawRepository.searchRptQuizUserDailySummery(rptSearchVo);
+        };
+    }
+
+
 //    public Page<RptQuizPartnerDailyVo> searchPartnerRpt(RptSearchVo rptSearchVo, Pageable pageable) {
 //        return switch (rptSearchVo.getRole()) {
 //            case ADMIN -> null;

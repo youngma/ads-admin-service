@@ -6,6 +6,7 @@ import com.ads.main.vo.report.resp.RptQuizAdminDailyVo;
 import com.ads.main.vo.report.resp.RptQuizAdvertiserDailyVo;
 import com.ads.main.vo.report.resp.RptQuizPartnerDailyVo;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -99,7 +100,6 @@ public class QRptQuizReportRepository {
         return new PageImpl<>(reports, pageable, Objects.requireNonNullElse(count, 0L));
     }
 
-
     public Page<RptQuizAdminDailyVo> searchRptQuizAdminDaily(RptSearchVo searchVo, Pageable pageable) {
 
         List<RptQuizAdminDailyVo> reports = jpaQueryFactory.select(
@@ -131,5 +131,65 @@ public class QRptQuizReportRepository {
                 .fetchOne();
 
         return new PageImpl<>(reports, pageable, Objects.requireNonNullElse(count, 0L));
+    }
+
+
+    public RptQuizAdvertiserDailyVo searchRptQuizAdvertiserSummary(RptSearchVo searchVo) {
+      return jpaQueryFactory.select(
+                      Projections.bean(RptQuizAdvertiserDailyVo.class,
+                              adCampaignMasterEntity.advertiserEntity.advertiserName.countDistinct().as("advertiserCount"),
+                              adCampaignMasterEntity.campaignCode.countDistinct().as("campaignCount"),
+                              rptQuizAdvertiserDailyEntity.reqCnt.sum().as("reqCnt"),
+                              rptQuizAdvertiserDailyEntity.impressionCnt.sum().as("impressionCnt"),
+                              rptQuizAdvertiserDailyEntity.answerCnt.sum().as("answerCnt"),
+                              rptQuizAdvertiserDailyEntity.hintCnt.sum().as("hintCnt"),
+                              rptQuizAdvertiserDailyEntity.clickCnt.sum().as("clickCnt")
+                      )
+              )
+              .from(rptQuizAdvertiserDailyEntity)
+              .innerJoin(adCampaignMasterEntity).on(rptQuizAdvertiserDailyEntity.campaignCode.eq(adCampaignMasterEntity.campaignCode))
+              .innerJoin(adCampaignMasterEntity.advertiserEntity)
+              .where(searchVo.where())
+              .fetchFirst();
+    }
+
+    public RptQuizPartnerDailyVo searchRptQuizPartnerDailySummary(RptSearchVo searchVo) {
+
+        return jpaQueryFactory.select(
+                        Projections.bean(RptQuizPartnerDailyVo.class,
+                                rptQuizPartnerDailyEntity.groupCode.countDistinct().as("adGroupCount"),
+                                partnerAdGroupEntity.partnerEntity.partnerSeq.countDistinct().as("partnerCount"),
+                                rptQuizPartnerDailyEntity.reqCnt.sum().as("reqCnt"),
+                                rptQuizPartnerDailyEntity.impressionCnt.sum().as("impressionCnt"),
+                                rptQuizPartnerDailyEntity.answerCnt.sum().as("answerCnt"),
+                                rptQuizPartnerDailyEntity.hintCnt.sum().as("hintCnt"),
+                                rptQuizPartnerDailyEntity.clickCnt.sum().as("clickCnt")
+                        )
+                )
+                .from(rptQuizPartnerDailyEntity)
+                .innerJoin(partnerAdGroupEntity).on(partnerAdGroupEntity.groupCode.eq(rptQuizPartnerDailyEntity.groupCode))
+                .innerJoin(partnerAdGroupEntity.partnerEntity)
+                .where(searchVo.where())
+                .fetchFirst();
+    }
+
+
+    public RptQuizAdminDailyVo searchRptQuizAdminDailySummary(RptSearchVo searchVo) {
+
+        return jpaQueryFactory.select(
+                        Projections.bean(RptQuizAdminDailyVo.class,
+                                rptQuizAdminDailyEntity.reqCnt.sum().as("reqCnt"),
+                                rptQuizAdminDailyEntity.impressionCnt.sum().as("impressionCnt"),
+                                rptQuizAdminDailyEntity.answerCnt.sum().as("answerCnt"),
+                                rptQuizAdminDailyEntity.hintCnt.sum().as("hintCnt"),
+                                rptQuizAdminDailyEntity.clickCnt.sum().as("clickCnt"),
+                                rptQuizAdminDailyEntity.partnerCommission.sum().as("partnerCommission"),
+                                rptQuizAdminDailyEntity.userCommission.sum().as("userCommission")
+                        )
+                )
+                .from(rptQuizAdminDailyEntity)
+                .where(searchVo.where())
+                .fetchFirst();
+
     }
 }

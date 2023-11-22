@@ -132,5 +132,87 @@ public class ReportController {
 
 
         return new RespVo<>(list);
+    }@GetMapping("/quiz/advertiser/daily/summary")
+    public RespVo<? extends DailyReportVo> rptQuizAdvertiserSummary(
+            @RequestParam("startDate") String start,
+            @RequestParam("endDate") String end,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "20") int size
+    ) {
+
+        RptSearchVo rptSearchVo = RptSearchVo.builder()
+                .role(Role.ADVERTISER)
+                .searchStartDt(start)
+                .searchEndDt(end)
+                .build();
+
+        DailyReportVo summary = reportService.searchReportByDailySummary(rptSearchVo);
+
+        return new RespVo<>(summary);
+    }
+//
+    @GetMapping("/quiz/partner/daily/summary")
+    public RespVo<? extends DailyReportVo> rptQuizPartnerSummery(
+            @RequestParam("startDate") String start,
+            @RequestParam("endDate") String end,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "20") int size
+    ) {
+
+        RptSearchVo rptSearchVo = RptSearchVo.builder()
+                .role(Role.PARTNER)
+                .searchStartDt(start)
+                .searchEndDt(end)
+                .build();
+
+        DailyReportVo summary = reportService.searchReportByDailySummary(rptSearchVo);
+
+
+        return new RespVo<>(summary);
+    }
+
+    @GetMapping("/quiz/admin/daily/summary")
+    public RespVo<? extends DailyReportVo> rptQuizAdminSummary(
+            @RequestParam("startDate") String start,
+            @RequestParam("endDate") String end,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "20") int size
+    ) {
+
+        RptSearchVo rptSearchVo = RptSearchVo.builder()
+                .role(Role.ADMIN)
+                .searchStartDt(start)
+                .searchEndDt(end)
+                .build();
+
+        DailyReportVo summary = reportService.searchReportByDailySummary(rptSearchVo);
+
+
+        return new RespVo<>(summary);
+    }
+    @GetMapping("/quiz/user/raw/summary")
+    public RespVo<? extends DailyReportVo> rptQuizUserSummary(
+            @RequestParam("startDate") String start,
+            @RequestParam("endDate") String end,
+            @RequestParam(value = "userKey", required = false) String userKey,
+            @RequestParam(value = "campaignName", required = false) String campaignName,
+            @RequestParam(value = "campaignCode", required = false) String campaignCode,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "20") int size
+    ) {
+
+        RptSearchVo rptSearchVo = RptSearchVo.builder()
+                .role(Role.USER)
+                .searchStartDt(start)
+                .searchEndDt(end)
+                .userKey(userKey)
+                .campaignName(campaignName)
+                .campaignCode(campaignCode)
+                .build();
+
+        DailyReportVo summary = reportService.searchReportByDailySummary(rptSearchVo);
+
+
+        return new RespVo<>(summary);
     }
 }

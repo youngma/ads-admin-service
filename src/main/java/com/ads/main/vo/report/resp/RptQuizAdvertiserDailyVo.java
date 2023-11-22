@@ -20,11 +20,13 @@ public class RptQuizAdvertiserDailyVo  extends DailyReportVo implements Serializ
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private Long advertiserCount;
+    private Long campaignCount;
+
 
     private Long advertiserSeq;
     private String advertiserName;
     private String businessName;
-
 
 
     /**

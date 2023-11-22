@@ -1,5 +1,6 @@
 package com.ads.main.vo.report.resp;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,6 +12,7 @@ import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RptQuizAdminDailyVo extends DailyReportVo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

@@ -1,7 +1,6 @@
 package com.ads.main.repository.querydsl;
 
 import com.ads.main.vo.report.req.RptSearchVo;
-import com.ads.main.vo.report.resp.RptQuizAdvertiserDailyVo;
 import com.ads.main.vo.report.resp.RptQuizRawVo;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
@@ -18,7 +17,6 @@ import java.util.Objects;
 
 import static com.ads.main.entity.QAdCampaignMasterEntity.adCampaignMasterEntity;
 import static com.ads.main.entity.QPartnerAdGroupEntity.partnerAdGroupEntity;
-import static com.ads.main.entity.QRptQuizAdvertiserDailyEntity.rptQuizAdvertiserDailyEntity;
 import static com.ads.main.entity.QRptQuizRawEntity.rptQuizRawEntity;
 
 @Repository
@@ -89,5 +87,44 @@ public class QRptQuizRawRepository {
                 .fetchOne();
 
         return new PageImpl<>(reports, pageable, Objects.requireNonNullElse(count, 0L));
+    }
+
+    public RptQuizRawVo searchRptQuizUserDailySummery(RptSearchVo searchVo) {
+
+        StringTemplate requestAtFormatter = Expressions.stringTemplate(
+                "DATE_FORMAT({0}, {1})"
+                ,rptQuizRawEntity.requestAt
+                ,("%Y%m%d")
+        );
+        return jpaQueryFactory.select(
+                        Projections.bean(RptQuizRawVo.class,
+
+                                adCampaignMasterEntity.advertiserEntity.advertiserSeq.countDistinct().as("advertiserCount"),
+                                partnerAdGroupEntity.partnerEntity.partnerSeq.countDistinct().as("partnerCount"),
+                                rptQuizRawEntity.campaignCode.countDistinct().as("campaignCount"),
+                                rptQuizRawEntity.groupCode.countDistinct().as("adGroupCount"),
+                                rptQuizRawEntity.userKey.countDistinct().as("userCount"),
+
+                                rptQuizRawEntity.reqCnt.sum().as("reqCnt"),
+                                rptQuizRawEntity.impressionCnt.sum().as("impressionCnt"),
+                                rptQuizRawEntity.detailCnt.sum().as("detailCnt"),
+                                rptQuizRawEntity.answerCnt.sum().as("answerCnt"),
+                                rptQuizRawEntity.hintCnt.sum().as("hintCnt"),
+                                rptQuizRawEntity.clickCnt.sum().as("clickCnt"),
+
+                                rptQuizRawEntity.partnerCommission.sum().as("partnerCommission"),
+                                rptQuizRawEntity.userCommission.sum().as("userCommission"),
+                                rptQuizRawEntity.adReword.sum().as("adReword")
+
+                        )
+                )
+                .from(rptQuizRawEntity)
+                .innerJoin(adCampaignMasterEntity).on(rptQuizRawEntity.campaignCode.eq(adCampaignMasterEntity.campaignCode))
+                .innerJoin(adCampaignMasterEntity.advertiserEntity)
+                .innerJoin(partnerAdGroupEntity).on(rptQuizRawEntity.groupCode.eq(partnerAdGroupEntity.groupCode))
+                .innerJoin(partnerAdGroupEntity.partnerEntity)
+                .where(searchVo.where())
+                .fetchFirst();
+
     }
 }

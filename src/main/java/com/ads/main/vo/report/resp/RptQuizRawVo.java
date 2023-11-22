@@ -27,8 +27,17 @@ public class RptQuizRawVo extends DailyReportVo implements Serializable {
     private String userKey;
 
 
+
     private String advertiserName;
     private String partnerName;
+
+    private Long partnerCount;
+    private Long adGroupCount;
+
+    private Long advertiserCount;
+    private Long campaignCount;
+
+    private Long userCount;
 
     /**
      * 그룹 순번
