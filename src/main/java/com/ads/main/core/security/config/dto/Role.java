@@ -8,6 +8,7 @@ public enum Role {
     ADMIN("admin"),
     PARTNER("partner"),
     ADVERTISER("advertiser"),
+    USER("user"),
 
     ;
     private final String roleName;

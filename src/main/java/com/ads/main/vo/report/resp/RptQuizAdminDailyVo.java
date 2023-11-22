@@ -2,23 +2,19 @@ package com.ads.main.vo.report.resp;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class RptQuizAdminDailyVo implements Serializable {
+public class RptQuizAdminDailyVo extends DailyReportVo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-
-    /**
-     * 리포팅 일자
-     */
-    @NotNull(message = "rptDate can not null")
-    private String rptDate;
 
 
     /**

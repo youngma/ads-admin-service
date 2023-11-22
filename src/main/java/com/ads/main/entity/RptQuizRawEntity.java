@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -43,6 +44,10 @@ public class RptQuizRawEntity implements Serializable {
     @Id
     @Column(name = "CAMPAIGN_CODE", nullable = false)
     private String campaignCode;
+
+
+    @Column(name = "USER_KEY", nullable = false)
+    private String userKey;
 
     /**
      * 광고 요청 수
@@ -115,6 +120,26 @@ public class RptQuizRawEntity implements Serializable {
      */
     @Column(name = "CLICK_AT")
     private LocalDateTime clickAt;
+
+
+    /**
+     * 파트너 지급 금액
+     */
+    @Column(name = "PARTNER_COMMISSION")
+    private Long     partnerCommission;
+
+    /**
+     * 사용자 지급 금액
+     */
+    @Column(name = "USER_COMMISSION")
+    private Long userCommission;
+
+
+    /**
+     * 사용자 지급 포인트
+     */
+    @Column(name = "AD_REWORD")
+    private Long adReword;
 
     @Override
     public final boolean equals(Object o) {

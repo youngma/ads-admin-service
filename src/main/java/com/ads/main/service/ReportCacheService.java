@@ -2,25 +2,17 @@ package com.ads.main.service;
 
 import com.ads.main.core.enums.advertiser.AdGroupStatus;
 import com.ads.main.core.enums.campaign.CampaignStatus;
-import com.ads.main.entity.AdCampaignMasterEntity;
 import com.ads.main.entity.mapper.RptQuizDailyConverter;
 import com.ads.main.repository.jpa.*;
-import com.ads.main.repository.querydsl.QRptQuizRepository;
-import com.ads.main.vo.report.req.RptSearchVo;
 import com.ads.main.vo.report.resp.RptDashboard;
-import com.ads.main.vo.report.resp.RptQuizAdvertiserDailyVo;
 import com.ads.main.vo.report.resp.RptQuizDailyVo;
-import com.ads.main.vo.report.resp.RptQuizPartnerDailyVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j

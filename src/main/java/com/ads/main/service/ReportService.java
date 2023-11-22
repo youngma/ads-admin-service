@@ -1,11 +1,11 @@
 package com.ads.main.service;
 
 import com.ads.main.core.enums.common.SinkSchedule;
-import com.ads.main.entity.RptQuizAdminDailyEntity;
 import com.ads.main.entity.RptSinkTimeEntity;
 import com.ads.main.entity.mapper.RptSinkTimeConvert;
 import com.ads.main.repository.jpa.RptSinkTimeRepository;
-import com.ads.main.repository.querydsl.QRptQuizRepository;
+import com.ads.main.repository.querydsl.QRptQuizRawRepository;
+import com.ads.main.repository.querydsl.QRptQuizReportRepository;
 import com.ads.main.vo.report.RptSinkTimeVo;
 import com.ads.main.vo.report.req.RptSearchVo;
 import com.ads.main.vo.report.resp.*;
@@ -30,7 +30,8 @@ public class ReportService {
 
     private final ReportCacheService reportCacheService;
 
-    private final QRptQuizRepository qRptQuizRepository;
+    private final QRptQuizReportRepository qRptQuizReportRepository;
+    private final QRptQuizRawRepository qRptQuizRawRepository;
 
 
 
@@ -52,30 +53,30 @@ public class ReportService {
         return dashboard;
     }
 
-
-    public Page<RptQuizAdvertiserDailyVo> searchAdvertiserRpt(RptSearchVo rptSearchVo, Pageable pageable) {
+    public Page<? extends DailyReportVo> searchReportByDaily(RptSearchVo rptSearchVo, Pageable pageable) {
         return switch (rptSearchVo.getRole()) {
-            case ADMIN -> null;
-            case PARTNER -> null;
-            case ADVERTISER -> qRptQuizRepository.searchRptQuizAdvertiserDaily(rptSearchVo, pageable);
+            case ADMIN -> qRptQuizReportRepository.searchRptQuizAdminDaily(rptSearchVo, pageable);
+            case PARTNER -> qRptQuizReportRepository.searchRptQuizPartnerDaily(rptSearchVo, pageable);
+            case ADVERTISER -> qRptQuizReportRepository.searchRptQuizAdvertiserDaily(rptSearchVo, pageable);
+            case USER -> qRptQuizRawRepository.searchRptQuizUserDaily(rptSearchVo, pageable);
         };
     }
 
-    public Page<RptQuizPartnerDailyVo> searchPartnerRpt(RptSearchVo rptSearchVo, Pageable pageable) {
-        return switch (rptSearchVo.getRole()) {
-            case ADMIN -> null;
-            case PARTNER -> qRptQuizRepository.searchRptQuizPartnerDaily(rptSearchVo, pageable);
-            case ADVERTISER -> null;
-        };
-    }
-
-    public Page<RptQuizAdminDailyVo> searchAdminRpt(RptSearchVo rptSearchVo, Pageable pageable) {
-        return switch (rptSearchVo.getRole()) {
-            case ADMIN -> qRptQuizRepository.searchRptQuizAdminDaily(rptSearchVo, pageable);
-            case PARTNER -> null;
-            case ADVERTISER -> null;
-        };
-    }
+//    public Page<RptQuizPartnerDailyVo> searchPartnerRpt(RptSearchVo rptSearchVo, Pageable pageable) {
+//        return switch (rptSearchVo.getRole()) {
+//            case ADMIN -> null;
+//            case PARTNER ->
+//            case ADVERTISER -> null;
+//        };
+//    }
+//
+//    public Page<RptQuizAdminDailyVo> searchAdminRpt(RptSearchVo rptSearchVo, Pageable pageable) {
+//        return switch (rptSearchVo.getRole()) {
+//            case ADMIN ->
+//            case PARTNER -> null;
+//            case ADVERTISER -> null;
+//        };
+//    }
 
     public RptSinkTimeVo loadSinkSchedule(SinkSchedule schedule, String defaultSinkTime) {
 

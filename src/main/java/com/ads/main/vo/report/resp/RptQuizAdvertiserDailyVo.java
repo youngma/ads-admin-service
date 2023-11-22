@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,19 +12,14 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RptQuizAdvertiserDailyVo implements Serializable {
+public class RptQuizAdvertiserDailyVo  extends DailyReportVo implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-
-    /**
-     * 리포팅 일자
-     */
-    @NotNull(message = "rptDate can not null")
-    private String rptDate;
 
     private Long advertiserSeq;
     private String advertiserName;

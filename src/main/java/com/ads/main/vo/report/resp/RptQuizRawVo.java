@@ -1,6 +1,9 @@
 package com.ads.main.vo.report.resp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -11,28 +14,34 @@ import java.util.Date;
 
 
 @Data
-public class RptQuizRawVo implements Serializable {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class RptQuizRawVo extends DailyReportVo implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
 
     /**
      * 광고 요청 코드
      */
     private String requestId;
+    private String userKey;
 
+
+    private String advertiserName;
+    private String partnerName;
 
     /**
      * 그룹 순번
      */
     private String groupCode;
+    private String groupName;
 
 
     /**
      * 광고 코드
      */
     private String campaignCode;
+    private String campaignName;
 
 
     /**
@@ -111,5 +120,39 @@ public class RptQuizRawVo implements Serializable {
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime clickAt;
+
+
+    /**
+     * 파트너 지급 금액
+     */
+    private Long partnerCommission;
+
+
+
+    /**
+     * 사용자 지급 금액
+     */
+    private Long userCommission;
+
+
+    /**
+     * 사용자 지급 포인트
+     */
+    private Long adReword;
+
+
+    public Long getAdReword() {
+        return this.answerAt != null ? this. adReword : 0L;
+    }
+
+
+    public Long getPartnerCommission() {
+        return this.answerAt != null ? this. partnerCommission : 0L;
+
+    }
+
+    public Long getUserCommission() {
+        return this.answerAt != null ? this. userCommission : 0L;
+    }
 
 }

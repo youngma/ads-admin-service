@@ -1,7 +1,6 @@
 package com.ads.main.repository.querydsl;
 
 
-import com.ads.main.entity.QAdvertiserEntity;
 import com.ads.main.vo.report.req.RptSearchVo;
 import com.ads.main.vo.report.resp.RptQuizAdminDailyVo;
 import com.ads.main.vo.report.resp.RptQuizAdvertiserDailyVo;
@@ -26,7 +25,7 @@ import static com.ads.main.entity.QRptQuizAdminDailyEntity.rptQuizAdminDailyEnti
 
 @Repository
 @RequiredArgsConstructor
-public class QRptQuizRepository {
+public class QRptQuizReportRepository {
 
 
     private final EntityManager entityManager;
@@ -54,7 +53,7 @@ public class QRptQuizRepository {
                 .innerJoin(adCampaignMasterEntity).on(rptQuizAdvertiserDailyEntity.campaignCode.eq(adCampaignMasterEntity.campaignCode))
                 .innerJoin(adCampaignMasterEntity.advertiserEntity)
                 .where(searchVo.where())
-                .orderBy(rptQuizAdvertiserDailyEntity.rptDate.desc())
+                .orderBy(rptQuizAdvertiserDailyEntity.rptDate.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -87,7 +86,7 @@ public class QRptQuizRepository {
                 .innerJoin(partnerAdGroupEntity).on(partnerAdGroupEntity.groupCode.eq(rptQuizPartnerDailyEntity.groupCode))
                 .innerJoin(partnerAdGroupEntity.partnerEntity)
                 .where(searchVo.where())
-                .orderBy(rptQuizPartnerDailyEntity.rptDate.desc())
+                .orderBy(rptQuizPartnerDailyEntity.rptDate.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -121,7 +120,7 @@ public class QRptQuizRepository {
                 )
                 .from(rptQuizAdminDailyEntity)
                 .where(searchVo.where())
-                .orderBy(rptQuizAdminDailyEntity.rptDate.desc())
+                .orderBy(rptQuizAdminDailyEntity.rptDate.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
