@@ -56,6 +56,9 @@ public class QuizAdminDailySink {
         log.info("# Start Admin Daily Sink Quiz Answer");
         rptQuizAdminDailyTemplate.sinkAnswer(startDateH, endDateH);
 
+        log.info("# Start Admin Daily Sink Quiz Click");
+        rptQuizAdminDailyTemplate.sinkClick(startDateH, endDateH);
+
         rptSinkTimeVo.setLastSink(data.plusHours(1).format(formatter));
         reportService.saveSinkSchedule(rptSinkTimeVo);
     }

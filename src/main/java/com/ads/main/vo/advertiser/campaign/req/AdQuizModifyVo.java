@@ -77,5 +77,7 @@ public class AdQuizModifyVo implements Serializable {
     private String goodsCode;
 
 
+    private String ifAdCode;
+
 
 }

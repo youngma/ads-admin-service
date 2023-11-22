@@ -56,7 +56,7 @@ public class QuizAdSchedule {
 
         log.info("# Quiz Ad Redis Sink Scheduler");
 
-        long count =  qAdvertiserCampaignMasterRepository.findCountByCampaignType(CampaignType.Quiz01);
+        long count =  qAdvertiserCampaignMasterRepository.findCountByCampaignType(CampaignType.All);
 
         int page = 0;
         int size = 20;

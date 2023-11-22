@@ -190,6 +190,7 @@ public class AdCampaignMasterVo implements Serializable {
     private String rejectMessage;
 
 
+    private String ifAdCode;
 
 
     private AdSmartStoreVo smartStore;

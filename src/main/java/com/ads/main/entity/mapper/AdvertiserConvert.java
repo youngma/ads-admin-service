@@ -64,7 +64,6 @@ public interface AdvertiserConvert extends GenericMapper<AdvertiserVo, Advertise
     @Mapping(target = "insertedAt", ignore = true)
     @Mapping(target = "phoneNumber", ignore = true)
     @Mapping(target = "email", ignore = true)
-    @Mapping(target = "businessName", ignore = true)
     @Mapping(target = "advertiserUserEntities", ignore = true)
     @Mapping(target = "advertiserName", ignore = true)
     @Mapping(target = "filesEntity", source = "file")

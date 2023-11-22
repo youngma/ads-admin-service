@@ -108,10 +108,13 @@ public class AdCampaignMasterRegisterVo implements Serializable {
      */
     private BigDecimal userCommissionRate;
 
+    private String ifAdCode;
+
 
     private AdSmartStoreRegisterVo smartStore;
 
     private AdQuizRegisterVo quiz;
+
 
 
     public void validCheck() {

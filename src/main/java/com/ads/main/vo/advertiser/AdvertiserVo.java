@@ -76,6 +76,10 @@ public class AdvertiserVo implements Serializable {
     @NotBlank(message = "광고주 명은 필수 입니다.")
     private String advertiserName;
 
+    /**
+     * 광고 연동 코드
+     */
+    private String ifCode;
 
     /**
      * 등록일자

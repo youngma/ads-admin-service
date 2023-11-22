@@ -3,7 +3,6 @@ package com.ads.main.schedule.quiz;
 
 import com.ads.main.core.enums.common.SinkSchedule;
 import com.ads.main.repository.template.RptQuizPartnerDailyTemplate;
-import com.ads.main.repository.template.RptQuizRawTemplate;
 import com.ads.main.service.ReportService;
 import com.ads.main.vo.report.RptSinkTimeVo;
 import lombok.RequiredArgsConstructor;

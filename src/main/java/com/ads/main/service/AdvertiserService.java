@@ -14,15 +14,13 @@ import com.ads.main.repository.jpa.AdvertiserRepository;
 import com.ads.main.repository.jpa.AdvertiserUserRepository;
 import com.ads.main.repository.querydsl.QAdvertiserRepository;
 import com.ads.main.repository.querydsl.QAdvertiserUserRepository;
-import com.ads.main.service.FileService;
-import com.ads.main.service.UserService;
 import com.ads.main.vo.FilesVo;
+import com.ads.main.vo.admin.UserVo;
+import com.ads.main.vo.advertiser.AdvertiserBusinessModifyVo;
 import com.ads.main.vo.advertiser.AdvertiserModifyVo;
 import com.ads.main.vo.advertiser.AdvertiserSearchVo;
 import com.ads.main.vo.advertiser.AdvertiserVo;
-import com.ads.main.vo.advertiser.AdvertiserBusinessModifyVo;
 import com.ads.main.vo.advertiser.user.*;
-import com.ads.main.vo.admin.UserVo;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -152,22 +150,23 @@ public class AdvertiserService {
 
 
     @Transactional
-    public AdvertiserVo businessNumberModify(AdvertiserBusinessModifyVo advertiserVo) {
-        Optional<AdvertiserEntity> advertiserEntityOptional =findUserEntityByBusinessNumber(advertiserVo.getBusinessNumber());
-
-        if (advertiserEntityOptional.isPresent()) {
-            throw ADVERTISER_ALREADY_EXISTS.throwErrors();
-        }
-
-         advertiserEntityOptional = findUserEntityByAdvertiserSeq(advertiserVo.getAdvertiserSeq());
+    public AdvertiserVo businessNumberModify(AdvertiserBusinessModifyVo modifyVo) {
+        Optional<AdvertiserEntity> advertiserEntityOptional = findUserEntityByAdvertiserSeq(modifyVo.getAdvertiserSeq());
 
         if (advertiserEntityOptional.isEmpty()) {
             throw ADVERTISER_NOT_FOUND.throwErrors();
         }
 
         AdvertiserEntity advertiserEntity = advertiserEntityOptional.get();
-        advertiserConvert.updateFromDto(advertiserVo, advertiserEntity);
 
+        if (!modifyVo.getBusinessNumber().equals(advertiserEntity.getBusinessNumber())) {
+            if (checkBusinessNumber(modifyVo.getBusinessNumber())) {
+                throw USER_ALREADY_EXISTS.throwErrors();
+            }
+        }
+
+        fileService.move(modifyVo.getFile(), "사업자 등록증");
+        advertiserConvert.updateFromDto(modifyVo, advertiserEntity);
         advertiserRepository.save(advertiserEntity);
 
         return advertiserConvert.toDto(advertiserEntity);

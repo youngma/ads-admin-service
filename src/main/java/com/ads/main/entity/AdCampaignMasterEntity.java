@@ -130,6 +130,14 @@ public class AdCampaignMasterEntity  extends BaseEntity implements Serializable 
     @Column(name = "AD_PRICE")
     private BigDecimal adPrice;
 
+    /**
+     * 광고 연동코드
+     */
+    @Column(name = "IF_AD_CODE")
+    private String ifAdCode;
+
+
+
     public void request() {
         this.campaignStatus = CampaignStatus.Request;
         this.requestAt = LocalDateTime.now();

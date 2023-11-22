@@ -128,45 +128,38 @@ public class PartnerService {
     @Transactional
     public PartnerVo modify(PartnerModifyVo modifyVo) {
 
-        log.info("# step 1");
         Optional<PartnerEntity> partnerEntityOptional = findPartnerBySeq(modifyVo.getPartnerSeq());
-        log.info("# step 2");
 
         if (partnerEntityOptional.isEmpty()) {
             throw PARTNER_NOT_FOUND.throwErrors();
         }
 
-        log.info("# step 3");
-
-
         PartnerEntity advertiserEntity = partnerEntityOptional.get();
         partnerConvert.updateFromDto(modifyVo, advertiserEntity);
-        log.info("# step 4");
 
         partnerRepository.save(advertiserEntity);
         log.info("# step 5");
-
         return partnerConvert.toDto(advertiserEntity);
     }
 
 
     @Transactional
     public PartnerVo businessNumberModify(PartnerBusinessModifyVo modifyVo) {
-        Optional<PartnerEntity> partnerEntityOptional = findPartnerByBusinessNumber(modifyVo.getBusinessNumber());
-
-        if (partnerEntityOptional.isPresent()) {
-            throw PARTNER_ALREADY_EXISTS.throwErrors();
-        }
-
-        partnerEntityOptional = findPartnerBySeq(modifyVo.getPartnerSeq());
+        Optional<PartnerEntity> partnerEntityOptional = findPartnerBySeq(modifyVo.getPartnerSeq());
 
         if (partnerEntityOptional.isEmpty()) {
             throw PARTNER_NOT_FOUND.throwErrors();
         }
 
         PartnerEntity partnerEntity = partnerEntityOptional.get();
-        partnerConvert.updateFromDto(modifyVo, partnerEntity);
+        if (!modifyVo.getBusinessNumber().equals(partnerEntity.getBusinessNumber())) {
+            if (checkBusinessNumber(modifyVo.getBusinessNumber())) {
+                throw USER_ALREADY_EXISTS.throwErrors();
+            }
+        }
 
+        fileService.move(modifyVo.getFile(), "사업자 등록증");
+        partnerConvert.updateFromDto(modifyVo, partnerEntity);
         partnerRepository.save(partnerEntity);
 
         return partnerConvert.toDto(partnerEntity);

@@ -15,21 +15,29 @@ public class RptQuizAdminDailyTemplate {
 
         jdbcTemplate.update(
                 """
-                        insert into RPT_QUIZ_ADMIN_DAILY (
-                        RPT_DATE, ADVERTISER_CNT, CAMPAIGN_CNT, PARTNER_CNT, AD_GROUP_CNT,
-                        REQ_CNT, IMPRESSION_CNT, ANSWER_CNT, HINT_CNT, CLICK_CNT, PARTNER_COMMISSION, USER_COMMISSION,
-                        INSERTED_AT, UPDATED_AT)
-                        values (
-                        DATE_FORMAT(now(), '%Y%m%d'), ?, ?, ?, ?,
-                        0, 0, 0, 0, 0, 0, 0,
-                        current_timestamp, current_timestamp
-                        )
-                        
-                        ON DUPLICATE KEY UPDATE  ADVERTISER_CNT = values(ADVERTISER_CNT),
-                            ADVERTISER_CNT = values(ADVERTISER_CNT),
-                            CAMPAIGN_CNT =  values(CAMPAIGN_CNT),
-                            PARTNER_CNT = values(PARTNER_CNT),
-                            AD_GROUP_CNT = values(AD_GROUP_CNT)
+                        insert into RPT_QUIZ_ADMIN_DAILY
+                        select * from (
+                            select
+                                DATE_FORMAT(now(), '%Y%m%d') as RPT_DATE,
+                                ? as ADVERTISER_CNT,
+                                ? as CAMPAIGN_CNT,
+                                ? as PARTNER_CNT,
+                                ? as AD_GROUP_CNT,
+                                0 as REQ_CNT,
+                                0 AS IMPRESSION_CNT,
+                                0 AS ANSWER_CNT,
+                                0 AS HINT_CNT,
+                                0 as CLICK_CNT,
+                                0 as PARTNER_COMMISSION,
+                                0 as USER_COMMISSION,
+                                current_timestamp as INSERTED_AT,
+                                current_timestamp as UPDATED_AT
+                            from dual
+                        ) as raw
+                        ON DUPLICATE KEY UPDATE  ADVERTISER_CNT = raw.ADVERTISER_CNT,
+                        CAMPAIGN_CNT = raw.CAMPAIGN_CNT,
+                        PARTNER_CNT = raw.PARTNER_CNT,
+                        AD_GROUP_CNT = raw.AD_GROUP_CNT
                         ;
                         
                         """
@@ -42,25 +50,27 @@ public class RptQuizAdminDailyTemplate {
         jdbcTemplate.update(
                 """
                         insert into RPT_QUIZ_ADMIN_DAILY
-                        select
-                            DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') as RPT_DATE,
-                            0,
-                            0,
-                            0,
-                            0,
-                            sum(RAW.REQ_CNT) AS REQ_CNT,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            current_timestamp,
-                            current_timestamp
-                        from RPT_QUIZ_RAW RAW
-                        where RAW.REQUEST_AT between ? and ?
-                        group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
-                        ON DUPLICATE KEY UPDATE  REQ_CNT = REQ_CNT + values(REQ_CNT)
+                        select * from (
+                            select
+                                DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') as RPT_DATE,
+                                0 as ADVERTISER_CNT,
+                                0 as CAMPAIGN_CNT,
+                                0 as PARTNER_CNT,
+                                0 as AD_GROUP_CNT,
+                                sum(RAW.REQ_CNT) as REQ_CNT,
+                                0 AS IMPRESSION_CNT,
+                                0 AS ANSWER_CNT,
+                                0 AS HINT_CNT,
+                                0 as CLICK_CNT,
+                                0 as PARTNER_COMMISSION,
+                                0 as USER_COMMISSION,
+                                current_timestamp as INSERTED_AT,
+                                current_timestamp as UPDATED_AT
+                            from RPT_QUIZ_RAW RAW
+                            where RAW.REQUEST_AT between ? and ?
+                            group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
+                        ) as raw
+                        ON DUPLICATE KEY UPDATE  REQ_CNT = raw.REQ_CNT
                         ;
                         """
                 ,startDate, endDate
@@ -72,27 +82,29 @@ public class RptQuizAdminDailyTemplate {
 
         jdbcTemplate.update(
                 """
-                        insert into RPT_QUIZ_ADMIN_DAILY
-                        select
-                            DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') as RPT_DATE,
-                            0,
-                            0,
-                            0,
-                            0,
-                            sum(DETAIL_CNT) AS IMPRESSION_CNT,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            current_timestamp,
-                            current_timestamp
-                        from RPT_QUIZ_RAW RAW
-                        where RAW.DETAIL_AT between ? and ?
-                        group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
                         
-                        ON DUPLICATE KEY UPDATE  IMPRESSION_CNT = IMPRESSION_CNT + values(IMPRESSION_CNT)
+                        insert into RPT_QUIZ_ADMIN_DAILY
+                        select * from (
+                            select
+                                DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') as RPT_DATE,
+                                0 as ADVERTISER_CNT,
+                                0 as CAMPAIGN_CNT,
+                                0 as PARTNER_CNT,
+                                0 as AD_GROUP_CNT,
+                                0 as REQ_CNT,
+                                sum(DETAIL_CNT) AS IMPRESSION_CNT,
+                                0 AS ANSWER_CNT,
+                                0 AS HINT_CNT,
+                                0 as CLICK_CNT,
+                                0 as PARTNER_COMMISSION,
+                                0 as USER_COMMISSION,
+                                current_timestamp as INSERTED_AT,
+                                current_timestamp as UPDATED_AT
+                            from RPT_QUIZ_RAW RAW
+                            where RAW.DETAIL_AT between ? and ?
+                            group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
+                        ) as raw
+                        ON DUPLICATE KEY UPDATE  IMPRESSION_CNT = raw.IMPRESSION_CNT
                         ;
                         """
                 ,startDate, endDate
@@ -103,27 +115,28 @@ public class RptQuizAdminDailyTemplate {
 
         jdbcTemplate.update(
                 """
-                        insert into RPT_QUIZ_ADMIN_DAILY
-                        select
-                            DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') as RPT_DATE,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            sum(HINT_CNT) AS HINT_CNT,
-                            0,
-                            0,
-                            0,
-                            current_timestamp,
-                            current_timestamp
-                        from RPT_QUIZ_RAW RAW
-                        where RAW.HINT_AT between ? and ?
-                        group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
-                        
-                        ON DUPLICATE KEY UPDATE  HINT_CNT = HINT_CNT + values(HINT_CNT)
+                       insert into RPT_QUIZ_ADMIN_DAILY
+                        select * from (
+                            select
+                                DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') as RPT_DATE,
+                                0 as ADVERTISER_CNT,
+                                0 as CAMPAIGN_CNT,
+                                0 as PARTNER_CNT,
+                                0 as AD_GROUP_CNT,
+                                0 as REQ_CNT,
+                                0 as IMPRESSION_CNT,
+                                0 AS ANSWER_CNT,
+                                sum(HINT_CNT) AS HINT_CNT,
+                                0 as CLICK_CNT,
+                                0 as PARTNER_COMMISSION,
+                                0 as USER_COMMISSION,
+                                current_timestamp as INSERTED_AT,
+                                current_timestamp as UPDATED_AT
+                            from RPT_QUIZ_RAW RAW
+                            where RAW.HINT_AT between ? and ?
+                            group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
+                        ) as raw
+                        ON DUPLICATE KEY UPDATE  HINT_CNT = raw.HINT_CNT
                         ;
                         """
                 ,startDate, endDate
@@ -136,59 +149,62 @@ public class RptQuizAdminDailyTemplate {
 
         jdbcTemplate.update(
                 """
-                        insert into RPT_QUIZ_ADMIN_DAILY
-                        select
-                            DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') as RPT_DATE,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            sum(ANSWER_CNT) AS ANSWER_CNT,
-                            0,
-                            0,
-                            sum(PARTNER_COMMISSION) as PARTNER_COMMISSION,
-                            sum(USER_COMMISSION) as USER_COMMISSION,
-                            current_timestamp,
-                            current_timestamp
-                        from RPT_QUIZ_RAW RAW
-                        where RAW.ANSWER_AT between ? and ?
-                        group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
-                        ON DUPLICATE KEY UPDATE  ANSWER_CNT = ANSWER_CNT + values(ANSWER_CNT),
-                        PARTNER_COMMISSION = PARTNER_COMMISSION + values(PARTNER_COMMISSION),
-                        USER_COMMISSION = USER_COMMISSION + values(USER_COMMISSION)
+                       insert into RPT_QUIZ_ADMIN_DAILY
+                        select * from (
+                            select
+                                DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') as RPT_DATE,
+                                0 as ADVERTISER_CNT,
+                                0 as CAMPAIGN_CNT,
+                                0 as PARTNER_CNT,
+                                0 as AD_GROUP_CNT,
+                                0 as REQ_CNT,
+                                0 as IMPRESSION_CNT,
+                                sum(ANSWER_CNT) AS ANSWER_CNT,
+                                0 as HINT_CNT,
+                                0 as CLICK_CNT,
+                                sum(PARTNER_COMMISSION) as PARTNER_COMMISSION,
+                                sum(USER_COMMISSION) as USER_COMMISSION,
+                                current_timestamp as INSERTED_AT,
+                                current_timestamp as UPDATED_AT
+                            from RPT_QUIZ_RAW RAW
+                            where RAW.ANSWER_AT between ? and ?
+                            group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
+                        ) as raw
+                        ON DUPLICATE KEY UPDATE  ANSWER_CNT = raw.ANSWER_CNT,
+                        PARTNER_COMMISSION =  raw.PARTNER_COMMISSION,
+                        USER_COMMISSION =  raw.USER_COMMISSION
                         ;
                         """
                 ,startDate, endDate
         );
     }
 
-    public void sinkClock(String startDate, String endDate) {
+    public void sinkClick(String startDate, String endDate) {
 
         jdbcTemplate.update(
                 """
                         insert into RPT_QUIZ_ADMIN_DAILY
-                        select
-                            DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') as RPT_DATE,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            sum(CLICK_CNT) AS CLICK_CNT,
-                            0,
-                            0,
-                            current_timestamp,
-                            current_timestamp
-                        from RPT_QUIZ_RAW RAW
-                        where RAW.CLICK_AT between ? and ?
-                        group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
-                        
-                        ON DUPLICATE KEY UPDATE  CLICK_CNT = CLICK_CNT + values(CLICK_CNT)
+                        select * from (
+                            select
+                                DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') as RPT_DATE,
+                                0 as ADVERTISER_CNT,
+                                0 as CAMPAIGN_CNT,
+                                0 as PARTNER_CNT,
+                                0 as AD_GROUP_CNT,
+                                0 as REQ_CNT,
+                                0 as IMPRESSION_CNT,
+                                0 AS ANSWER_CNT,
+                                0 as HINT_CNT,
+                                sum(CLICK_CNT)  as CLICK_CNT,
+                                sum(PARTNER_COMMISSION) as PARTNER_COMMISSION,
+                                sum(USER_COMMISSION) as USER_COMMISSION,
+                                current_timestamp as INSERTED_AT,
+                                current_timestamp as UPDATED_AT
+                            from RPT_QUIZ_RAW RAW
+                            where RAW.CLICK_AT between ? and ?
+                            group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
+                        ) as raw
+                        ON DUPLICATE KEY UPDATE  CLICK_CNT = raw.CLICK_CNT
                         ;
                         """
                 ,startDate, endDate

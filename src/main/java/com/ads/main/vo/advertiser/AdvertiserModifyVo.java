@@ -1,6 +1,7 @@
 package com.ads.main.vo.advertiser;
 
 import com.ads.main.vo.FilesVo;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -59,6 +60,12 @@ public class AdvertiserModifyVo implements Serializable {
     @NotBlank(message = "세금 계산서 발행 이메일은 필수 입니다.")
     @Email (message = "세금 계산서 발행 이메일 형식을 확인 해주세요.")
     private String taxBillEmail;
+
+
+    /**
+     * 광고 연동 코드
+     */
+    private String ifCode;
 
     /**
      * 사업자 등록증 파일

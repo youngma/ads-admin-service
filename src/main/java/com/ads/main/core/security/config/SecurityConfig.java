@@ -55,7 +55,8 @@ public class SecurityConfig {
                 .requestMatchers(
                 "/v3/api-docs/**",
                 "/swagger-ui/**",
-                "/admin/xauth/**",
+                "admin/xauth/**",
+                "/mgmt/**",
                 "/error"
                 )
                 ;
@@ -85,7 +86,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
 //                    auth.requestMatchers("/api/admin/**").hasAnyAuthority(Role.ADMIN.getRoleName());
                     auth.requestMatchers(new FilterSkipMatcher(skipPaths(), "/**")).permitAll();
-//                    auth.requestMatchers("/api/partner/**").hasAnyAuthority(Role.PARTNER.getRoleName());
                     auth.anyRequest().authenticated();
                 })// // [STEP3] 토큰을 활용하는 경우 모든 요청에 대해 '인가'에 대해서 사용.
 

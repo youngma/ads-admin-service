@@ -93,7 +93,7 @@ public class QAdvertiserCampaignMasterRepository {
                     adCampaignMasterEntity
                 )
                 .from(adCampaignMasterEntity)
-                .innerJoin(adCampaignMasterEntity.advertiserEntity)
+                .innerJoin(adCampaignMasterEntity.advertiserEntity).fetchJoin()
                 .leftJoin(adCampaignMasterEntity.adSmartStoreEntity).fetchJoin()
                 .leftJoin(adCampaignMasterEntity.adSmartStoreEntity.image).fetchJoin()
                 .leftJoin(adCampaignMasterEntity.adQuizEntity).fetchJoin()

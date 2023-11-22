@@ -8,7 +8,7 @@ server:
 
 spring:
   application:
-    name: partner_center
+    name: ads-admin
   profiles:
     active: local
 
@@ -70,6 +70,11 @@ spring:
 #      exposure:
 #        include: "refresh"
 
+#  boot:
+#    admin:
+#      client:
+#        url: http://localhost:9999
+
 logging:
   file:
     name: ./logs/${spring.application.name}.log
@@ -87,8 +92,14 @@ logging:
     test: debug
     web: debug
     com:
-      smartad: debug
+      ads: debug
     org:
+#      org.springframework.boot.actuate.endpoint.web
+      springframework:
+        boot:
+          actuate:
+            endpoint:
+              web: info
       hibernate:
         stat: trace
         SQL: debug
@@ -104,3 +115,18 @@ app:
     uploadPath: /Users/bob/projects/file-upload/files
 
 
+
+management:
+  endpoints:
+    web:
+      base-path: /mgmt
+      exposure:
+        include: "health,info,metrics,threaddump,loggers,env,logfile,refresh"
+  info:
+    env:
+      enabled: true
+  endpoint:
+    health:
+      show-details: ALWAYS
+    shutdown:
+      enabled: true

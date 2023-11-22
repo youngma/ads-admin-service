@@ -92,6 +92,13 @@ public class AdvertiserEntity extends BaseEntity implements Serializable {
     private String advertiserName;
 
 
+    /**
+     * 광고 연동 코드
+     */
+    @Column(name = "IF_CODE", nullable = false)
+    private String ifCode;
+
+
     @OneToMany(mappedBy = "advertiserEntity")
     @ToString.Exclude
     private List<AdvertiserUserEntity> advertiserUserEntities = new ArrayList<>();

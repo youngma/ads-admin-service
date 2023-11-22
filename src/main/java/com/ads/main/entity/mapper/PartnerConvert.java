@@ -55,7 +55,6 @@ public interface PartnerConvert extends GenericMapper<PartnerVo, PartnerEntity> 
     @Mapping(target = "insertedId", ignore = true)
     @Mapping(target = "insertedAt", ignore = true)
     @Mapping(target = "email", ignore = true)
-    @Mapping(target = "businessName", ignore = true)
     @Mapping(target = "partnerUserEntities", ignore = true)
     @Mapping(target = "filesEntity", source = "file")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

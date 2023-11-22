@@ -23,6 +23,12 @@ public class AdvertiserBusinessModifyVo implements Serializable {
     private Long advertiserSeq;
 
     /**
+     * 광고주 명
+     */
+    @NotBlank(message = "사업자 명은 필수 입니다.")
+    private String businessName;
+
+    /**
      * 사업자 번호
      */
     @NotBlank(message = "사업자 번호는 필수 입니다.")

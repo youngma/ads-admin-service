@@ -27,7 +27,6 @@ public class QuizRawSink {
 
         DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-
         LocalDateTime data = LocalDateTime.now().minusSeconds(10);
 
         RptSinkTimeVo rptSinkTimeVo =  reportService.loadSinkSchedule(SinkSchedule.AD_RAW, data.format(formatter));

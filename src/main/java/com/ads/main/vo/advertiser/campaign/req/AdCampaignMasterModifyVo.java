@@ -114,8 +114,13 @@ public class AdCampaignMasterModifyVo implements Serializable {
     @NotNull(message = "광고 종료 일자 은 필수 입니다.")
     private LocalDateTime adEndDate;
 
+
+    private String ifAdCode;
+
+
     private AdSmartStoreModifyVo smartStore;
     private AdQuizModifyVo quiz;
+
 
 
     public void validCheck() {

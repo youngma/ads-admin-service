@@ -8,14 +8,14 @@ server:
 
 spring:
   application:
-    name: admin-service
+    name: ads-admin-service
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://223.130.139.66:3306/quiz_ad
+    url: jdbc:mysql://110.165.16.212:13306/quiz_ad
     hikari:
       username: ad_user
-      password: password
+      password: p@ssW0rd
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -41,12 +41,11 @@ spring:
   data:
     redis:
       default:
-        host: 223.130.139.66
-        port: 6379
+        host: 110.165.16.212
+        port: 16379
         database: 2
       repositories:
         enabled: false
-
   mvc:
     throw-exception-if-no-handler-found: true
   web:
@@ -69,6 +68,11 @@ spring:
 #      exposure:
 #        include: "refresh"
 
+  boot:
+    admin:
+      client:
+        url: http://localhost:9999
+
 logging:
   file:
     name: /home/ads/logs/admin/${spring.application.name}.log
@@ -86,8 +90,13 @@ logging:
     test: debug
     web: debug
     com:
-      smartad: debug
+      ads: debug
     org:
+      springframework:
+        boot:
+          actuate:
+            endpoint:
+              web: info
       hibernate:
         stat: trace
         SQL: debug
@@ -101,4 +110,20 @@ app:
   file:
     uploadTempPath: /home/ads/uploads/temp
     uploadPath: /home/ads/uploads/files
+
+
+management:
+  endpoints:
+    web:
+      base-path: /mgmt
+      exposure:
+        include: "health,info,metrics,threaddump,loggers,env,logfile,refresh"
+  info:
+    env:
+      enabled: true
+  endpoint:
+    health:
+      show-details: ALWAYS
+    shutdown:
+      enabled: false
 
