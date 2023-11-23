@@ -1,4 +1,4 @@
-package com.ads.main.core.security.dto;
+package com.ads.main.core.security.config;
 
 import lombok.Getter;
 

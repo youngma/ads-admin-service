@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "userAuditorAware")
 public class AdsAdminServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(AdsAdminServiceApplication.class, args);

@@ -15,7 +15,7 @@ public class AppUser extends User {
     private final UserVo userVo;
 
     public AppUser(UserVo userVo) {
-        super(userVo.getUserId(), userVo.getUserPassword(), List.of(new SimpleGrantedAuthority(userVo.getUserRole().getRoleName())));
+        super(String.valueOf(userVo.getUserSeq()), userVo.getUserPassword(), List.of(new SimpleGrantedAuthority(userVo.getUserRole().getRoleName())));
         this.userVo = userVo;
     }
 }

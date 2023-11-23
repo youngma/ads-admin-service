@@ -81,6 +81,13 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public UserVo findUserBySeqAndRole(String userSeq, Role role) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findUserEntityByUserSeqAndUserRole(userSeq, role).orElseThrow(USER_NOT_FOUND::throwErrors);
+        return userConverter.toDto(userEntity);
+    }
+
+
+    @Transactional(readOnly = true)
     public UserVo findUser(String userid, String password) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findUserEntityByUserIdAndUserPassword(userid, password).orElseThrow(USER_NOT_FOUND::throwErrors);
         return userConverter.toDto(userEntity);

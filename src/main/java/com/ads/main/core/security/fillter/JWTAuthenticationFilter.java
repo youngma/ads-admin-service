@@ -1,8 +1,8 @@
 package com.ads.main.core.security.fillter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ads.main.core.security.dto.LoginInfo;
-import com.ads.main.core.security.dto.SecurityProperties;
+import com.ads.main.core.security.config.dto.LoginInfo;
+import com.ads.main.core.security.config.SecurityProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -40,7 +40,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             LoginInfo user = objectMapper.readValue(request.getReader(), LoginInfo.class);
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.userId(), user.password()));
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserId(), user.getPassword()));
         } catch (IOException e) {
             throw new AuthenticationServiceException(e.getMessage());
         }
@@ -49,20 +49,24 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication auth) throws IOException, ServletException {
 
-        HashSet<String> claims = new HashSet<>();
+        HashSet<String> roles = new HashSet<>();
 
         if (!auth.getAuthorities().isEmpty()) {
-            auth.getAuthorities().forEach(authority -> claims.add(authority.getAuthority()));
+            auth.getAuthorities().forEach(authority -> roles.add(authority.getAuthority()));
         }
+
+
+
 
         String token = Jwts.builder()
                 .setSubject((auth.getName()))
-                .claim("role", claims)
+                .claim("info", objectMapper.writeValueAsString(auth.getDetails()))
+                .claim("role", roles)
                 .setExpiration(from(Instant.now().plus(Duration.ofDays(securityProperties.getExpirationTime()))))
                 .signWith(Keys.hmacShaKeyFor(securityProperties.getSecret().getBytes()), SignatureAlgorithm.HS512)
                 .compact();
 
-        // todo redis save (userId, token)
+        log.info("# Token => {}", token);
 
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);

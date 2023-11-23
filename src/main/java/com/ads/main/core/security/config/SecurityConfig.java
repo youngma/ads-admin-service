@@ -2,8 +2,6 @@ package com.ads.main.core.security.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ads.main.core.security.config.dto.Role;
-import com.ads.main.core.security.dto.SecurityProperties;
 import com.ads.main.core.security.fillter.ExceptionHandlerFilter;
 import com.ads.main.core.security.fillter.FilterSkipMatcher;
 import com.ads.main.core.security.fillter.JWTAuthenticationFilter;
@@ -93,7 +91,7 @@ public class SecurityConfig {
                 .and()
                 .addFilterBefore(exceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class)  // Filter ExceptionHandle
                 .addFilter(jWTAuthenticationFilter)  // [STEP6] Spring Security JWT Filter Load
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), securityProperties, userDetailsService));
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), securityProperties, userDetailsService, objectMapper));
 
         return httpSecurity.build();  // [STEP7] 최종 구성한 값을 사용함.
     }

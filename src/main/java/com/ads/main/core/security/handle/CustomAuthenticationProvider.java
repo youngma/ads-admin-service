@@ -2,19 +2,19 @@ package com.ads.main.core.security.handle;
 
 
 import com.ads.main.core.security.config.dto.AppUser;
+import com.ads.main.core.security.config.dto.LoginInfo;
 import com.ads.main.core.security.service.CustomUserDetailsService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Comment;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+
+import java.util.HashSet;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -35,14 +35,27 @@ public class CustomAuthenticationProvider implements AuthenticationProvider  {
         try {
             AppUser appUser = userDetailsService.loadUserByUserId(userId);
             if ( compare(appUser, userId, userPw) ) {
-                return new UsernamePasswordAuthenticationToken(appUser.getUsername(), appUser.getUserVo(), appUser.getAuthorities());
+                return getUsernamePasswordAuthenticationToken(appUser);
             }
         } catch (Exception e) {
-            log.error("# 인증 오류 => ", e);
             throw new BadCredentialsException(e.getMessage());
         }
 
-        return null;
+        throw new BadCredentialsException("로그인 정보를 다시 확인 해주세요.");
+    }
+
+    private static UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(AppUser appUser) {
+        LoginInfo loginInfo = new LoginInfo(
+                appUser.getUserVo().getUserSeq(),
+                appUser.getUserVo().getUserId(),
+                null,
+                appUser.getUserVo().getPhoneNumber(),
+                appUser.getUserVo().getUserName()
+        );
+
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(appUser.getUsername(), null, appUser.getAuthorities());
+        usernamePasswordAuthenticationToken.setDetails(loginInfo);
+        return usernamePasswordAuthenticationToken;
     }
 
     private boolean compare(UserDetails userVo, String userId , String userPw){

@@ -1,9 +1,9 @@
 package com.ads.main.core.security.fillter;
 
-import com.ads.main.core.config.exception.AppException;
-import com.ads.main.core.security.dto.SecurityProperties;
+import com.ads.main.core.security.config.SecurityProperties;
+import com.ads.main.core.security.config.dto.LoginInfo;
 import com.ads.main.core.security.service.CustomUserDetailsService;
-import com.ads.main.core.vo.RespVo;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
@@ -11,9 +11,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -25,8 +25,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -37,16 +37,20 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final CustomUserDetailsService userDetailsService;
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager,  SecurityProperties securityProperties, CustomUserDetailsService userDetailsService) {
+    private final ObjectMapper objectMapper;
+
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager,  SecurityProperties securityProperties, CustomUserDetailsService userDetailsService, ObjectMapper objectMapper) {
         super(authenticationManager);
         this.securityProperties = securityProperties;
         this.userDetailsService = userDetailsService;
+        this.objectMapper = objectMapper;
     }
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, AuthenticationEntryPoint authenticationEntryPoint, SecurityProperties securityProperties, CustomUserDetailsService userDetailsService) {
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, AuthenticationEntryPoint authenticationEntryPoint, SecurityProperties securityProperties, CustomUserDetailsService userDetailsService, ObjectMapper objectMapper) {
         super(authenticationManager, authenticationEntryPoint);
         this.securityProperties = securityProperties;
         this.userDetailsService = userDetailsService;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -61,7 +65,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         if (StringUtils.hasText(jwt) && validateToken(jwt)) {
 
             Authentication authentication = loadAuthentication(token);
-            log.debug("Security Context 에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
+            log.debug("Security Context 에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getPrincipal(), requestURI);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             chain.doFilter(request, response);
@@ -83,19 +87,14 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                     .parseClaimsJws(token.replace(securityProperties.getTokenPrefix(), ""))
                     .getBody();
 
-            String userId = claims.getSubject();
+            LoginInfo loginInfo = objectMapper.readValue(claims.get("info", String.class), LoginInfo.class) ;
+            List<? extends GrantedAuthority> authorities = Arrays.stream(claims.get("role").toString().split(","))
+                    .map(SimpleGrantedAuthority::new)
+                    .toList();
 
-            List<? extends GrantedAuthority> authorities =
-                    Arrays.stream(claims.get("role").toString().split(","))
-                            .map(SimpleGrantedAuthority::new)
-                            .toList();
-
-//            AppUser appUser = userDetailsService.loadUserByUserId(userId);
-//            UserVo userVo = appUser.getUserVo();
-            // todo redis check( token, user_id )
-            return new UsernamePasswordAuthenticationToken(userId, token, authorities);
+            return new UsernamePasswordAuthenticationToken(loginInfo.getUserSeq(), loginInfo, authorities);
         } catch (Exception e) {
-            return null;
+            throw new AuthorizationServiceException("인증 토큰이 잘못 되었습니다..");
         }
     }
 

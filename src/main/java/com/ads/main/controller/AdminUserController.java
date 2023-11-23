@@ -51,7 +51,7 @@ public class AdminUserController {
     @GetMapping("/info")
     public RespVo<UserVo> check() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserVo user = userService.findUserById(authentication.getName());
+        UserVo user = userService.findUserBySeqAndRole(authentication.getName(), Role.ADMIN);
         return new RespVo<>(user);
     }
 

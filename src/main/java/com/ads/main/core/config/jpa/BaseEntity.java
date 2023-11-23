@@ -5,7 +5,9 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -28,6 +30,7 @@ public class BaseEntity {
     /**
      * 등록자
      */
+    @CreatedBy
     @Column(name = "INSERTED_ID")
     private String insertedId;
 
@@ -42,6 +45,7 @@ public class BaseEntity {
     /**
      * 수정자
      */
+    @LastModifiedBy
     @Column(name = "UPDATED_ID")
     private String updatedId;
 
