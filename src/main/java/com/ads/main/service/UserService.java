@@ -50,8 +50,12 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<UserEntity> findUserEntityById(String userid) {
+    public Optional<UserEntity> findAdminUserById(String userid) {
         return userRepository.findUserEntityByUserIdAndUserRole(userid, Role.ADMIN);
+    }
+
+    public Optional<UserEntity> findAllUserByUserId(String userid) {
+        return userRepository.findUserEntityByUserId(userid);
     }
 
     @Transactional(readOnly = true)
@@ -61,7 +65,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public boolean adminUserCheck(String userid) {
-        return findUserEntityById(userid).isPresent();
+        return findAdminUserById(userid).isPresent();
     }
 
     @Transactional(readOnly = true)
@@ -76,12 +80,12 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserVo findUserById(String userid) throws UsernameNotFoundException {
-        UserEntity userEntity = findUserEntityById(userid).orElseThrow(USER_NOT_FOUND::throwErrors);
+        UserEntity userEntity = findAdminUserById(userid).orElseThrow(USER_NOT_FOUND::throwErrors);
         return userConverter.toDto(userEntity);
     }
 
     @Transactional(readOnly = true)
-    public UserVo findUserBySeqAndRole(String userSeq, Role role) throws UsernameNotFoundException {
+    public UserVo findUserBySeqAndRole(Long userSeq, Role role) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findUserEntityByUserSeqAndUserRole(userSeq, role).orElseThrow(USER_NOT_FOUND::throwErrors);
         return userConverter.toDto(userEntity);
     }
@@ -106,21 +110,26 @@ public class UserService {
         }
     }
 
-    @Transactional(readOnly = true)
     public void registerValid(Role role, long advertiserSeq, String userId) {
-        switch (role) {
-            case ADVERTISER -> {
-                if (advertiserUserCheck(advertiserSeq, userId)) {
-                    throw USER_ALREADY_EXISTS.throwErrors();
-                }
-            }
-            case PARTNER -> {
-                if (partnerUserCheck(advertiserSeq, userId)) {
-                    throw USER_ALREADY_EXISTS.throwErrors();
-                }
-            }
-            default -> throw USER_ALREADY_EXISTS.throwErrors();
+
+        if (findAllUserByUserId(userId).isPresent()) {
+            throw  USER_ALREADY_EXISTS.throwErrors();
         }
+
+//        switch (role) {
+
+//            case ADVERTISER -> {
+//                if (advertiserUserCheck(advertiserSeq, userId)) {
+//                    throw USER_ALREADY_EXISTS.throwErrors();
+//                }
+//            }
+//            case PARTNER -> {
+//                if (partnerUserCheck(advertiserSeq, userId)) {
+//                    throw USER_ALREADY_EXISTS.throwErrors();
+//                }
+//            }
+//            default -> throw USER_ALREADY_EXISTS.throwErrors();
+//        }
     }
 
     @Transactional

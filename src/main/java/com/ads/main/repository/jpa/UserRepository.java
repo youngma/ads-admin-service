@@ -10,8 +10,9 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long>, JpaSpecificationExecutor<UserEntity> {
 
+    Optional<UserEntity> findUserEntityByUserId(String userId);
     Optional<UserEntity> findUserEntityByUserIdAndUserRole(String userId, Role user);
-    Optional<UserEntity> findUserEntityByUserSeqAndUserRole(String userSeq, Role user);
+    Optional<UserEntity> findUserEntityByUserSeqAndUserRole(Long userSeq, Role user);
     Optional<UserEntity> findUserEntityByUserSeq(long userSeq);
 
     List<UserEntity> findUserEntitiesByUserSeqIn(List<Long> userSeqList);
