@@ -33,7 +33,7 @@ public class RptQuizRawTemplate {
                             null as DETAIL_AT,              /* detail at */
                             null as ANSWER_AT,              /* answer at */
                             null as CLICK_AT,               /* click at */
-                            0 as AD_PRICE,
+                            0 as AD_COST,
                             0 as PARTNER_COMMISSION,
                             0 as USER_COMMISSION,
                             0 as AD_REWORD
@@ -73,7 +73,7 @@ public class RptQuizRawTemplate {
                         null as DETAIL_AT,              /* detail at */
                         null as ANSWER_AT,              /* answer at */
                         null as CLICK_AT,               /* click at */
-                        0 as AD_PRICE,
+                        0 as AD_COST,
                         0 as PARTNER_COMMISSION,
                         0 as USER_COMMISSION,
                         0 as AD_REWORD
@@ -121,7 +121,7 @@ public class RptQuizRawTemplate {
                         IMPRESSION.IMPRESSION_AT as DETAIL_AT,              /* detail at */
                         null as ANSWER_AT,              /* answer at */
                         null as CLICK_AT,               /* click at */
-                        0 as AD_PRICE,
+                        0 as AD_COST,
                         0 as PARTNER_COMMISSION,
                         0 as USER_COMMISSION,
                         0 as AD_REWORD
@@ -167,7 +167,7 @@ public class RptQuizRawTemplate {
                         null as DETAIL_AT,              /* detail at */
                         null as ANSWER_AT,              /* answer at */
                         null as CLICK_AT,               /* click at */
-                        0 as AD_PRICE,
+                        0 as AD_COST,
                         0 as PARTNER_COMMISSION,
                         0 as USER_COMMISSION,
                         0 as AD_REWORD
@@ -214,7 +214,7 @@ public class RptQuizRawTemplate {
                         null as DETAIL_AT,              /* detail at */
                         null as ANSWER_AT,              /* answer at */
                         CLICK.CLICK_AT as CLICK_AT,               /* click at */
-                        0 as AD_PRICE,
+                        0 as AD_COST,
                         0 as PARTNER_COMMISSION,
                         0 as USER_COMMISSION,
                         0 as AD_REWORD
@@ -262,7 +262,7 @@ public class RptQuizRawTemplate {
                             null as DETAIL_AT,              /* detail at */
                             ANSWER.ANSWER_AT as ANSWER_AT,              /* answer at */
                             null as CLICK_AT,               /* click at */
-                            REQUEST.AD_PRICE as AD_PRICE,
+                            REQUEST.AD_COST as AD_COST,
                             REQUEST.PARTNER_COMMISSION as PARTNER_COMMISSION,
                             REQUEST.USER_COMMISSION as USER_COMMISSION, 
                             REQUEST.AD_REWORD as AD_REWORD
@@ -280,7 +280,7 @@ public class RptQuizRawTemplate {
                     ) as RAW
                     ON DUPLICATE KEY UPDATE  ANSWER_CNT = RAW.ANSWER_CNT
                     , ANSWER_AT = RAW.ANSWER_AT
-                    , AD_PRICE = RAW.AD_PRICE
+                    , AD_COST = RAW.AD_COST
                     , PARTNER_COMMISSION = RAW.PARTNER_COMMISSION
                     , USER_COMMISSION = RAW.USER_COMMISSION
                     , AD_REWORD = RAW.AD_REWORD

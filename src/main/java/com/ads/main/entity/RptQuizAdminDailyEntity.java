@@ -88,6 +88,12 @@ public class RptQuizAdminDailyEntity implements Serializable {
     private Long clickCnt;
 
     /**
+     * 광고 금액
+     */
+    @Column(name = "AD_COST")
+    private Long adCost;
+
+    /**
      * 수수료(매체사)
      */
     @Column(name = "PARTNER_COMMISSION")

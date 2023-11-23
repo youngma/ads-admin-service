@@ -10,6 +10,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface RptQuizRawConverter extends GenericMapper<RptQuizRawVo, RptQuizRawEntity> {
 
+    @Mapping(target = "userCount", ignore = true)
+    @Mapping(target = "partnerCount", ignore = true)
+    @Mapping(target = "campaignCount", ignore = true)
+    @Mapping(target = "advertiserCount", ignore = true)
+    @Mapping(target = "adGroupCount", ignore = true)
     @Mapping(target = "rptDate", ignore = true)
     @Mapping(target = "partnerName", ignore = true)
     @Mapping(target = "groupName", ignore = true)

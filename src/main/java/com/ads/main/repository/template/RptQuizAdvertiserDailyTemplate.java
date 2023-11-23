@@ -24,6 +24,7 @@ public class RptQuizAdvertiserDailyTemplate {
                                 0 as ANSWER_CNT,
                                 0 as HINT_CNT,
                                 0 as CLICK_CNT,
+                                0 as AD_COST,
                                 current_timestamp as INSERT_AT,
                                 current_timestamp  as UPDATE_AT
                             from RPT_QUIZ_RAW RAW
@@ -54,6 +55,7 @@ public class RptQuizAdvertiserDailyTemplate {
                                 0 as ANSWER_CNT,
                                 0 as HINT_CNT,
                                 0 as CLICK_CNT,
+                                0 as AD_COST,
                                 current_timestamp as INSERT_AT,
                                 current_timestamp  as UPDATE_AT
                             from RPT_QUIZ_RAW RAW
@@ -83,6 +85,7 @@ public class RptQuizAdvertiserDailyTemplate {
                                 0 as ANSWER_CNT,
                                 sum(HINT_CNT) as HINT_CNT,
                                 0 as CLICK_CNT,
+                                0 as AD_COST,
                                 current_timestamp as INSERT_AT,
                                 current_timestamp  as UPDATE_AT
                             from RPT_QUIZ_RAW RAW
@@ -112,6 +115,7 @@ public class RptQuizAdvertiserDailyTemplate {
                                 0 as IMPRESSION_CNT,
                                 0 as ANSWER_CNT,
                                 0 as HINT_CNT,
+                                sum(AD_COST) as AD_COST,
                                 sum(CLICK_CNT) AS CLICK_CNT,
                                 current_timestamp as INSERT_AT,
                                 current_timestamp  as UPDATE_AT

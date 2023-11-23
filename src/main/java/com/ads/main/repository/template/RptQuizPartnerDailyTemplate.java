@@ -24,6 +24,9 @@ public class RptQuizPartnerDailyTemplate {
                                 0 as ANSWER_CNT,
                                 0 as HINT_CNT,
                                 0 as CLICK_CNT,
+                                0 as AD_COST,
+                                0 as PARTNER_COMMISSION,
+                                0 as AD_CUSER_COMMISSIONOST,
                                 current_timestamp as INSERTED_AT,
                                 current_timestamp as UPDATED_AT
                             from RPT_QUIZ_RAW RAW
@@ -54,6 +57,9 @@ public class RptQuizPartnerDailyTemplate {
                                 0 as ANSWER_CNT,
                                 0 as HINT_CNT,
                                 0 as CLICK_CNT,
+                                0 as AD_COST,
+                                0 as PARTNER_COMMISSION,
+                                0 as AD_CUSER_COMMISSIONOST,
                                 current_timestamp as INSERTED_AT,
                                 current_timestamp as UPDATED_AT
                             from RPT_QUIZ_RAW RAW
@@ -84,6 +90,9 @@ public class RptQuizPartnerDailyTemplate {
                                 0 as ANSWER_CNT,
                                 sum(HINT_CNT) AS HINT_CNT,
                                 0 as CLICK_CNT,
+                                0 as AD_COST,
+                                0 as PARTNER_COMMISSION,
+                                0 as AD_CUSER_COMMISSIONOST,
                                 current_timestamp as INSERTED_AT,
                                 current_timestamp as UPDATED_AT
                             from RPT_QUIZ_RAW RAW
@@ -115,6 +124,9 @@ public class RptQuizPartnerDailyTemplate {
                                 sum(ANSWER_CNT) AS ANSWER_CNT,
                                 0 AS HINT_CNT,
                                 0 as CLICK_CNT,
+                                sum(AD_COST) as AD_COST,
+                                sum(PARTNER_COMMISSION) as PARTNER_COMMISSION,
+                                sum(USER_COMMISSION) as USER_COMMISSION,
                                 current_timestamp as INSERTED_AT,
                                 current_timestamp as UPDATED_AT
                             from RPT_QUIZ_RAW RAW
@@ -124,6 +136,8 @@ public class RptQuizPartnerDailyTemplate {
                             group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') ,GROUP_CODE
                         ) as report
                         ON DUPLICATE KEY UPDATE  ANSWER_CNT = RPT_QUIZ_PARTNER_DAILY.ANSWER_CNT + report.ANSWER_CNT
+                        , PARTNER_COMMISSION = RPT_QUIZ_PARTNER_DAILY.PARTNER_COMMISSION + report.PARTNER_COMMISSION
+                        , USER_COMMISSION = RPT_QUIZ_PARTNER_DAILY.USER_COMMISSION + report.USER_COMMISSION
                         ;
                         """
                 ,startDate, endDate

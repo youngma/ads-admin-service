@@ -32,8 +32,9 @@ public class QAdvertiserUserRepository {
                 .from(advertiserUserEntity)
                 .innerJoin(userEntity)
                 .on(userEntity.userSeq.eq(advertiserUserEntity.userEntity.userSeq))
-                .where(advertiserEntity.advertiserSeq.eq(advertiserSeq))
-                .where(userEntity.userId.eq(userId))
+                .where(advertiserEntity.advertiserSeq.eq(advertiserSeq)
+                        .and(userEntity.userId.eq(userId))
+                )
                 .fetchOne());
     }
 

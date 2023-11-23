@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ import java.util.Objects;
 @Table(name = "RPT_QUIZ_RAW")
 public class RptQuizRawEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

@@ -34,12 +34,12 @@ public class ReportService {
     private final QRptQuizRawRepository qRptQuizRawRepository;
 
 
-
-
     public RptDashboard getDashboardToday() {
 
         DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime data = LocalDateTime.now();
+
+
 
         return reportCacheService.findDashboard(data.format(formatter));
     }
@@ -49,6 +49,8 @@ public class ReportService {
         RptDashboard dashboard = getDashboardToday();
         List<RptQuizDailyVo> dailyList = reportCacheService.findDashboardList(start, end);
         dashboard.setRptQuizDailyList(dailyList);
+
+        dashboard.setLastUpdate(loadSinkSchedule(SinkSchedule.QUIZ_DAILY));
 
         return dashboard;
     }
@@ -99,8 +101,12 @@ public class ReportService {
             return newRptSinkTimeEntity;
         });
 
-
         return rptSinkTimeConvert.toDto(rptSinkTimeEntity);
+    }
+
+    public RptSinkTimeVo loadSinkSchedule(SinkSchedule schedule) {
+        Optional<RptSinkTimeEntity> rptSinkTimeEntityOptional = rptSinkTimeRepository.findByScheduleName(schedule.getName());
+        return rptSinkTimeEntityOptional.map(rptSinkTimeConvert::toDto).orElse(null);
     }
 
     public void saveSinkSchedule(RptSinkTimeVo rptSinkTimeVo) {

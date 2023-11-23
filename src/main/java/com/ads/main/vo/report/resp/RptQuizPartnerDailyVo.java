@@ -2,6 +2,7 @@ package com.ads.main.vo.report.resp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -62,6 +63,21 @@ public class RptQuizPartnerDailyVo extends DailyReportVo implements Serializable
      */
     private Long clickCnt;
 
+
+    /**
+     * 광고 금액
+     */
+    private Long adCost;
+
+    /**
+     * 수수료(매체사)
+     */
+    private Long partnerCommission;
+
+    /**
+     * 수수료(고객)
+     */
+    private Long userCommission;
 
     /**
      * 등록 일자

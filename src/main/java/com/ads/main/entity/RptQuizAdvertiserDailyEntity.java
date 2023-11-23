@@ -80,6 +80,12 @@ public class RptQuizAdvertiserDailyEntity implements Serializable {
     @Column(name = "UPDATED_AT", nullable = false)
     private LocalDateTime updatedAt;
 
+    /**
+     * 수정 일자
+     */
+    @Column(name = "AD_COST", nullable = false)
+    private Long adCost;
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

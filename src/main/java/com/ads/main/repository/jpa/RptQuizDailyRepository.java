@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface RptQuizDailyRepository extends JpaRepository<RptQuizDailyEntity, String>, JpaSpecificationExecutor<RptQuizDailyEntity> {
 
-    List<RptQuizDailyEntity> findAllByRptDateBetween(String start, String end);
+    List<RptQuizDailyEntity> findAllByRptDateBetweenOrderByRptDateAsc(String start, String end);
 }

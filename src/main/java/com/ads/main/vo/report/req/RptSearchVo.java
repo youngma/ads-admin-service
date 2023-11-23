@@ -27,8 +27,6 @@ public class RptSearchVo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     private Role role;
 
     private String searchStartDt;

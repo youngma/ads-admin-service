@@ -1,5 +1,6 @@
 package com.ads.main.vo.report;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -31,6 +32,7 @@ public class RptSinkTimeVo implements Serializable {
      * 최종 업데이트 시간
      */
     @NotNull(message = "lastUpdateTim can not null")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastUpdateTim;
 
 }

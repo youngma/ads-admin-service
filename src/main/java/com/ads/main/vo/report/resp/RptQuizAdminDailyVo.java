@@ -73,6 +73,10 @@ public class RptQuizAdminDailyVo extends DailyReportVo implements Serializable {
     private Long clickCnt;
 
 
+
+    private Long adCost;
+
+
     /**
      * 수수료(매체사)
      */

@@ -1,6 +1,7 @@
 package com.ads.main.vo.report.resp;
 
 
+import com.ads.main.vo.report.RptSinkTimeVo;
 import lombok.Data;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public class RptDashboard {
 
     private List<RptQuizDailyVo> rptQuizDailyList;
 
+    private RptSinkTimeVo lastUpdate;
 }

@@ -11,6 +11,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface RptQuizAdvertiserDailyConverter extends GenericMapper<RptQuizAdvertiserDailyVo, RptQuizAdvertiserDailyEntity> {
 
+    @Mapping(target = "campaignCount", ignore = true)
+    @Mapping(target = "advertiserCount", ignore = true)
     @Mapping(target = "campaignName", ignore = true)
     @Mapping(target = "businessName", ignore = true)
     @Mapping(target = "advertiserSeq", ignore = true)

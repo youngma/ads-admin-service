@@ -24,7 +24,10 @@ public class RptQuizDailyTemplate {
                             sum(DETAIL_CNT) as DETAIL_CNT,
                             sum(ANSWER_CNT) as ANSWER_CNT,
                             sum(HINT_CNT) as HINT_CNT,
-                            sum(CLICK_CNT) as CLICK_CNT
+                            sum(CLICK_CNT) as CLICK_CNT,
+                            sum(AD_COST) as AD_COST,
+                            sum(PARTNER_COMMISSION) as PARTNER_COMMISSION,
+                            sum(USER_COMMISSION) as USER_COMMISSION
                         from  RPT_QUIZ_RAW where REQUEST_AT between ? and ?
                         group by date_format(REQUEST_AT, '%Y%m%d')
                         ON DUPLICATE KEY UPDATE 
@@ -36,7 +39,10 @@ public class RptQuizDailyTemplate {
                             ANSWER_CNT = values(ANSWER_CNT),
                             ANSWER_CNT = values(ANSWER_CNT),
                             HINT_CNT = values(HINT_CNT),
-                            CLICK_CNT = values(CLICK_CNT)
+                            CLICK_CNT = values(CLICK_CNT),
+                            AD_COST = values(AD_COST),
+                            PARTNER_COMMISSION = values(PARTNER_COMMISSION),
+                            USER_COMMISSION = values(USER_COMMISSION)
                         ;
                         """
                 ,startDate, endDate

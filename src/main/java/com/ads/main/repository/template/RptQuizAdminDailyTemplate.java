@@ -28,6 +28,7 @@ public class RptQuizAdminDailyTemplate {
                                 0 AS ANSWER_CNT,
                                 0 AS HINT_CNT,
                                 0 as CLICK_CNT,
+                                0 as AD_COST,
                                 0 as PARTNER_COMMISSION,
                                 0 as USER_COMMISSION,
                                 current_timestamp as INSERTED_AT,
@@ -62,6 +63,7 @@ public class RptQuizAdminDailyTemplate {
                                 0 AS ANSWER_CNT,
                                 0 AS HINT_CNT,
                                 0 as CLICK_CNT,
+                                0 as AD_COST,
                                 0 as PARTNER_COMMISSION,
                                 0 as USER_COMMISSION,
                                 current_timestamp as INSERTED_AT,
@@ -96,6 +98,7 @@ public class RptQuizAdminDailyTemplate {
                                 0 AS ANSWER_CNT,
                                 0 AS HINT_CNT,
                                 0 as CLICK_CNT,
+                                0 as AD_COST,
                                 0 as PARTNER_COMMISSION,
                                 0 as USER_COMMISSION,
                                 current_timestamp as INSERTED_AT,
@@ -128,6 +131,7 @@ public class RptQuizAdminDailyTemplate {
                                 0 AS ANSWER_CNT,
                                 sum(HINT_CNT) AS HINT_CNT,
                                 0 as CLICK_CNT,
+                                0 as AD_COST,
                                 0 as PARTNER_COMMISSION,
                                 0 as USER_COMMISSION,
                                 current_timestamp as INSERTED_AT,
@@ -162,6 +166,7 @@ public class RptQuizAdminDailyTemplate {
                                 sum(ANSWER_CNT) AS ANSWER_CNT,
                                 0 as HINT_CNT,
                                 0 as CLICK_CNT,
+                                sum(AD_COST) as AD_COST,
                                 sum(PARTNER_COMMISSION) as PARTNER_COMMISSION,
                                 sum(USER_COMMISSION) as USER_COMMISSION,
                                 current_timestamp as INSERTED_AT,
@@ -171,6 +176,7 @@ public class RptQuizAdminDailyTemplate {
                             group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
                         ) as raw
                         ON DUPLICATE KEY UPDATE  ANSWER_CNT = raw.ANSWER_CNT,
+                        AD_COST =  raw.AD_COST,
                         PARTNER_COMMISSION =  raw.PARTNER_COMMISSION,
                         USER_COMMISSION =  raw.USER_COMMISSION
                         ;
@@ -196,8 +202,9 @@ public class RptQuizAdminDailyTemplate {
                                 0 AS ANSWER_CNT,
                                 0 as HINT_CNT,
                                 sum(CLICK_CNT)  as CLICK_CNT,
-                                sum(PARTNER_COMMISSION) as PARTNER_COMMISSION,
-                                sum(USER_COMMISSION) as USER_COMMISSION,
+                                0 as AD_COST,
+                                0 as PARTNER_COMMISSION,
+                                0 as USER_COMMISSION,
                                 current_timestamp as INSERTED_AT,
                                 current_timestamp as UPDATED_AT
                             from RPT_QUIZ_RAW RAW

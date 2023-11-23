@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -26,16 +27,15 @@ public class QuizTotalDailySink {
     @Scheduled(cron = "0 10 0 * * ?")
     public void rawSink() {
 
-        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
-        LocalDateTime data = LocalDateTime.now().minusDays(1);
-
+        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate data = LocalDate.now().minusDays(1);
 
         RptSinkTimeVo rptSinkTimeVo =  reportService.loadSinkSchedule(SinkSchedule.QUIZ_DAILY, data.format(formatter));
 
-        LocalDateTime last = LocalDateTime.parse(rptSinkTimeVo.getLastSink(), formatter);
+        LocalDate last = LocalDate.parse(rptSinkTimeVo.getLastSink(), formatter);
 
-        String startDate = last.format(formatter) + "00:00:00";
-        String endDate = data.format(formatter)+ "23:59:59";
+        String startDate = last.format(formatter) + " 00:00:00";
+        String endDate = data.format(formatter)+ " 23:59:59";
         log.info("# Quiz Daily Sink {} ~ {}", startDate, endDate);
 
         rptQuizDailyTemplate.sinkDaily(startDate, endDate);

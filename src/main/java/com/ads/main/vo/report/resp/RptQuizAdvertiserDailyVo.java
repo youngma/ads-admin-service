@@ -67,6 +67,8 @@ public class RptQuizAdvertiserDailyVo  extends DailyReportVo implements Serializ
     private Long clickCnt;
 
 
+    private long adCost;
+
     /**
      * 등록 일자
      */

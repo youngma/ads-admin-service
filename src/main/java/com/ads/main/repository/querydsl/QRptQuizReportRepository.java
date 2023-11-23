@@ -47,7 +47,8 @@ public class QRptQuizReportRepository {
                                 rptQuizAdvertiserDailyEntity.impressionCnt,
                                 rptQuizAdvertiserDailyEntity.answerCnt,
                                 rptQuizAdvertiserDailyEntity.hintCnt,
-                                rptQuizAdvertiserDailyEntity.clickCnt
+                                rptQuizAdvertiserDailyEntity.clickCnt,
+                                rptQuizAdvertiserDailyEntity.adCost
                         )
                 )
                 .from(rptQuizAdvertiserDailyEntity)
@@ -80,7 +81,10 @@ public class QRptQuizReportRepository {
                                 rptQuizPartnerDailyEntity.impressionCnt,
                                 rptQuizPartnerDailyEntity.answerCnt,
                                 rptQuizPartnerDailyEntity.hintCnt,
-                                rptQuizPartnerDailyEntity.clickCnt
+                                rptQuizPartnerDailyEntity.clickCnt,
+                                rptQuizPartnerDailyEntity.adCost,
+                                rptQuizPartnerDailyEntity.partnerCommission,
+                                rptQuizPartnerDailyEntity.userCommission
                         )
                 )
                 .from(rptQuizPartnerDailyEntity)
@@ -114,6 +118,7 @@ public class QRptQuizReportRepository {
                                 rptQuizAdminDailyEntity.answerCnt,
                                 rptQuizAdminDailyEntity.hintCnt,
                                 rptQuizAdminDailyEntity.clickCnt,
+                                rptQuizAdminDailyEntity.adCost,
                                 rptQuizAdminDailyEntity.partnerCommission,
                                 rptQuizAdminDailyEntity.userCommission
                         )
@@ -137,13 +142,14 @@ public class QRptQuizReportRepository {
     public RptQuizAdvertiserDailyVo searchRptQuizAdvertiserSummary(RptSearchVo searchVo) {
       return jpaQueryFactory.select(
                       Projections.bean(RptQuizAdvertiserDailyVo.class,
-                              adCampaignMasterEntity.advertiserEntity.advertiserName.countDistinct().as("advertiserCount"),
+                              adCampaignMasterEntity.advertiserEntity.advertiserSeq.countDistinct().as("advertiserCount"),
                               adCampaignMasterEntity.campaignCode.countDistinct().as("campaignCount"),
                               rptQuizAdvertiserDailyEntity.reqCnt.sum().as("reqCnt"),
                               rptQuizAdvertiserDailyEntity.impressionCnt.sum().as("impressionCnt"),
                               rptQuizAdvertiserDailyEntity.answerCnt.sum().as("answerCnt"),
                               rptQuizAdvertiserDailyEntity.hintCnt.sum().as("hintCnt"),
-                              rptQuizAdvertiserDailyEntity.clickCnt.sum().as("clickCnt")
+                              rptQuizAdvertiserDailyEntity.clickCnt.sum().as("clickCnt"),
+                              rptQuizAdvertiserDailyEntity.adCost.sum().as("adCost")
                       )
               )
               .from(rptQuizAdvertiserDailyEntity)
@@ -163,7 +169,9 @@ public class QRptQuizReportRepository {
                                 rptQuizPartnerDailyEntity.impressionCnt.sum().as("impressionCnt"),
                                 rptQuizPartnerDailyEntity.answerCnt.sum().as("answerCnt"),
                                 rptQuizPartnerDailyEntity.hintCnt.sum().as("hintCnt"),
-                                rptQuizPartnerDailyEntity.clickCnt.sum().as("clickCnt")
+                                rptQuizPartnerDailyEntity.adCost.sum().as("adCost"),
+                                rptQuizPartnerDailyEntity.partnerCommission.sum().as("partnerCommission"),
+                                rptQuizPartnerDailyEntity.userCommission.sum().as("userCommission")
                         )
                 )
                 .from(rptQuizPartnerDailyEntity)
@@ -183,6 +191,9 @@ public class QRptQuizReportRepository {
                                 rptQuizAdminDailyEntity.answerCnt.sum().as("answerCnt"),
                                 rptQuizAdminDailyEntity.hintCnt.sum().as("hintCnt"),
                                 rptQuizAdminDailyEntity.clickCnt.sum().as("clickCnt"),
+                                rptQuizAdminDailyEntity.partnerCommission.sum().as("partnerCommission"),
+                                rptQuizAdminDailyEntity.userCommission.sum().as("userCommission"),
+                                rptQuizAdminDailyEntity.adCost.sum().as("adCost"),
                                 rptQuizAdminDailyEntity.partnerCommission.sum().as("partnerCommission"),
                                 rptQuizAdminDailyEntity.userCommission.sum().as("userCommission")
                         )
