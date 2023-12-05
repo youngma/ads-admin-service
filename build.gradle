@@ -91,6 +91,10 @@ dependencies {
     // spring boot admin
     implementation group: 'de.codecentric', name: 'spring-boot-admin-starter-client', version: '3.1.7'
 
+
+    // POI
+    implementation 'org.apache.poi:poi-ooxml:5.2.2'
+    implementation 'org.apache.poi:poi:5.2.2'
 }
 
 tasks.named('test') {

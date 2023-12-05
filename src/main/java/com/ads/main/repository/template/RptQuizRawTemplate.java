@@ -157,9 +157,9 @@ public class RptQuizRawTemplate {
                         RAW.USER_KEY as USER_KEY,
                         REQ_CNT as REQ_CNT ,
                         IMPRESSION_AT AS IMPRESSION_CNT,
-                        1 AS DETAIL_CNT,
+                        0 AS DETAIL_CNT,
                         0 AS ANSWER_CNT,
-                        0 AS HINT_CNT,
+                        1 AS HINT_CNT,
                         0 AS CLICK_CNT,
                         RAW.REQUEST_AT as REQUEST_AT, /* request at */
                         null as IMPRESSION_AT ,              /* impression at */

@@ -73,7 +73,14 @@ public class AdQuizRegisterVo implements Serializable {
     @NotBlank(message = "상품 코드 은 필수 입니다.")
     private String goodsCode;
 
+    /**
+     * 광고주 연동 코드
+     */
     private String ifAdCode;
 
+    /**
+     * 광고 연동 식별 코드
+     */
+    private String mappingAdsCode;
 
 }

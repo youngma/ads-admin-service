@@ -40,7 +40,6 @@ public class ReportService {
         LocalDateTime data = LocalDateTime.now();
 
 
-
         return reportCacheService.findDashboard(data.format(formatter));
     }
 
@@ -71,6 +70,15 @@ public class ReportService {
             case PARTNER -> qRptQuizReportRepository.searchRptQuizPartnerDailySummary(rptSearchVo);
             case ADVERTISER -> qRptQuizReportRepository.searchRptQuizAdvertiserSummary(rptSearchVo);
             case USER -> qRptQuizRawRepository.searchRptQuizUserDailySummery(rptSearchVo);
+        };
+    }
+
+    public List<? extends DailyReportVo> searchReportByDailyExcel(RptSearchVo rptSearchVo) {
+        return switch (rptSearchVo.getRole()) {
+            case ADMIN -> qRptQuizReportRepository.searchRptQuizAdminDailyExcel(rptSearchVo);
+            case PARTNER -> qRptQuizReportRepository.searchRptQuizPartnerDailyExcel(rptSearchVo);
+            case ADVERTISER -> qRptQuizReportRepository.searchRptQuizAdvertiserDailyExcel(rptSearchVo);
+            case USER -> qRptQuizRawRepository.searchRptQuizUserDailyExcel(rptSearchVo);
         };
     }
 

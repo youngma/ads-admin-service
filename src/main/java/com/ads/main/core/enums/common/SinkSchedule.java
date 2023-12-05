@@ -13,6 +13,7 @@ import java.util.List;
 @Slf4j
 public enum SinkSchedule {
 
+    X_CODE_DAILY("X_CODE_DAILY"),
     ADMIN_DAILY("ADMIN_DAILY"),
     PARTNER_DAILY("PARTNER_DAILY"),
     ADVERTISER_DAILY("ADVERTISER_DAILY"),

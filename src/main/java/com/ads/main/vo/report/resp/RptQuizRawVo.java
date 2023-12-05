@@ -131,6 +131,13 @@ public class RptQuizRawVo extends DailyReportVo implements Serializable {
     private LocalDateTime clickAt;
 
 
+
+    /**
+     * 광고 단가
+     */
+    private Long adCost;
+
+
     /**
      * 파트너 지급 금액
      */

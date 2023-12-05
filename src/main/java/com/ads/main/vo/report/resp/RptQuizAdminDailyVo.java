@@ -89,17 +89,5 @@ public class RptQuizAdminDailyVo extends DailyReportVo implements Serializable {
     private Long userCommission;
 
 
-    /**
-     * 등록 일자
-     */
-    @NotNull(message = "insertedAt can not null")
-    private Date insertedAt;
-
-
-    /**
-     * 수정 일자
-     */
-    @NotNull(message = "updatedAt can not null")
-    private Date updatedAt;
 
 }

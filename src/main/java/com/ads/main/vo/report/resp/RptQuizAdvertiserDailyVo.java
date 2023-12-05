@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -29,10 +30,6 @@ public class RptQuizAdvertiserDailyVo  extends DailyReportVo implements Serializ
     private String businessName;
 
 
-    /**
-     * 그룹 순번
-     */
-    @NotNull(message = "campaignCode can not null")
     private String campaignCode;
     private String campaignName;
 
@@ -67,6 +64,14 @@ public class RptQuizAdvertiserDailyVo  extends DailyReportVo implements Serializ
     private Long clickCnt;
 
 
+    /**
+     * 광고 단가
+     */
+    private BigDecimal originAdCost;
+
+    /**
+     * 광고 단가 (합계)
+     */
     private long adCost;
 
     /**
@@ -74,7 +79,6 @@ public class RptQuizAdvertiserDailyVo  extends DailyReportVo implements Serializ
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime insertedAt;
-
 
     /**
      * 수정 일자

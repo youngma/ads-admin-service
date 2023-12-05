@@ -7,13 +7,17 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import lombok.Builder;
 import lombok.Data;
+import org.hibernate.mapping.Set;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 
 import static com.ads.main.entity.QAdCampaignMasterEntity.adCampaignMasterEntity;
+import static com.ads.main.entity.QPartnerAdGroupEntity.partnerAdGroupEntity;
 import static com.ads.main.entity.QRptQuizAdminDailyEntity.rptQuizAdminDailyEntity;
 import static com.ads.main.entity.QRptQuizAdvertiserDailyEntity.rptQuizAdvertiserDailyEntity;
 import static com.ads.main.entity.QRptQuizPartnerDailyEntity.rptQuizPartnerDailyEntity;
@@ -33,11 +37,12 @@ public class RptSearchVo implements Serializable {
     private String searchEndDt;
 
 
-    private long advertiserSeq;
+    private HashSet<Long> advertiserSeq;
     private String campaignCode;
     private String campaignName;
 
-    private long partnerSeq;
+    private HashSet<Long> partnerSeq;
+    private String groupName;
     private String groupCode;
 
     private String userKey;
@@ -53,12 +58,39 @@ public class RptSearchVo implements Serializable {
             }
             case PARTNER -> {
                 builder
-                        .and(rptQuizPartnerDailyEntity.rptDate.between(searchStartDt, searchEndDt))
+                        .and(rptQuizPartnerDailyEntity.rptDate.between(searchStartDt, searchEndDt));
+
+                if(partnerSeq != null && !partnerSeq.isEmpty()) {
+                    builder
+                            .and(partnerAdGroupEntity.partnerEntity.partnerSeq.in(advertiserSeq));
+                }
+
+                if (groupName != null&& !groupName.isBlank()) {
+                    builder.and(partnerAdGroupEntity.groupName.eq(groupName));
+                }
+
+                if (groupCode != null&& !groupCode.isBlank()) {
+                    builder.and(partnerAdGroupEntity.groupCode.contains(groupCode));
+                }
+
                 ;
             }
             case ADVERTISER -> {
                 builder
-                        .and(rptQuizAdvertiserDailyEntity.rptDate.between(searchStartDt, searchEndDt))
+                        .and(rptQuizAdvertiserDailyEntity.rptDate.between(searchStartDt, searchEndDt));
+
+                if(advertiserSeq != null && !advertiserSeq.isEmpty()) {
+                    builder
+                            .and(adCampaignMasterEntity.advertiserEntity.advertiserSeq.in(advertiserSeq));
+                }
+
+                if (campaignCode != null&& !campaignCode.isBlank()) {
+                    builder.and(adCampaignMasterEntity.campaignCode.eq(campaignCode));
+                }
+
+                if (campaignName != null&& !campaignName.isBlank()) {
+                    builder.and(adCampaignMasterEntity.campaignName.contains(campaignName));
+                }
                 ;
             }
             case USER -> {

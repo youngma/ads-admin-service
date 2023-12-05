@@ -13,11 +13,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import static com.ads.main.entity.QAdCampaignMasterEntity.adCampaignMasterEntity;
+import static com.ads.main.entity.QAdQuizEntity.adQuizEntity;
 import static com.ads.main.entity.QAdSmartStoreEntity.adSmartStoreEntity;
 
 @Repository
@@ -117,4 +119,17 @@ public class QAdvertiserCampaignMasterRepository {
     }
 
 
+    // 모비온 광고중 이미 등록 된 광고 찾기
+    public List<String> findAlreadyRegisteredMobiAds(String ifAdCode, HashSet<String> keys) {
+        return jpaQueryFactory.select(
+                        adCampaignMasterEntity.adQuizEntity.mappingAdsCode
+                )
+                .from(adCampaignMasterEntity)
+                .join(adCampaignMasterEntity.adQuizEntity)
+                .where(
+                        adCampaignMasterEntity.ifAdCode.eq(ifAdCode)
+                        .and(adQuizEntity.mappingAdsCode.in(keys))
+                )
+                .fetch();
+    }
 }

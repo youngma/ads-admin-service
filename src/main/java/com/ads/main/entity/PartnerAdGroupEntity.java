@@ -19,6 +19,9 @@ import org.springframework.data.annotation.CreatedDate;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -124,6 +127,23 @@ public class PartnerAdGroupEntity extends BaseEntity implements Serializable {
     @Convert(converter = AdGroupStatusConvert.class)
     @Column(name = "GROUP_STATUS", nullable = false)
     private AdGroupStatus groupStatus;
+
+    @OneToMany(mappedBy = "partnerAdGroupEntity", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<PartnerAdMappingEntity> partnerAdMappingEntities = new ArrayList<>();
+
+    public List<PartnerAdMappingEntity> mappingAds(HashSet<Long> campaignSeqList) {
+
+        campaignSeqList.forEach(campaign -> {
+            PartnerAdMappingEntity partnerAdMappingEntity = new PartnerAdMappingEntity();
+            partnerAdMappingEntity.setPartnerAdGroupEntity(this);
+            partnerAdMappingEntity.setCampaignSeq(campaign);
+            partnerAdMappingEntities.add(partnerAdMappingEntity);
+        });
+
+        return this.partnerAdMappingEntities;
+    }
+
 
     public void approval() {
         this.groupStatus = AdGroupStatus.Approval;

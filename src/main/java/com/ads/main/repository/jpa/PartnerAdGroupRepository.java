@@ -15,7 +15,7 @@ public interface PartnerAdGroupRepository extends JpaRepository<PartnerAdGroupEn
     Optional<PartnerAdGroupEntity> findOneByGroupSeq(Long groupSeq);
 
     @EntityGraph(attributePaths = { "logoFileEntity",  "pointIconFileEntity" })
-    Optional<PartnerAdGroupEntity> findOneByGroupSeqAndPartnerEntity_PartnerSeq(Long groupSeq, Long partnerSeq);
+    Optional<PartnerAdGroupEntity> findOneByPartnerEntity_PartnerSeqAndGroupSeq(Long partnerSeq, Long groupSeq);
     Optional<PartnerAdGroupEntity> findOneByGroupCode(String groupSeq);
 
     Long countByGroupStatus(AdGroupStatus groupStatus);

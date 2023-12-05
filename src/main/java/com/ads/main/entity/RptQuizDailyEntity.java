@@ -80,6 +80,23 @@ public class RptQuizDailyEntity implements Serializable {
     @Column(name = "CLICK_CNT")
     private Long clickCnt;
 
+
+    @Column(name = "AD_COST")
+    private Long adCost;
+
+    /**
+     * 파트너 지급 금액
+     */
+    @Column(name = "PARTNER_COMMISSION")
+    private Long partnerCommission;
+
+    /**
+     * 사용자 지급 금액
+     */
+    @Column(name = "USER_COMMISSION")
+    private Long userCommission;
+
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

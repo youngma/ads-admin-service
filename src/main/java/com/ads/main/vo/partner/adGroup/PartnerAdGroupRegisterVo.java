@@ -9,6 +9,7 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 
 
 @Data
@@ -89,4 +90,5 @@ public class PartnerAdGroupRegisterVo implements Serializable {
     private Integer rewordRate;
 
 
+    private HashSet<Long> mappingAds;
 }

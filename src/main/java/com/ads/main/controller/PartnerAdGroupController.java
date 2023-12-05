@@ -3,7 +3,9 @@ package com.ads.main.controller;
 import com.ads.main.core.enums.advertiser.AdGroupStatus;
 import com.ads.main.core.vo.RespVo;
 import com.ads.main.service.PartnerAdGroupService;
+import com.ads.main.service.PartnerAdMappingService;
 import com.ads.main.service.PartnerService;
+import com.ads.main.vo.partner.ad.req.AdMappingReqVo;
 import com.ads.main.vo.partner.adGroup.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -24,6 +27,7 @@ public class PartnerAdGroupController {
 
     private final PartnerService partnerService;
     private final PartnerAdGroupService partnerAdGroupService;
+    private final PartnerAdMappingService partnerAdMappingService;
 
     // 매체사 광고 그룹 조회
     @GetMapping("/search")
@@ -51,6 +55,24 @@ public class PartnerAdGroupController {
         return new RespVo<>(adGroups);
     }
 
+    @GetMapping("/mapping/ads")
+    public RespVo<List<Long>> selectAdGroups(
+            @RequestParam(value = "partnerSeq") Long partnerSeq,
+            @RequestParam(value = "groupSeq") Long groupSeq
+    ) {
+        List<Long> mappingAds= partnerAdMappingService.findCampaignSeqByGroupSeq(partnerSeq, groupSeq);
+        return new RespVo<>(mappingAds);
+    }
+
+    @PutMapping("/mapping/ads")
+    public RespVo<String> selectAdGroups(
+            @RequestBody AdMappingReqVo mappingReqVo
+    ) {
+        log.info("# {} ", mappingReqVo);
+
+        partnerAdMappingService.saveMappingAds(mappingReqVo);
+        return new RespVo<>("저장 되었습니다.");
+    }
 
     @PostMapping("/register")
     public RespVo<PartnerAdGroupVo> register(@RequestBody @Validated @NotNull PartnerAdGroupRegisterVo partnerAdGroupVo) {

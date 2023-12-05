@@ -108,6 +108,9 @@ public class AdCampaignMasterRegisterVo implements Serializable {
      */
     private BigDecimal userCommissionRate;
 
+    /**
+     * 광고주 연동 코드
+     */
     private String ifAdCode;
 
 

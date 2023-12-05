@@ -98,6 +98,12 @@ public class AdQuizEntity extends BaseEntity implements Serializable {
     @Column(name = "GOODS_CODE")
     private String goodsCode;
 
+    /**
+     * 상품 코드
+     */
+    @Column(name = "MAPPING_ADS_CODE")
+    private String mappingAdsCode;
+
 
 
     @Override

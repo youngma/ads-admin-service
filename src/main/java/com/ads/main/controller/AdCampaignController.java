@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -26,7 +27,6 @@ public class AdCampaignController {
 
     private final AdCampaignService adCampaignService;
 
-    // 광고주 조회
     @GetMapping("/search")
     public RespVo<Page<AdCampaignMasterVo>> selectAdvertisers(
             @RequestParam(value = "page", defaultValue = "1") int page,
@@ -60,6 +60,14 @@ public class AdCampaignController {
     public RespVo<AdCampaignMasterVo> register(@RequestBody @Validated @NotNull AdCampaignMasterRegisterVo adCampaignVo) {
         AdCampaignMasterVo registered = adCampaignService.register(adCampaignVo);
         return new RespVo<>(registered);
+    }
+
+    @GetMapping("/mobi/already_registered")
+    public RespVo<HashSet<String>> alreadyRegisteredCheckByMObi(
+            @RequestParam(value = "ifAdCode") String ifAdCode,
+            @RequestParam(value = "keys") HashSet<String> keys
+    ) {
+        return new RespVo<>(adCampaignService.mobiAdsAlreadyRegisteredCheck(ifAdCode, keys));
     }
 
 

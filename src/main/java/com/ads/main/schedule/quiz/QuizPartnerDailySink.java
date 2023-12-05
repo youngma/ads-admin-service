@@ -48,6 +48,9 @@ public class QuizPartnerDailySink {
         log.info("# Start Partner Daily Sink Quiz Answer");
         rptQuizPartnerDailyTemplate.sinkAnswer(startDateH, endDateH);
 
+        log.info("# Start Partner Daily Sink Quiz Click");
+        rptQuizPartnerDailyTemplate.sinkClick(startDateH, endDateH);
+
         rptSinkTimeVo.setLastSink(data.plusHours(1).format(formatter));
         reportService.saveSinkSchedule(rptSinkTimeVo);
     }

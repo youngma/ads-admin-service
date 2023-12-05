@@ -28,6 +28,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 import static com.ads.main.core.enums.exception.AdCampaignException.AD_CAMPAIGN_STATUS_NOT_CHANGE;
@@ -186,5 +188,13 @@ public class AdCampaignService {
 
         return adCampaignMasterConvert.toDto(adCampaignMasterEntityOptional.get());
 
+    }
+
+    public HashSet<String> mobiAdsAlreadyRegisteredCheck(String ifCode, HashSet<String> keys) {
+        List<String> alreadyRegisteredKeys = qAdvertiserCampaignMasterRepository.findAlreadyRegisteredMobiAds(ifCode,keys);
+        if (!alreadyRegisteredKeys.isEmpty()) {
+            alreadyRegisteredKeys.forEach(keys::remove);
+        }
+        return keys;
     }
 }

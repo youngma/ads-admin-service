@@ -51,7 +51,7 @@ public class RptQuizAdvertiserDailyTemplate {
                                 DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') as RPT_DATE,
                                 RAW.CAMPAIGN_CODE as CAMPAIGN_CODE,
                                 0 AS REQ_CNT,
-                                sum(IMPRESSION_CNT) as IMPRESSION_CNT,
+                                sum(DETAIL_CNT) as IMPRESSION_CNT,
                                 0 as ANSWER_CNT,
                                 0 as HINT_CNT,
                                 0 as CLICK_CNT,
@@ -61,7 +61,7 @@ public class RptQuizAdvertiserDailyTemplate {
                             from RPT_QUIZ_RAW RAW
                             inner join AD_CAMPAIGN_MASTER AD_CAMPAIGN
                                 on RAW.CAMPAIGN_CODE = AD_CAMPAIGN.CAMPAIGN_CODE
-                            where RAW.IMPRESSION_AT between ? and ?
+                            where RAW.DETAIL_AT between ? and ?
                             group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') ,CAMPAIGN_CODE
                         ) as report
                         ON DUPLICATE KEY UPDATE  IMPRESSION_CNT = RPT_QUIZ_ADVERTISER_DAILY.IMPRESSION_CNT + report.IMPRESSION_CNT
@@ -122,10 +122,11 @@ public class RptQuizAdvertiserDailyTemplate {
                             from RPT_QUIZ_RAW RAW
                             inner join AD_CAMPAIGN_MASTER AD_CAMPAIGN
                                 on RAW.CAMPAIGN_CODE = AD_CAMPAIGN.CAMPAIGN_CODE
-                            where RAW.ANSWER_AT between ? and ?
+                            where RAW.CLICK_AT between ? and ?
                             group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d') ,CAMPAIGN_CODE
                         ) as report
                         ON DUPLICATE KEY UPDATE  CLICK_CNT = RPT_QUIZ_ADVERTISER_DAILY.CLICK_CNT + report.CLICK_CNT
+                        , AD_COST = RPT_QUIZ_ADVERTISER_DAILY.AD_COST + report.AD_COST
                         ;
                         """
                 ,startDate, endDate

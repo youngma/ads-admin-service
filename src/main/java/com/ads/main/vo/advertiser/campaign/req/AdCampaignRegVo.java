@@ -141,6 +141,9 @@ public class AdCampaignRegVo implements Serializable {
     @NotNull(message = "광고 종료 일자 은 필수 입니다.")
     private LocalDateTime adEndDate;
 
+    /**
+     * 광고주 연동 코드
+     */
     private String ifAdCode;
 
 }

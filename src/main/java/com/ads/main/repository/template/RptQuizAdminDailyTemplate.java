@@ -72,7 +72,7 @@ public class RptQuizAdminDailyTemplate {
                             where RAW.REQUEST_AT between ? and ?
                             group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
                         ) as raw
-                        ON DUPLICATE KEY UPDATE  REQ_CNT = raw.REQ_CNT
+                        ON DUPLICATE KEY UPDATE  REQ_CNT = RPT_QUIZ_ADMIN_DAILY.REQ_CNT +  raw.REQ_CNT
                         ;
                         """
                 ,startDate, endDate
@@ -107,7 +107,7 @@ public class RptQuizAdminDailyTemplate {
                             where RAW.DETAIL_AT between ? and ?
                             group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
                         ) as raw
-                        ON DUPLICATE KEY UPDATE  IMPRESSION_CNT = raw.IMPRESSION_CNT
+                        ON DUPLICATE KEY UPDATE  IMPRESSION_CNT =  RPT_QUIZ_ADMIN_DAILY.IMPRESSION_CNT + raw.IMPRESSION_CNT
                         ;
                         """
                 ,startDate, endDate
@@ -140,7 +140,7 @@ public class RptQuizAdminDailyTemplate {
                             where RAW.HINT_AT between ? and ?
                             group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
                         ) as raw
-                        ON DUPLICATE KEY UPDATE  HINT_CNT = raw.HINT_CNT
+                        ON DUPLICATE KEY UPDATE  HINT_CNT = RPT_QUIZ_ADMIN_DAILY.HINT_CNT + raw.HINT_CNT
                         ;
                         """
                 ,startDate, endDate
@@ -175,10 +175,7 @@ public class RptQuizAdminDailyTemplate {
                             where RAW.ANSWER_AT between ? and ?
                             group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
                         ) as raw
-                        ON DUPLICATE KEY UPDATE  ANSWER_CNT = raw.ANSWER_CNT,
-                        AD_COST =  raw.AD_COST,
-                        PARTNER_COMMISSION =  raw.PARTNER_COMMISSION,
-                        USER_COMMISSION =  raw.USER_COMMISSION
+                        ON DUPLICATE KEY UPDATE  ANSWER_CNT = RPT_QUIZ_ADMIN_DAILY.ANSWER_CNT + raw.ANSWER_CNT
                         ;
                         """
                 ,startDate, endDate
@@ -202,16 +199,19 @@ public class RptQuizAdminDailyTemplate {
                                 0 AS ANSWER_CNT,
                                 0 as HINT_CNT,
                                 sum(CLICK_CNT)  as CLICK_CNT,
-                                0 as AD_COST,
-                                0 as PARTNER_COMMISSION,
-                                0 as USER_COMMISSION,
+                                sum(AD_COST) as AD_COST,
+                                sum(PARTNER_COMMISSION) as PARTNER_COMMISSION,
+                                sum(USER_COMMISSION) as USER_COMMISSION,
                                 current_timestamp as INSERTED_AT,
                                 current_timestamp as UPDATED_AT
                             from RPT_QUIZ_RAW RAW
                             where RAW.CLICK_AT between ? and ?
                             group by DATE_FORMAT(RAW.REQUEST_AT, '%Y%m%d')
                         ) as raw
-                        ON DUPLICATE KEY UPDATE  CLICK_CNT = raw.CLICK_CNT
+                        ON DUPLICATE KEY UPDATE  CLICK_CNT = RPT_QUIZ_ADMIN_DAILY.CLICK_CNT +  raw.CLICK_CNT,
+                        AD_COST =   RPT_QUIZ_ADMIN_DAILY.AD_COST +raw.AD_COST,
+                        PARTNER_COMMISSION =  RPT_QUIZ_ADMIN_DAILY.PARTNER_COMMISSION + raw.PARTNER_COMMISSION,
+                        USER_COMMISSION =  RPT_QUIZ_ADMIN_DAILY.USER_COMMISSION + raw.USER_COMMISSION
                         ;
                         """
                 ,startDate, endDate

@@ -52,6 +52,9 @@ public class QuizAdvertiserDailySink {
         log.info("# Start Advertiser Daily Sink Quiz Answer");
         rptQuizAdvertiserDailyTemplate.sinkClick(startDateH, endDateH);
 
+//        log.info("# Start Advertiser Daily Sink Quiz Click");
+//        rptQuizAdvertiserDailyTemplate.sinkClick(startDateH, endDateH);
+
         rptSinkTimeVo.setLastSink(data.plusHours(1).format(formatter));
         reportService.saveSinkSchedule(rptSinkTimeVo);
     }

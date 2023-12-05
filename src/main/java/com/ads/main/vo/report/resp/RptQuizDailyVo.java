@@ -69,4 +69,22 @@ public class RptQuizDailyVo implements Serializable {
      */
     private Long clickCnt;
 
+
+    /**
+     * 광고 단가
+     */
+    private Long adCost;
+
+
+    /**
+     * 파트너 지급 금액
+     */
+    private Long partnerCommission;
+
+
+
+    /**
+     * 사용자 지급 금액
+     */
+    private Long userCommission;
 }

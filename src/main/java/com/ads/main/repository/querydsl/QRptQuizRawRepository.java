@@ -60,6 +60,7 @@ public class QRptQuizRawRepository {
                                 rptQuizRawEntity.answerAt,
                                 rptQuizRawEntity.clickAt,
 
+                                rptQuizRawEntity.adCost,
                                 rptQuizRawEntity.partnerCommission,
                                 rptQuizRawEntity.userCommission,
                                 rptQuizRawEntity.adReword
@@ -72,7 +73,7 @@ public class QRptQuizRawRepository {
                 .innerJoin(partnerAdGroupEntity).on(rptQuizRawEntity.groupCode.eq(partnerAdGroupEntity.groupCode))
                 .innerJoin(partnerAdGroupEntity.partnerEntity)
                 .where(searchVo.where())
-                .orderBy(rptQuizRawEntity.requestAt.asc())
+                .orderBy(rptQuizRawEntity.requestAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -87,6 +88,58 @@ public class QRptQuizRawRepository {
                 .fetchOne();
 
         return new PageImpl<>(reports, pageable, Objects.requireNonNullElse(count, 0L));
+    }
+
+
+    public List<RptQuizRawVo> searchRptQuizUserDailyExcel(RptSearchVo searchVo) {
+
+        StringTemplate requestAtFormatter = Expressions.stringTemplate(
+                "DATE_FORMAT({0}, {1})"
+                ,rptQuizRawEntity.requestAt
+                ,("%Y%m%d")
+        );
+
+        return jpaQueryFactory.select(
+                        Projections.bean(RptQuizRawVo.class,
+
+                                requestAtFormatter.as("rptDate"),
+                                rptQuizRawEntity.requestId,
+                                adCampaignMasterEntity.advertiserEntity.businessName.as("advertiserName"),
+                                partnerAdGroupEntity.partnerEntity.businessName.as("partnerName"),
+                                rptQuizRawEntity.campaignCode,
+                                adCampaignMasterEntity.campaignName,
+                                rptQuizRawEntity.groupCode,
+                                partnerAdGroupEntity.groupName,
+                                rptQuizRawEntity.userKey,
+                                rptQuizRawEntity.reqCnt,
+                                rptQuizRawEntity.impressionCnt,
+                                rptQuizRawEntity.detailCnt,
+                                rptQuizRawEntity.answerCnt,
+                                rptQuizRawEntity.hintCnt,
+                                rptQuizRawEntity.clickCnt,
+
+                                rptQuizRawEntity.requestAt,
+                                rptQuizRawEntity.impressionAt,
+                                rptQuizRawEntity.hintAt,
+                                rptQuizRawEntity.detailAt,
+                                rptQuizRawEntity.answerAt,
+                                rptQuizRawEntity.clickAt,
+
+                                rptQuizRawEntity.adCost,
+                                rptQuizRawEntity.partnerCommission,
+                                rptQuizRawEntity.userCommission,
+                                rptQuizRawEntity.adReword
+
+                        )
+                )
+                .from(rptQuizRawEntity)
+                .innerJoin(adCampaignMasterEntity).on(rptQuizRawEntity.campaignCode.eq(adCampaignMasterEntity.campaignCode))
+                .innerJoin(adCampaignMasterEntity.advertiserEntity)
+                .innerJoin(partnerAdGroupEntity).on(rptQuizRawEntity.groupCode.eq(partnerAdGroupEntity.groupCode))
+                .innerJoin(partnerAdGroupEntity.partnerEntity)
+                .where(searchVo.where())
+                .orderBy(rptQuizRawEntity.requestAt.desc())
+                .fetch();
     }
 
     public RptQuizRawVo searchRptQuizUserDailySummery(RptSearchVo searchVo) {

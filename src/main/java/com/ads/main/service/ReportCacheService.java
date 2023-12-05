@@ -59,7 +59,7 @@ public class ReportCacheService {
             , unless = "#result == null"
     )
     public List<RptQuizDailyVo> findDashboardList(String start, String end) {
-        return rptQuizDailyConverter.toDtoList(rptQuizDailyRepository.findAllByRptDateBetweenOrderByRptDateAsc(start, end));
+        return rptQuizDailyConverter.toDtoList(rptQuizDailyRepository.findAllByRptDateBetweenOrderByRptDateDesc(start, end));
     }
 }
 

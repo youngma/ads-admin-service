@@ -125,10 +125,16 @@ public class RptQuizRawEntity implements Serializable {
 
 
     /**
+     * 광고 단가
+     */
+    @Column(name = "AD_COST")
+    private Long adCost;
+
+    /**
      * 파트너 지급 금액
      */
     @Column(name = "PARTNER_COMMISSION")
-    private Long     partnerCommission;
+    private Long partnerCommission;
 
     /**
      * 사용자 지급 금액

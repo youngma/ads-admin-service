@@ -6,12 +6,13 @@ import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PostExchange;
 
 public interface MobonApi extends WebClients {
-    @GetExchange(value = "/servlet/adbnMobileBanner")
+    @GetExchange(value = "/servlet/adNonSDKMobileBanner")
     String search(
             @RequestParam String s,
             @RequestParam String cntad,
             @RequestParam String cntsr,
             @RequestParam String bntype,
-            @RequestParam String sslRedirect
+            @RequestParam String sslRedirect,
+            @RequestParam String increaseViewCnt
     );
 }

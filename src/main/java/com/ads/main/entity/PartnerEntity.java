@@ -17,6 +17,7 @@ import org.hibernate.proxy.HibernateProxy;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -96,7 +97,6 @@ public class PartnerEntity extends BaseEntity implements Serializable {
     private List<PartnerAdGroupEntity> partnerAdGroupEntities = new ArrayList<>();
 
 
-
     public com.ads.main.entity.UserEntity addUser(UserEntity userEntity) {
         PartnerUserEntity partnerUserEntity = new PartnerUserEntity();
 
@@ -116,14 +116,20 @@ public class PartnerEntity extends BaseEntity implements Serializable {
     }
 
 
-    public PartnerAdGroupEntity addAdGroup(PartnerAdGroupEntity partnerAdGroupEntity) {
+    public PartnerAdGroupEntity addAdGroup(PartnerAdGroupEntity partnerAdGroupEntity, HashSet<Long> campaignSeqList) {
         partnerAdGroupEntity.setPartnerEntity(this);
+
+        if (!campaignSeqList.isEmpty()) {
+            partnerAdGroupEntity.mappingAds(campaignSeqList);
+        }
 
         partnerAdGroupEntity.approval();
         this.partnerAdGroupEntities.add(partnerAdGroupEntity);
 
         return partnerAdGroupEntity;
     }
+
+
 
 
     @Override

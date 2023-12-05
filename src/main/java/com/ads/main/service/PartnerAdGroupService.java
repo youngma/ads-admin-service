@@ -6,6 +6,7 @@ import com.ads.main.core.utils.PageMapper;
 import com.ads.main.entity.*;
 import com.ads.main.entity.mapper.PartnerAdGroupConvert;
 import com.ads.main.repository.jpa.PartnerAdGroupRepository;
+import com.ads.main.repository.jpa.PartnerAdMappingRepository;
 import com.ads.main.repository.querydsl.QPartnerAdGroupRepository;
 import com.ads.main.service.FileService;
 import com.ads.main.service.PartnerService;
@@ -33,6 +34,7 @@ public class PartnerAdGroupService {
 
 
     private final PartnerAdGroupRepository partnerAdGroupRepository;
+    private final PartnerAdMappingRepository partnerAdMappingRepository;
     private final QPartnerAdGroupRepository qPartnerAdGroupRepository;
 
     private final PartnerAdGroupConvert partnerAdGroupConvert;
@@ -49,8 +51,8 @@ public class PartnerAdGroupService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<PartnerAdGroupEntity> findPartnerAdGroupEntityByPartnerSeqAndGroupSeq(Long partnerSeq,Long groupSeq) {
-        return partnerAdGroupRepository.findOneByGroupSeqAndPartnerEntity_PartnerSeq(partnerSeq, groupSeq);
+    public Optional<PartnerAdGroupEntity> findPartnerAdGroupEntityByPartnerSeqAndGroupSeq(Long partnerSeq, Long groupSeq) {
+        return partnerAdGroupRepository.findOneByPartnerEntity_PartnerSeqAndGroupSeq(partnerSeq, groupSeq);
     }
 
     @Transactional(readOnly = true)
@@ -93,15 +95,16 @@ public class PartnerAdGroupService {
         fileService.move(registerVo.getPointIconFile(), "광고지면 - 포인트 이미지");
 
         PartnerEntity partner = partnerEntityOptional.get();
-        PartnerAdGroupEntity adGroupEntity =  partner.addAdGroup(partnerAdGroupConvert.toEntity(registerVo));
+        PartnerAdGroupEntity adGroupEntity =  partner.addAdGroup(partnerAdGroupConvert.toEntity(registerVo), registerVo.getMappingAds());
 
-        return partnerAdGroupConvert.toDto(adGroupEntity);
-
+        // 지면 정보 먼저 저장
+        PartnerAdGroupVo partnerAdGroupDto = partnerAdGroupConvert.toDto(adGroupEntity);
+        return partnerAdGroupDto;
     }
 
     public PartnerAdGroupVo status(AdGroupStatus adGroupStatus, PartnerAdGroupStatusVo partnerAdGroupStatusVo) {
 
-        Optional<PartnerAdGroupEntity> partnerAdGroupEntityOptional = partnerAdGroupRepository.findOneByGroupSeqAndPartnerEntity_PartnerSeq(partnerAdGroupStatusVo.getGroupSeq(), partnerAdGroupStatusVo.getPartnerSeq());
+        Optional<PartnerAdGroupEntity> partnerAdGroupEntityOptional = partnerAdGroupRepository.findOneByPartnerEntity_PartnerSeqAndGroupSeq(partnerAdGroupStatusVo.getPartnerSeq(), partnerAdGroupStatusVo.getGroupSeq());
 
         if (partnerAdGroupEntityOptional.isEmpty()) {
             throw PARTNER_AD_GROUP_NOT_FOUND.throwErrors();
@@ -124,7 +127,7 @@ public class PartnerAdGroupService {
 
     public PartnerAdGroupVo modify(PartnerAdGroupModifyVo modifyVo) {
 
-        Optional<PartnerAdGroupEntity> partnerAdGroupEntityOptional = partnerAdGroupRepository.findOneByGroupSeqAndPartnerEntity_PartnerSeq(modifyVo.getGroupSeq(), modifyVo.getPartnerSeq());
+        Optional<PartnerAdGroupEntity> partnerAdGroupEntityOptional = partnerAdGroupRepository.findOneByPartnerEntity_PartnerSeqAndGroupSeq(modifyVo.getPartnerSeq(), modifyVo.getGroupSeq());
 
         if (partnerAdGroupEntityOptional.isEmpty()) {
             throw PARTNER_AD_GROUP_NOT_FOUND.throwErrors();

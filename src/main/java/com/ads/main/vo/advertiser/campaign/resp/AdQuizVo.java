@@ -77,6 +77,11 @@ public class AdQuizVo implements Serializable {
     private String goodsCode;
 
     /**
+     * 광고 연동 식별 코드
+     */
+    private String mappingAdsCode;
+
+    /**
      * 등록 일자
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
