@@ -1,0 +1,130 @@
+server:
+  port: 8081
+  error:
+    path: /error
+  servlet:
+    context-path: /api
+
+
+spring:
+  application:
+    name: ads-admin-service
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.0.10:3306/quiz_ad
+    hikari:
+      username: quiz_ad
+      password: quiz_adDB@)23
+      maximum-pool-size: 50
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        session:
+          events:
+            log:
+              LOG_QUERIES_SLOWER_THAN_MS: 50000
+        connection:
+          autocommit: true
+        #        show_sql: true
+        format_sql: true
+        highlight_sql: ture
+        use_sql_comments: true
+        order_inserts: true
+        order_updates: true
+        generate_statistics: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+  data:
+    redis:
+      default:
+        host: 192.168.0.10
+        port: 6379
+        database: 2
+      repositories:
+        enabled: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+  #  cloud:
+  #    config:
+  #      enabled: false
+  #      name: mk-service
+
+  #  config:
+  #    import: "optional:configserver:https://github.com/youngma/local-config"
+
+  #management:
+  #  endpoints:
+  #    web:
+  #      exposure:
+  #        include: "refresh"
+
+  boot:
+    admin:
+      client:
+        url: http://localhost:9999
+
+logging:
+  file:
+    name: /home/ads/logs/admin/${spring.application.name}.log
+  logback:
+    rollingpolicy:
+      max-history: 7
+      clean-history-on-start: true
+
+  charset:
+    file: UTF-8
+    console: UTF-8
+
+  level:
+    root: info
+    test: info
+    web: info
+    com:
+      ads: info
+    org:
+      springframework:
+        boot:
+          actuate:
+            endpoint:
+              web: info
+      hibernate:
+        stat: info
+        SQL: info
+        orm:
+          #          results:
+          #            loading:
+          #              entity: debug
+          jdbc:
+            bind: info
+app:
+  file:
+    uploadTempPath: /home/ads/uploads/temp
+    uploadPath: /home/ads/uploads/files
+
+
+management:
+  endpoints:
+    web:
+      base-path: /mgmt
+      exposure:
+        include: "health,info,metrics,threaddump,loggers,env,logfile,refresh"
+  info:
+    env:
+      enabled: true
+  endpoint:
+    health:
+      show-details: ALWAYS
+    shutdown:
+      enabled: false
+

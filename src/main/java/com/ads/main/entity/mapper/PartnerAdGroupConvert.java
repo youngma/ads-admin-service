@@ -30,6 +30,7 @@ public interface PartnerAdGroupConvert extends GenericMapper<PartnerAdGroupVo, P
     @Override
     PartnerAdGroupVo toDto(PartnerAdGroupEntity e);
 
+    @Mapping(target = "partnerAdMappingEntities", ignore = true)
     @Mapping(target = "partnerEntity", ignore = true)
     @Mapping(target = "pointIconFileEntity", source = "pointIconFile")
     @Mapping(target = "logoFileEntity", source = "logoFile")
@@ -37,6 +38,7 @@ public interface PartnerAdGroupConvert extends GenericMapper<PartnerAdGroupVo, P
     @Override
     PartnerAdGroupEntity toEntity(PartnerAdGroupVo d);
 
+    @Mapping(target = "partnerAdMappingEntities", ignore = true)
     @Mapping(target = "requestAt", ignore = true)
     @Mapping(target = "rejectMessage", ignore = true)
     @Mapping(target = "rejectAt", ignore = true)
@@ -60,6 +62,7 @@ public interface PartnerAdGroupConvert extends GenericMapper<PartnerAdGroupVo, P
     @Override
     List<PartnerAdGroupEntity> toEntities(List<PartnerAdGroupVo> d);
 
+    @Mapping(target = "partnerAdMappingEntities", ignore = true)
     @Mapping(target = "requestAt", ignore = true)
     @Mapping(target = "rejectMessage", ignore = true)
     @Mapping(target = "rejectAt", ignore = true)
@@ -80,6 +83,7 @@ public interface PartnerAdGroupConvert extends GenericMapper<PartnerAdGroupVo, P
     void updateFromDto(PartnerAdGroupModifyVo partnerAdGroupModifyVo, @MappingTarget PartnerAdGroupEntity partnerAdGroupEntity);
 
 
+    @Mapping(target = "partnerAdMappingEntities", ignore = true)
     @Mapping(target = "requestAt", ignore = true)
     @Mapping(target = "rejectMessage", ignore = true)
     @Mapping(target = "rejectAt", ignore = true)
@@ -92,6 +96,7 @@ public interface PartnerAdGroupConvert extends GenericMapper<PartnerAdGroupVo, P
     @Mapping(target = "rewordRate", ignore = true)
     @Mapping(target = "pointName", ignore = true)
     @Mapping(target = "commissionRate", ignore = true)
+    @Mapping(target = "userCommissionRate", ignore = true)
     @Mapping(target = "callBackUrl", ignore = true)
     @Mapping(target = "updatedId", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)

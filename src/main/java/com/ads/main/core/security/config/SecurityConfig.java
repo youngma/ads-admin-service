@@ -71,7 +71,7 @@ public class SecurityConfig {
     public DefaultSecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         JWTAuthenticationFilter jWTAuthenticationFilter = new JWTAuthenticationFilter(authenticationManager(), securityProperties, objectMapper);
-        jWTAuthenticationFilter.setFilterProcessesUrl("/admin/login");
+        jWTAuthenticationFilter.setFilterProcessesUrl("/**/login");
         jWTAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
 
         httpSecurity.csrf().disable()       // [STEP1] 서버에 인증정보를 저장하지 않기에 csrf를 사용하지 않는다.

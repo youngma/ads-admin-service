@@ -132,4 +132,30 @@ public class QAdvertiserCampaignMasterRepository {
                 )
                 .fetch();
     }
+
+
+    public void adCampaignClosed(String ifAdCode, List<String> keys) {
+
+        List<Long> seqList = jpaQueryFactory.select(
+                    adCampaignMasterEntity.seq
+                )
+                .from(adCampaignMasterEntity)
+                .join(adCampaignMasterEntity.adQuizEntity)
+                .where(
+                        adCampaignMasterEntity.ifAdCode.eq(ifAdCode)
+                        .and(adQuizEntity.mappingAdsCode.notIn(keys))
+                )
+                .fetch();
+
+        if (!seqList.isEmpty()) {
+            jpaQueryFactory
+                    .update(adCampaignMasterEntity)
+                    .set(adCampaignMasterEntity.exposureStatus, false)
+                    .where(adCampaignMasterEntity.seq.in(seqList))
+                    .execute();
+
+            entityManager.clear();
+            entityManager.flush();
+        }
+    }
 }

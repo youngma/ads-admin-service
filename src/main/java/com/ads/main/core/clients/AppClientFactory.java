@@ -7,6 +7,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
@@ -33,9 +34,14 @@ public class AppClientFactory {
 
         Class<S> serviceType = (Class<S>) domain.getClazz();
 
+        ExchangeStrategies exchangeStrategies = ExchangeStrategies.builder()
+                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(-1)) // to unlimited memory size
+                .build();
+
         WebClient client =
                 WebClient.builder()
                         .baseUrl(domain.getUrl())
+                        .exchangeStrategies(exchangeStrategies)
                         .defaultHeaders(httpHeaders -> {
                             // todo 수정 가능 한지 확인..
                             if (serviceType.getTypeName().equals(MobonApi.class.getTypeName())) {
