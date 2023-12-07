@@ -1,4 +1,4 @@
-package com.ads.main.controller;
+package com.ads.main.controller.admin;
 
 import com.ads.main.core.enums.campaign.CampaignStatus;
 import com.ads.main.core.enums.campaign.CampaignType;

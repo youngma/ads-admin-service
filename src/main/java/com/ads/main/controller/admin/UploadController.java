@@ -1,4 +1,4 @@
-package com.ads.main.controller;
+package com.ads.main.controller.admin;
 
 
 import com.ads.main.core.vo.FileVo;
