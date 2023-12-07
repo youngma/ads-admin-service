@@ -1,6 +1,5 @@
 package com.ads.main.repository.template;
 
-import com.ads.main.vo.report.resp.RptDashboard;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

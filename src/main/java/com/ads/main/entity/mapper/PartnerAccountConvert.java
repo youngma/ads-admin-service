@@ -3,10 +3,9 @@ package com.ads.main.entity.mapper;
 import com.ads.main.core.config.convert.GenericMapper;
 import com.ads.main.core.enums.common.Bank;
 import com.ads.main.entity.PartnerAccountEntity;
-import com.ads.main.entity.mapper.FilesConverter;
-import com.ads.main.vo.partner.account.PartnerAccountModifyVo;
-import com.ads.main.vo.partner.account.PartnerAccountRegisterVo;
-import com.ads.main.vo.partner.account.PartnerAccountVo;
+import com.ads.main.vo.admin.partner.account.PartnerAccountModifyVo;
+import com.ads.main.vo.admin.partner.account.PartnerAccountRegisterVo;
+import com.ads.main.vo.admin.partner.account.PartnerAccountVo;
 import org.mapstruct.*;
 
 import java.util.List;

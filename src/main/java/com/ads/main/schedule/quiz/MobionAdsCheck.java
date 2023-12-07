@@ -3,10 +3,9 @@ package com.ads.main.schedule.quiz;
 import com.ads.main.core.clients.AppClientFactory;
 import com.ads.main.core.clients.DOMAIN;
 import com.ads.main.core.clients.api.MobonApi;
-import com.ads.main.core.utils.PageMapper;
 import com.ads.main.repository.querydsl.QAdvertiserCampaignMasterRepository;
-import com.ads.main.vo.inf.mobi.Data;
-import com.ads.main.vo.inf.mobi.MobiAds;
+import com.ads.main.vo.admin.mobi.Data;
+import com.ads.main.vo.admin.mobi.MobiAds;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor

@@ -1,15 +1,12 @@
 package com.ads.main.entity.mapper;
 
 import com.ads.main.core.config.convert.GenericMapper;
-import com.ads.main.core.enums.campaign.PaymentTerms;
 import com.ads.main.entity.AdQuizEntity;
 import com.ads.main.entity.AdSmartStoreEntity;
-import com.ads.main.vo.advertiser.campaign.req.AdQuizModifyVo;
-import com.ads.main.vo.advertiser.campaign.req.AdQuizRegisterVo;
-import com.ads.main.vo.advertiser.campaign.req.AdSmartStoreModifyVo;
-import com.ads.main.vo.advertiser.campaign.req.AdSmartStoreRegisterVo;
-import com.ads.main.vo.advertiser.campaign.resp.AdQuizVo;
-import com.ads.main.vo.advertiser.campaign.resp.AdSmartStoreVo;
+import com.ads.main.vo.admin.advertiser.campaign.req.AdQuizModifyVo;
+import com.ads.main.vo.admin.advertiser.campaign.req.AdQuizRegisterVo;
+import com.ads.main.vo.admin.advertiser.campaign.req.AdSmartStoreRegisterVo;
+import com.ads.main.vo.admin.advertiser.campaign.resp.AdQuizVo;
 import org.mapstruct.*;
 
 import java.util.List;

@@ -1,20 +1,14 @@
 package com.ads.main.repository.querydsl;
 
-import com.ads.main.entity.PartnerAdMappingEntity;
-import com.ads.main.vo.partner.ad.PartnerAdMappingVo;
-import com.ads.main.vo.report.req.RptSearchVo;
-import com.ads.main.vo.report.resp.RptQuizAdvertiserDailyVo;
+import com.ads.main.vo.admin.partner.ad.PartnerAdMappingVo;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
 
 import static com.ads.main.entity.QPartnerAdMappingEntity.partnerAdMappingEntity;
 @Repository

@@ -3,12 +3,9 @@ package com.ads.main.schedule.quiz;
 
 import com.ads.main.core.enums.campaign.CampaignType;
 import com.ads.main.entity.AdCampaignMasterEntity;
-import com.ads.main.entity.QAdCampaignMasterEntity;
-import com.ads.main.entity.mapper.AdCampaignMasterConvert;
 import com.ads.main.entity.mapper.AdCampaignRedisConvert;
 import com.ads.main.repository.querydsl.QAdvertiserCampaignMasterRepository;
-import com.ads.main.repository.template.RptQuizRawTemplate;
-import com.ads.main.vo.advertiser.campaign.resp.AdCampaignMasterVo;
+import com.ads.main.vo.admin.advertiser.campaign.resp.AdCampaignMasterVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -16,20 +13,14 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RMap;
-import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
-import org.redisson.codec.JsonJacksonCodec;
-import org.redisson.codec.TypedJsonJacksonCodec;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor

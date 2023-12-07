@@ -1,7 +1,7 @@
 package com.ads.main.repository.querydsl;
 
-import com.ads.main.vo.report.req.RptSearchVo;
-import com.ads.main.vo.report.resp.RptQuizRawVo;
+import com.ads.main.vo.admin.report.req.RptSearchVo;
+import com.ads.main.vo.admin.report.resp.RptQuizRawVo;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;

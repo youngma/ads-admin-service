@@ -3,7 +3,7 @@ package com.ads.main.repository.querydsl;
 import com.ads.main.core.enums.campaign.CampaignStatus;
 import com.ads.main.core.enums.campaign.CampaignType;
 import com.ads.main.entity.AdCampaignMasterEntity;
-import com.ads.main.vo.advertiser.campaign.req.AdCampaignSearchVo;
+import com.ads.main.vo.admin.advertiser.campaign.req.AdCampaignSearchVo;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;

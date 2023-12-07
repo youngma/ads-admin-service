@@ -3,7 +3,7 @@ package com.ads.main.repository.querydsl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ads.main.entity.AdvertiserEntity;
 import com.ads.main.entity.AdvertiserUserEntity;
-import com.ads.main.vo.advertiser.AdvertiserSearchVo;
+import com.ads.main.vo.admin.advertiser.AdvertiserSearchVo;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

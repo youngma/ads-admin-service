@@ -1,6 +1,6 @@
 package com.ads.main.core.security.config.dto;
 
-import com.ads.main.vo.admin.UserVo;
+import com.ads.main.vo.admin.user.UserVo;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

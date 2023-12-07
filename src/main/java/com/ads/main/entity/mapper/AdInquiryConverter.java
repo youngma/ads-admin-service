@@ -4,7 +4,7 @@ import com.ads.main.core.config.convert.GenericMapper;
 import com.ads.main.core.enums.inquiry.InquiryStatus;
 import com.ads.main.core.enums.inquiry.InquiryType;
 import com.ads.main.entity.AdInquiryEntity;
-import com.ads.main.vo.inquiry.resp.AdInquiryVo;
+import com.ads.main.vo.admin.inquiry.resp.AdInquiryVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

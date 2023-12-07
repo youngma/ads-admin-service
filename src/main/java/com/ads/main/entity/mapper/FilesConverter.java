@@ -2,7 +2,7 @@ package com.ads.main.entity.mapper;
 
 import com.ads.main.core.config.convert.GenericMapper;
 import com.ads.main.entity.FilesEntity;
-import com.ads.main.vo.FilesVo;
+import com.ads.main.vo.admin.FilesVo;
 import org.mapstruct.*;
 
 import java.util.List;

@@ -1,11 +1,11 @@
 package com.ads.main.repository.querydsl;
 
 
-import com.ads.main.vo.report.req.RptSearchVo;
-import com.ads.main.vo.report.resp.RptQuizAdminDailyVo;
-import com.ads.main.vo.report.resp.RptQuizAdvertiserDailyVo;
-import com.ads.main.vo.report.resp.RptQuizPartnerDailyVo;
-import com.ads.main.vo.report.resp.RptQuizXCodeVo;
+import com.ads.main.vo.admin.report.req.RptSearchVo;
+import com.ads.main.vo.admin.report.resp.RptQuizAdminDailyVo;
+import com.ads.main.vo.admin.report.resp.RptQuizAdvertiserDailyVo;
+import com.ads.main.vo.admin.report.resp.RptQuizPartnerDailyVo;
+import com.ads.main.vo.admin.report.resp.RptQuizXCodeVo;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

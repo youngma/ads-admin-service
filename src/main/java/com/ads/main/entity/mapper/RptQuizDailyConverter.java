@@ -2,7 +2,7 @@ package com.ads.main.entity.mapper;
 
 import com.ads.main.core.config.convert.GenericMapper;
 import com.ads.main.entity.RptQuizDailyEntity;
-import com.ads.main.vo.report.resp.RptQuizDailyVo;
+import com.ads.main.vo.admin.report.resp.RptQuizDailyVo;
 import org.mapstruct.Mapper;
 
 import java.util.List;

@@ -2,11 +2,11 @@ package com.ads.main.controller.admin;
 
 import com.ads.main.core.enums.advertiser.AdGroupStatus;
 import com.ads.main.core.vo.RespVo;
-import com.ads.main.service.PartnerAdGroupService;
-import com.ads.main.service.PartnerAdMappingService;
-import com.ads.main.service.PartnerService;
-import com.ads.main.vo.partner.ad.req.AdMappingReqVo;
-import com.ads.main.vo.partner.adGroup.*;
+import com.ads.main.service.admin.PartnerAdGroupService;
+import com.ads.main.service.admin.PartnerAdMappingService;
+import com.ads.main.service.admin.PartnerService;
+import com.ads.main.vo.admin.partner.ad.req.AdMappingReqVo;
+import com.ads.main.vo.admin.partner.adGroup.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

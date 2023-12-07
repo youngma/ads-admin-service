@@ -2,10 +2,9 @@ package com.ads.main.entity.mapper;
 
 import com.ads.main.core.config.convert.GenericMapper;
 import com.ads.main.entity.PartnerEntity;
-import com.ads.main.entity.mapper.FilesConverter;
-import com.ads.main.vo.partner.PartnerBusinessModifyVo;
-import com.ads.main.vo.partner.PartnerModifyVo;
-import com.ads.main.vo.partner.PartnerVo;
+import com.ads.main.vo.admin.partner.PartnerBusinessModifyVo;
+import com.ads.main.vo.admin.partner.PartnerModifyVo;
+import com.ads.main.vo.admin.partner.PartnerVo;
 import org.mapstruct.*;
 
 import java.util.List;

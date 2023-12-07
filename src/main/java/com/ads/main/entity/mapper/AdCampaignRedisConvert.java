@@ -4,9 +4,9 @@ import com.ads.main.core.config.convert.GenericMapper;
 import com.ads.main.core.enums.campaign.CampaignStatus;
 import com.ads.main.core.enums.campaign.CampaignType;
 import com.ads.main.entity.AdCampaignMasterEntity;
-import com.ads.main.vo.advertiser.campaign.req.AdCampaignMasterModifyVo;
-import com.ads.main.vo.advertiser.campaign.req.AdCampaignMasterRegisterVo;
-import com.ads.main.vo.advertiser.campaign.resp.AdCampaignMasterVo;
+import com.ads.main.vo.admin.advertiser.campaign.req.AdCampaignMasterModifyVo;
+import com.ads.main.vo.admin.advertiser.campaign.req.AdCampaignMasterRegisterVo;
+import com.ads.main.vo.admin.advertiser.campaign.resp.AdCampaignMasterVo;
 import org.mapstruct.*;
 
 import java.util.List;

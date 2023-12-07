@@ -1,12 +1,10 @@
 package com.ads.main.entity.mapper;
 
 import com.ads.main.core.config.convert.GenericMapper;
-import com.ads.main.core.enums.campaign.CampaignStatus;
 import com.ads.main.core.enums.user.UserStatus;
-import com.ads.main.core.security.config.dto.Role;
 import com.ads.main.entity.UserEntity;
-import com.ads.main.vo.admin.UserModifyVo;
-import com.ads.main.vo.admin.UserVo;
+import com.ads.main.vo.admin.user.UserModifyVo;
+import com.ads.main.vo.admin.user.UserVo;
 import org.mapstruct.*;
 
 import java.util.List;

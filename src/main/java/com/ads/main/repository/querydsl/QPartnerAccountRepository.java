@@ -3,7 +3,7 @@ package com.ads.main.repository.querydsl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ads.main.core.enums.common.Bank;
 import com.ads.main.entity.PartnerAccountEntity;
-import com.ads.main.vo.partner.account.PartnerAccountSearchVo;
+import com.ads.main.vo.admin.partner.account.PartnerAccountSearchVo;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

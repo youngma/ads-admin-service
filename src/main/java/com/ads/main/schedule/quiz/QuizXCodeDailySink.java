@@ -2,11 +2,9 @@ package com.ads.main.schedule.quiz;
 
 
 import com.ads.main.core.enums.common.SinkSchedule;
-import com.ads.main.repository.template.RptQuizAdminDailyTemplate;
 import com.ads.main.repository.template.RptQuizXCodeDailyTemplate;
-import com.ads.main.service.ReportService;
-import com.ads.main.vo.report.RptSinkTimeVo;
-import com.ads.main.vo.report.resp.RptDashboard;
+import com.ads.main.service.admin.ReportService;
+import com.ads.main.vo.admin.report.RptSinkTimeVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

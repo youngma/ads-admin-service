@@ -1,18 +1,11 @@
 package com.ads.main.entity.mapper;
 
 import com.ads.main.core.config.convert.GenericMapper;
-import com.ads.main.core.enums.campaign.CampaignType;
 import com.ads.main.core.enums.campaign.PaymentTerms;
-import com.ads.main.entity.AdCampaignMasterEntity;
 import com.ads.main.entity.AdSmartStoreEntity;
-import com.ads.main.entity.PartnerAdGroupEntity;
-import com.ads.main.entity.mapper.FilesConverter;
-import com.ads.main.vo.advertiser.campaign.req.AdCampaignMasterModifyVo;
-import com.ads.main.vo.advertiser.campaign.req.AdSmartStoreModifyVo;
-import com.ads.main.vo.advertiser.campaign.req.AdSmartStoreRegisterVo;
-import com.ads.main.vo.advertiser.campaign.resp.AdSmartStoreVo;
-import com.ads.main.vo.partner.adGroup.PartnerAdGroupRegisterVo;
-import com.ads.main.vo.partner.adGroup.PartnerAdGroupStatusVo;
+import com.ads.main.vo.admin.advertiser.campaign.req.AdSmartStoreModifyVo;
+import com.ads.main.vo.admin.advertiser.campaign.req.AdSmartStoreRegisterVo;
+import com.ads.main.vo.admin.advertiser.campaign.resp.AdSmartStoreVo;
 import org.mapstruct.*;
 
 import java.util.List;

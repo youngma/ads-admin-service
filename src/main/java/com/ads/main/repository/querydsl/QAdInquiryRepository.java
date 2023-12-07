@@ -1,8 +1,8 @@
 package com.ads.main.repository.querydsl;
 
 
-import com.ads.main.vo.inquiry.req.AdInquirySearchVo;
-import com.ads.main.vo.inquiry.resp.AdInquiryVo;
+import com.ads.main.vo.admin.inquiry.req.AdInquirySearchVo;
+import com.ads.main.vo.admin.inquiry.resp.AdInquiryVo;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

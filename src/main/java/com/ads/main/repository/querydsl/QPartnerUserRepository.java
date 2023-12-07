@@ -2,7 +2,7 @@ package com.ads.main.repository.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ads.main.entity.UserEntity;
-import com.ads.main.vo.partner.user.PartnerUserSearchVo;
+import com.ads.main.vo.admin.partner.user.PartnerUserSearchVo;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

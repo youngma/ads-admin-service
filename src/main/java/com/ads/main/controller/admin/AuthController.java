@@ -2,7 +2,7 @@ package com.ads.main.controller.admin;
 
 
 import com.ads.main.core.vo.RespVo;
-import com.ads.main.service.UserService;
+import com.ads.main.service.admin.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;

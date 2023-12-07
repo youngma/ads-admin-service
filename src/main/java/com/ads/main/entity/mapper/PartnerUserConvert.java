@@ -2,9 +2,7 @@ package com.ads.main.entity.mapper;
 
 import com.ads.main.core.config.convert.GenericMapper;
 import com.ads.main.entity.PartnerUserEntity;
-import com.ads.main.entity.mapper.PartnerConvert;
-import com.ads.main.entity.mapper.UserConverter;
-import com.ads.main.vo.partner.user.PartnerUserVo;
+import com.ads.main.vo.admin.partner.user.PartnerUserVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

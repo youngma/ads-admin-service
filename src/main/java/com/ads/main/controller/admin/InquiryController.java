@@ -2,10 +2,10 @@ package com.ads.main.controller.admin;
 
 
 import com.ads.main.core.vo.RespVo;
-import com.ads.main.service.AdInquiryService;
-import com.ads.main.vo.inquiry.req.AdInquiryAnswerVo;
-import com.ads.main.vo.inquiry.req.AdInquirySearchVo;
-import com.ads.main.vo.inquiry.resp.AdInquiryVo;
+import com.ads.main.service.admin.AdInquiryService;
+import com.ads.main.vo.admin.inquiry.req.AdInquiryAnswerVo;
+import com.ads.main.vo.admin.inquiry.req.AdInquirySearchVo;
+import com.ads.main.vo.admin.inquiry.resp.AdInquiryVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
