@@ -5,10 +5,7 @@ import com.ads.main.core.security.config.dto.Role;
 import com.ads.main.core.utils.ExcelUtilsV1;
 import com.ads.main.core.vo.RespVo;
 import com.ads.main.service.ReportService;
-import com.ads.main.vo.report.excel.RptQuizAdminExcelVo;
-import com.ads.main.vo.report.excel.RptQuizAdvertiserExcelVo;
-import com.ads.main.vo.report.excel.RptQuizPartnerExcelVo;
-import com.ads.main.vo.report.excel.RptQuizUserRawExcelVo;
+import com.ads.main.vo.report.excel.*;
 import com.ads.main.vo.report.req.RptSearchVo;
 import com.ads.main.vo.report.resp.*;
 import jakarta.servlet.http.HttpServletResponse;
@@ -145,6 +142,34 @@ public class ReportController {
         return new RespVo<>(list);
     }
 
+    @GetMapping("/quiz/xcode")
+    public RespVo<Page<? extends DailyReportVo>> rptQuizXCode(
+            @RequestParam("startDate") String start,
+            @RequestParam("endDate") String end,
+            @RequestParam(value = "campaignName", required = false) String campaignName,
+            @RequestParam(value = "campaignCode", required = false) String campaignCode,
+            @RequestParam(value = "groupCode", required = false) String groupCode,
+            @RequestParam(value = "groupName", required = false) String groupName,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "20") int size
+    ) {
+
+        RptSearchVo rptSearchVo = RptSearchVo.builder()
+                .role(Role.X_CODE)
+                .searchStartDt(start)
+                .searchEndDt(end)
+                .campaignName(campaignName)
+                .campaignCode(campaignCode)
+                .groupCode(groupCode)
+                .groupName(groupName)
+                .build();
+
+        Page<? extends DailyReportVo> list = reportService.searchReportByDaily(rptSearchVo, PageRequest.of(page - 1, size));
+
+
+        return new RespVo<>(list);
+    }
+
     @GetMapping("/quiz/advertiser/daily/summary")
     public RespVo<? extends DailyReportVo> rptQuizAdvertiserSummary(
             @RequestParam("startDate") String start,
@@ -234,6 +259,33 @@ public class ReportController {
         return new RespVo<>(summary);
     }
 
+
+    @GetMapping("/quiz/xcode/summary")
+    public RespVo<? extends DailyReportVo> rptQuizXCodeSummary(
+            @RequestParam("startDate") String start,
+            @RequestParam("endDate") String end,
+            @RequestParam(value = "campaignName", required = false) String campaignName,
+            @RequestParam(value = "campaignCode", required = false) String campaignCode,
+            @RequestParam(value = "groupCode", required = false) String groupCode,
+            @RequestParam(value = "groupName", required = false) String groupName,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "20") int size
+    ) {
+
+        RptSearchVo rptSearchVo = RptSearchVo.builder()
+                .role(Role.X_CODE)
+                .searchStartDt(start)
+                .searchEndDt(end)
+                .campaignName(campaignName)
+                .campaignCode(campaignCode)
+                .groupCode(groupCode)
+                .groupName(groupName)
+                .build();
+
+        DailyReportVo summary = reportService.searchReportByDailySummary(rptSearchVo);
+
+        return new RespVo<>(summary);
+    }
 
     @GetMapping("/quiz/advertiser/daily/excel")
     public void rptQuizAdvertiserExcel(
@@ -401,5 +453,53 @@ public class ReportController {
                 ).toList();
 
         excelUtils.download(RptQuizUserRawExcelVo.class, list, LocalDateTime.now().format(formatter), response);
+    }
+    @GetMapping("/quiz/xcode/daily/excel")
+    public void rptQuizXCodeExcel(
+            @RequestParam("startDate") String start,
+            @RequestParam("endDate") String end,
+            @RequestParam(value = "campaignName", required = false) String campaignName,
+            @RequestParam(value = "campaignCode", required = false) String campaignCode,
+            @RequestParam(value = "groupCode", required = false) String groupCode,
+            @RequestParam(value = "groupName", required = false) String groupName,
+            HttpServletResponse response
+    ) {
+
+        RptSearchVo rptSearchVo = RptSearchVo.builder()
+                .role(Role.X_CODE)
+                .searchStartDt(start)
+                .searchEndDt(end)
+                .campaignName(campaignName)
+                .campaignCode(campaignCode)
+                .groupCode(groupCode)
+                .groupName(groupName)
+                .build();
+
+        List<RptQuizXCodeExcelVo> list = reportService.searchReportByDailyExcel(rptSearchVo)
+                .stream()
+                .map(t -> {
+                    RptQuizXCodeVo rptQuizXCodeVo = (RptQuizXCodeVo) t;
+                            return new RptQuizXCodeExcelVo(
+                                    rptQuizXCodeVo.getRptDate(),
+                                    rptQuizXCodeVo.getPartnerName(),
+                                    rptQuizXCodeVo.getGroupCode(),
+                                    rptQuizXCodeVo.getGroupName(),
+                                    rptQuizXCodeVo.getAdvertiserName(),
+                                    rptQuizXCodeVo.getCampaignCode(),
+                                    rptQuizXCodeVo.getCampaignName(),
+
+                                    rptQuizXCodeVo.getImpressionCnt(),
+                                    rptQuizXCodeVo.getAnswerCnt(),
+                                    rptQuizXCodeVo.getHintCnt(),
+                                    rptQuizXCodeVo.getClickCnt(),
+
+                                    rptQuizXCodeVo.getAdCost(),
+                                    rptQuizXCodeVo.getPartnerCommission(),
+                                    rptQuizXCodeVo.getUserCommission()
+                            );
+                        }
+                ).toList();
+
+        excelUtils.download(RptQuizXCodeExcelVo.class, list, LocalDateTime.now().format(formatter), response);
     }
 }

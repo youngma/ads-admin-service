@@ -1,19 +1,14 @@
 package com.ads.main.vo.report.req;
 
 import com.ads.main.core.security.config.dto.Role;
-import com.ads.main.entity.QRptQuizRawEntity;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.mapping.Set;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 
 import static com.ads.main.entity.QAdCampaignMasterEntity.adCampaignMasterEntity;
@@ -22,6 +17,7 @@ import static com.ads.main.entity.QRptQuizAdminDailyEntity.rptQuizAdminDailyEnti
 import static com.ads.main.entity.QRptQuizAdvertiserDailyEntity.rptQuizAdvertiserDailyEntity;
 import static com.ads.main.entity.QRptQuizPartnerDailyEntity.rptQuizPartnerDailyEntity;
 import static com.ads.main.entity.QRptQuizRawEntity.rptQuizRawEntity;
+import static com.ads.main.entity.QRptQuizXCodeEntity.rptQuizXCodeEntity;
 
 
 @Data
@@ -114,6 +110,28 @@ public class RptSearchVo implements Serializable {
                 if (campaignName != null&& !campaignName.isBlank()) {
                     builder.and(adCampaignMasterEntity.campaignName.contains(campaignName));
                 }
+            }
+
+            case X_CODE -> {
+
+                builder.and(rptQuizXCodeEntity.rptDate.between(searchStartDt, searchEndDt));
+
+                if (campaignCode != null&& !campaignCode.isBlank()) {
+                    builder.and(adCampaignMasterEntity.campaignCode.eq(campaignCode));
+                }
+
+                if (campaignName != null&& !campaignName.isBlank()) {
+                    builder.and(adCampaignMasterEntity.campaignName.contains(campaignName));
+                }
+
+                if (groupCode != null&& !groupCode.isBlank()) {
+                    builder.and(partnerAdGroupEntity.groupCode.eq(groupCode));
+                }
+
+                if (groupName != null&& !groupName.isBlank()) {
+                    builder.and(partnerAdGroupEntity.groupName.contains(groupName));
+                }
+
             }
         };
 

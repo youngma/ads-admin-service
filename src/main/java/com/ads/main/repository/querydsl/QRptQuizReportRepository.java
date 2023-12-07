@@ -5,8 +5,8 @@ import com.ads.main.vo.report.req.RptSearchVo;
 import com.ads.main.vo.report.resp.RptQuizAdminDailyVo;
 import com.ads.main.vo.report.resp.RptQuizAdvertiserDailyVo;
 import com.ads.main.vo.report.resp.RptQuizPartnerDailyVo;
+import com.ads.main.vo.report.resp.RptQuizXCodeVo;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +20,10 @@ import java.util.Objects;
 
 import static com.ads.main.entity.QAdCampaignMasterEntity.adCampaignMasterEntity;
 import static com.ads.main.entity.QPartnerAdGroupEntity.partnerAdGroupEntity;
+import static com.ads.main.entity.QRptQuizAdminDailyEntity.rptQuizAdminDailyEntity;
 import static com.ads.main.entity.QRptQuizAdvertiserDailyEntity.rptQuizAdvertiserDailyEntity;
 import static com.ads.main.entity.QRptQuizPartnerDailyEntity.rptQuizPartnerDailyEntity;
-import static com.ads.main.entity.QRptQuizAdminDailyEntity.rptQuizAdminDailyEntity;
+import static com.ads.main.entity.QRptQuizXCodeEntity.rptQuizXCodeEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -143,6 +144,53 @@ public class QRptQuizReportRepository {
         return new PageImpl<>(reports, pageable, Objects.requireNonNullElse(count, 0L));
     }
 
+    public Page<RptQuizXCodeVo> searchRptQuizXCodeDaily(RptSearchVo searchVo, Pageable pageable) {
+
+        List<RptQuizXCodeVo> reports = jpaQueryFactory.select(
+                        Projections.bean(RptQuizXCodeVo.class,
+                                rptQuizXCodeEntity.rptDate,
+                                adCampaignMasterEntity.advertiserEntity.businessName.as("advertiserName"),
+                                adCampaignMasterEntity.campaignName.as("campaignName"),
+                                adCampaignMasterEntity.adPrice.as("originAdCost"),
+                                partnerAdGroupEntity.partnerEntity.businessName.as("partnerName"),
+                                partnerAdGroupEntity.groupName.as("groupName"),
+                                rptQuizXCodeEntity.campaignCode,
+                                rptQuizXCodeEntity.groupCode,
+                                rptQuizXCodeEntity.reqCnt,
+                                rptQuizXCodeEntity.impressionCnt,
+                                rptQuizXCodeEntity.detailCnt,
+                                rptQuizXCodeEntity.answerCnt,
+                                rptQuizXCodeEntity.hintCnt,
+                                rptQuizXCodeEntity.clickCnt,
+                                rptQuizXCodeEntity.adCost,
+                                rptQuizXCodeEntity.partnerCommission,
+                                rptQuizXCodeEntity.userCommission,
+                                rptQuizXCodeEntity.adReword
+                        )
+                )
+                .from(rptQuizXCodeEntity)
+                .innerJoin(adCampaignMasterEntity).on(rptQuizXCodeEntity.campaignCode.eq(adCampaignMasterEntity.campaignCode))
+                .innerJoin(adCampaignMasterEntity.advertiserEntity)
+                .innerJoin(partnerAdGroupEntity).on(rptQuizXCodeEntity.groupCode.eq(partnerAdGroupEntity.groupCode))
+                .innerJoin(partnerAdGroupEntity.partnerEntity)
+                .where(searchVo.where())
+                .orderBy(rptQuizXCodeEntity.rptDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long count = jpaQueryFactory.select(rptQuizXCodeEntity.count())
+                .from(rptQuizXCodeEntity)
+                .innerJoin(adCampaignMasterEntity).on(rptQuizXCodeEntity.campaignCode.eq(adCampaignMasterEntity.campaignCode))
+                .innerJoin(adCampaignMasterEntity.advertiserEntity)
+                .innerJoin(partnerAdGroupEntity).on(rptQuizXCodeEntity.groupCode.eq(partnerAdGroupEntity.groupCode))
+                .innerJoin(partnerAdGroupEntity.partnerEntity)
+                .where(searchVo.where())
+                .fetchOne();
+
+        return new PageImpl<>(reports, pageable, Objects.requireNonNullElse(count, 0L));
+    }
+
 
     public List<RptQuizAdvertiserDailyVo> searchRptQuizAdvertiserDailyExcel(RptSearchVo searchVo) {
 
@@ -221,6 +269,38 @@ public class QRptQuizReportRepository {
                 .fetch();
     }
 
+    public List<RptQuizXCodeVo> searchRptQuizXCodeDailyExcel(RptSearchVo searchVo) {
+
+        return jpaQueryFactory.select(
+                        Projections.bean(RptQuizXCodeVo.class,
+                                rptQuizXCodeEntity.rptDate,
+                                adCampaignMasterEntity.advertiserEntity.businessName.as("advertiserName"),
+                                adCampaignMasterEntity.campaignName.as("campaignName"),
+                                adCampaignMasterEntity.adPrice.as("originAdCost"),
+                                partnerAdGroupEntity.partnerEntity.businessName.as("partnerName"),
+                                partnerAdGroupEntity.groupName.as("groupName"),
+                                rptQuizXCodeEntity.groupCode,
+                                rptQuizXCodeEntity.reqCnt,
+                                rptQuizXCodeEntity.impressionCnt,
+                                rptQuizXCodeEntity.detailCnt,
+                                rptQuizXCodeEntity.answerCnt,
+                                rptQuizXCodeEntity.hintCnt,
+                                rptQuizXCodeEntity.clickCnt,
+                                rptQuizXCodeEntity.adCost,
+                                rptQuizXCodeEntity.partnerCommission,
+                                rptQuizXCodeEntity.userCommission,
+                                rptQuizXCodeEntity.adReword
+                        )
+                )
+                .from(rptQuizXCodeEntity)
+                .innerJoin(adCampaignMasterEntity).on(rptQuizXCodeEntity.campaignCode.eq(adCampaignMasterEntity.campaignCode))
+                .innerJoin(adCampaignMasterEntity.advertiserEntity)
+                .innerJoin(partnerAdGroupEntity).on(rptQuizXCodeEntity.groupCode.eq(partnerAdGroupEntity.groupCode))
+                .innerJoin(partnerAdGroupEntity.partnerEntity)
+                .where(searchVo.where())
+                .orderBy(rptQuizXCodeEntity.rptDate.desc())
+                .fetch();
+    }
 
 
     public RptQuizAdvertiserDailyVo searchRptQuizAdvertiserSummary(RptSearchVo searchVo) {
@@ -265,7 +345,6 @@ public class QRptQuizReportRepository {
                 .fetchFirst();
     }
 
-
     public RptQuizAdminDailyVo searchRptQuizAdminDailySummary(RptSearchVo searchVo) {
 
         return jpaQueryFactory.select(
@@ -287,4 +366,31 @@ public class QRptQuizReportRepository {
                 .fetchFirst();
 
     }
+
+    public RptQuizXCodeVo searchRptQuizXCodeDailySummary(RptSearchVo searchVo) {
+
+        return jpaQueryFactory.select(
+                Projections.bean(RptQuizXCodeVo.class,
+                                rptQuizXCodeEntity.reqCnt.sum().as("reqCnt"),
+                                rptQuizXCodeEntity.impressionCnt.sum().as("impressionCnt"),
+                                rptQuizXCodeEntity.detailCnt.sum().as("detailCnt"),
+                                rptQuizXCodeEntity.answerCnt.sum().as("answerCnt"),
+                                rptQuizXCodeEntity.hintCnt.sum().as("hintCnt"),
+                                rptQuizXCodeEntity.clickCnt.sum().as("clickCnt"),
+                                rptQuizXCodeEntity.adCost.sum().as("adCost"),
+                                rptQuizXCodeEntity.partnerCommission.sum().as("partnerCommission"),
+                                rptQuizXCodeEntity.userCommission.sum().as("userCommission"),
+                                rptQuizXCodeEntity.adReword.sum().as("adReword")
+                        )
+                )
+                .from(rptQuizXCodeEntity)
+                .innerJoin(adCampaignMasterEntity).on(rptQuizXCodeEntity.campaignCode.eq(adCampaignMasterEntity.campaignCode))
+                .innerJoin(adCampaignMasterEntity.advertiserEntity)
+                .innerJoin(partnerAdGroupEntity).on(rptQuizXCodeEntity.groupCode.eq(partnerAdGroupEntity.groupCode))
+                .innerJoin(partnerAdGroupEntity.partnerEntity)
+                .where(searchVo.where())
+                .fetchFirst();
+
+    }
+
 }

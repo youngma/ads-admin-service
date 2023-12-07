@@ -33,7 +33,6 @@ public class ReportService {
     private final QRptQuizReportRepository qRptQuizReportRepository;
     private final QRptQuizRawRepository qRptQuizRawRepository;
 
-
     public RptDashboard getDashboardToday() {
 
         DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -60,6 +59,7 @@ public class ReportService {
             case PARTNER -> qRptQuizReportRepository.searchRptQuizPartnerDaily(rptSearchVo, pageable);
             case ADVERTISER -> qRptQuizReportRepository.searchRptQuizAdvertiserDaily(rptSearchVo, pageable);
             case USER -> qRptQuizRawRepository.searchRptQuizUserDaily(rptSearchVo, pageable);
+            case X_CODE -> qRptQuizReportRepository.searchRptQuizXCodeDaily(rptSearchVo, pageable);
         };
     }
 
@@ -70,6 +70,8 @@ public class ReportService {
             case PARTNER -> qRptQuizReportRepository.searchRptQuizPartnerDailySummary(rptSearchVo);
             case ADVERTISER -> qRptQuizReportRepository.searchRptQuizAdvertiserSummary(rptSearchVo);
             case USER -> qRptQuizRawRepository.searchRptQuizUserDailySummery(rptSearchVo);
+            case X_CODE -> qRptQuizReportRepository.searchRptQuizXCodeDailySummary(rptSearchVo);
+
         };
     }
 
@@ -79,25 +81,9 @@ public class ReportService {
             case PARTNER -> qRptQuizReportRepository.searchRptQuizPartnerDailyExcel(rptSearchVo);
             case ADVERTISER -> qRptQuizReportRepository.searchRptQuizAdvertiserDailyExcel(rptSearchVo);
             case USER -> qRptQuizRawRepository.searchRptQuizUserDailyExcel(rptSearchVo);
+            case X_CODE -> qRptQuizReportRepository.searchRptQuizXCodeDailyExcel(rptSearchVo);
         };
     }
-
-
-//    public Page<RptQuizPartnerDailyVo> searchPartnerRpt(RptSearchVo rptSearchVo, Pageable pageable) {
-//        return switch (rptSearchVo.getRole()) {
-//            case ADMIN -> null;
-//            case PARTNER ->
-//            case ADVERTISER -> null;
-//        };
-//    }
-//
-//    public Page<RptQuizAdminDailyVo> searchAdminRpt(RptSearchVo rptSearchVo, Pageable pageable) {
-//        return switch (rptSearchVo.getRole()) {
-//            case ADMIN ->
-//            case PARTNER -> null;
-//            case ADVERTISER -> null;
-//        };
-//    }
 
     public RptSinkTimeVo loadSinkSchedule(SinkSchedule schedule, String defaultSinkTime) {
 

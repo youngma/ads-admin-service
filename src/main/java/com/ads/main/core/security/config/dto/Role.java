@@ -9,6 +9,7 @@ public enum Role {
     PARTNER("partner"),
     ADVERTISER("advertiser"),
     USER("user"),
+    X_CODE("xcode"),
 
     ;
     private final String roleName;
