@@ -36,7 +36,7 @@ public class PartnerController {
 
     // 광고주 조회
     @GetMapping("/search")
-    public RespVo<Page<PartnerVo>> selectAdvertisers(
+    public RespVo<Page<PartnerVo>> selectPartners(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "20") int size,
             @RequestParam(value = "businessName", required = false) String businessName,
@@ -52,7 +52,7 @@ public class PartnerController {
                 .email(email)
                 .build();
 
-        Page<PartnerVo> advertisers = partnerService.findAdvertisers(partnerSearchVo, PageRequest.of(page - 1, size));
+        Page<PartnerVo> advertisers = partnerService.selectPartners(partnerSearchVo, PageRequest.of(page - 1, size));
         return new RespVo<>(advertisers);
     }
 

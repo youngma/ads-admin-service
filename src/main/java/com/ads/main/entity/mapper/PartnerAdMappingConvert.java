@@ -13,9 +13,11 @@ import java.util.List;
 )
 public interface PartnerAdMappingConvert extends GenericMapper<PartnerAdMappingVo, PartnerAdMappingEntity> {
 
+    @Mapping(target = "groupSeq", ignore = true)
     @Override
     PartnerAdMappingVo toDto(PartnerAdMappingEntity e);
 
+    @Mapping(target = "partnerAdGroupEntity", ignore = true)
     @Override
     PartnerAdMappingEntity toEntity(PartnerAdMappingVo d);
 

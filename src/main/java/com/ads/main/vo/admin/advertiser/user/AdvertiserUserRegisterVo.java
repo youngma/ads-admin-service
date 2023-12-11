@@ -31,6 +31,8 @@ public class AdvertiserUserRegisterVo extends UserVo implements Serializable {
         userVo.setUserName(this.userName);
         userVo.setUserPassword(this.userPassword);
         userVo.setPhoneNumber(this.phoneNumber);
+        userVo.setEmail(this.email);
+
         userVo.setUserRole(role);
 
         if (userStatus == null) {

@@ -2,6 +2,7 @@ package com.ads.main.core.config.advice;
 
 
 import com.ads.main.core.config.exception.AppException;
+import com.ads.main.core.config.exception.ServiceException;
 import com.ads.main.core.vo.RespVo;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,11 @@ public class ExceptionAdvice {
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public HttpEntity handle404(NoHandlerFoundException e){
+        return ResponseEntity.badRequest().body(new RespVo(e.getMessage()));
+    }
+    @ExceptionHandler(ServiceException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public HttpEntity handle404(ServiceException e){
         return ResponseEntity.badRequest().body(new RespVo(e.getMessage()));
     }
 

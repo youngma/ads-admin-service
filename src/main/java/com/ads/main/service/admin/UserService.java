@@ -54,6 +54,11 @@ public class UserService {
         return userRepository.findUserEntityByUserIdAndUserRole(userid, Role.ADMIN);
     }
 
+    public Optional<UserEntity> findAdminUserById(String userid, Role role) {
+        return userRepository.findUserEntityByUserIdAndUserRole(userid, role);
+    }
+
+
     public Optional<UserEntity> findAllUserByUserId(String userid) {
         return userRepository.findUserEntityByUserId(userid);
     }
@@ -81,6 +86,11 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserVo findUserById(String userid) throws UsernameNotFoundException {
         UserEntity userEntity = findAdminUserById(userid).orElseThrow(USER_NOT_FOUND::throwErrors);
+        return userConverter.toDto(userEntity);
+    }
+    @Transactional(readOnly = true)
+    public UserVo findUserById(String userid, Role role) throws UsernameNotFoundException {
+        UserEntity userEntity = findAdminUserById(userid, role).orElseThrow(USER_NOT_FOUND::throwErrors);
         return userConverter.toDto(userEntity);
     }
 

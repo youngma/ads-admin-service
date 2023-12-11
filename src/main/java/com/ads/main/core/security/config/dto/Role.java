@@ -1,6 +1,9 @@
 package com.ads.main.core.security.config.dto;
 
+import com.ads.main.core.enums.campaign.CampaignStatus;
 import lombok.Getter;
+
+import java.util.Arrays;
 
 @Getter
 public enum Role {
@@ -18,7 +21,10 @@ public enum Role {
         this.roleName = roleName;
     }
 
-    Role findRole(String roleName) {
-        return Role.valueOf(roleName);
+    public static Role findRole(String roleName) {
+        return Arrays.stream(Role.values())
+                .filter(value -> value.getRoleName().equals(roleName))
+                .findAny()
+                .orElseGet(() -> null);
     }
 }

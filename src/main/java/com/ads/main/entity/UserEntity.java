@@ -72,6 +72,13 @@ public class UserEntity extends BaseEntity implements Serializable {
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
+
+    /**
+     * 사용자 이메일
+     */
+    @Column(name = "EMAIL")
+    private String email;
+
     /**
      * 유저상태(활성, 휴면, 탈퇴)
      */

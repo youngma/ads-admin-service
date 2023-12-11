@@ -26,9 +26,7 @@ public class UserAuditorAware implements AuditorAware<String> {
             return  Optional.of(ADMIN_SYSTEM);
         }
 
-
         Long seq = (Long) authentication.getPrincipal();
-        log.debug("# {}",authentication.getPrincipal());
         return  Optional.ofNullable(String.valueOf(seq));
     }
 }

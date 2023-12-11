@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ads.main.core.enums.user.UserStatus;
 import com.ads.main.core.security.config.dto.Role;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -62,7 +65,14 @@ public class UserVo implements Serializable {
     protected String phoneNumber;
 
     /**
-     * 등록일자
+     * 사용자 이메일
+     */
+    @NotBlank(message = "이메일은 필수 입니다.")
+    @Email(message = "이메일 형식의 형식을 확인 해주세요.")
+    protected String email;
+
+    /**
+     * 등록 일자
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     protected LocalDateTime insertedAt;
@@ -75,7 +85,7 @@ public class UserVo implements Serializable {
 
 
     /**
-     * 수정일자
+     * 수정 일자
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     protected LocalDateTime updatedAt;
@@ -95,7 +105,11 @@ public class UserVo implements Serializable {
     protected String userStatusName;
 
     public String getUserStatusName() {
-        return UserStatus.of(userStatus).getName();
+        if (userStatus != null) {
+            return UserStatus.of(userStatus).getName();
+        } else {
+            return UserStatus.Disable.getName();
+        }
     }
 
 }

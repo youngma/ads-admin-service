@@ -1,5 +1,8 @@
 package com.ads.main.core.security.config.dto;
 
+import com.ads.main.vo.admin.partner.PartnerVo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,6 +16,7 @@ import java.util.HashSet;
 @Getter
 @Setter
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LoginInfo implements Serializable {
 
     @Serial
@@ -23,11 +27,22 @@ public class LoginInfo implements Serializable {
     private String password;
     private String phoneNumber;
     private String userName;
+
+    private Long advertiserSeq;
+    private String advertiserName;
+    private Long partnerSeq;
+    private String partnerName;
+
     public LoginInfo(Long userSeq, String userId, String password, String phoneNumber, String userName) {
         this.userSeq = userSeq;
         this.userId = userId;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.userName = userName;
+    }
+
+    public void setPartner(PartnerVo partnerVo) {
+        this.partnerName = partnerVo.getBusinessName();
+        this.partnerSeq = partnerVo.getPartnerSeq();
     }
 }

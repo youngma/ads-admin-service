@@ -1,6 +1,7 @@
 package com.ads.main.core.security.config;
 
 
+import com.ads.main.core.security.config.dto.Role;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ads.main.core.security.fillter.ExceptionHandlerFilter;
 import com.ads.main.core.security.fillter.FilterSkipMatcher;
@@ -82,8 +83,10 @@ public class SecurityConfig {
                 .and()
                 .httpBasic().disable()  // [STEP2] form 기반의 로그인에 대해 비 활성화하며 커스텀으로 구성한 필터를 사용한다.
                 .authorizeHttpRequests(auth -> {
-//                    auth.requestMatchers("/api/admin/**").hasAnyAuthority(Role.ADMIN.getRoleName());
-                    auth.requestMatchers(new FilterSkipMatcher(skipPaths(), "/**")).permitAll();
+                    auth.requestMatchers("/api/admin/**").hasAnyAuthority(Role.ADMIN.getRoleName());
+                    auth.requestMatchers("/api/partner/**").hasAnyAuthority(Role.PARTNER.getRoleName());
+                    auth.requestMatchers("/api/advertiser/**").hasAnyAuthority(Role.ADVERTISER.getRoleName());
+//                    auth.requestMatchers(new FilterSkipMatcher(skipPaths(), "/**")).permitAll();
                     auth.anyRequest().authenticated();
                 })// // [STEP3] 토큰을 활용하는 경우 모든 요청에 대해 '인가'에 대해서 사용.
 

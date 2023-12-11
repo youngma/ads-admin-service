@@ -1,6 +1,8 @@
 package com.ads.main.vo.admin.user;
 
 import com.ads.main.core.enums.user.UserStatus;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -37,12 +39,22 @@ public class UserModifyVo implements Serializable {
     @Pattern(regexp = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$", message = "10 ~ 11 자리의 숫자만 입력 가능합니다.")
     private String phoneNumber;
 
+
+    /**
+     * 사용자 이메일
+     */
+    @NotBlank(message = "이메일은 필수 입니다.")
+    @Email(message = "이메일 형식의 형식을 확인 해주세요.")
+    private String email;
+
+
     /**
      * 사용자 상태
      */
     private String userStatus;
 
     private String userStatusNm;
+
 
     public String getUserStatusNm() {
         try {

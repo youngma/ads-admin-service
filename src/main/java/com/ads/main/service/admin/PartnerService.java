@@ -81,7 +81,12 @@ public class PartnerService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PartnerVo> findAdvertisers(PartnerSearchVo partnerSearchVo, Pageable pageable) {
+    public PartnerVo findPartnerByUserSeq(long userSeq) {
+        return qPartnerUserEntityRepository.findPartnerByUserSeq(userSeq);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<PartnerVo> selectPartners(PartnerSearchVo partnerSearchVo, Pageable pageable) {
         Page<PartnerEntity> partnerEntities = qPartnerRepository.searchPartners(partnerSearchVo, pageable);
         return pageMapper.convert(partnerEntities);
     }

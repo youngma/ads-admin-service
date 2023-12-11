@@ -20,6 +20,4 @@ public enum UserException {
         return new RuntimeException(this.message);
     }
 
-
-
 }

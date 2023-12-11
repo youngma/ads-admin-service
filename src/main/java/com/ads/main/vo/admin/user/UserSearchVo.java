@@ -3,6 +3,8 @@ package com.ads.main.vo.admin.user;
 import com.querydsl.core.BooleanBuilder;
 import com.ads.main.core.enums.user.UserStatus;
 import com.ads.main.core.security.config.dto.Role;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -44,6 +46,11 @@ public class UserSearchVo implements Serializable {
      * 사용자 전화 번호
      */
     protected String phoneNumber;
+
+    /**
+     * 사용자 이메일
+     */
+    private String email;
 
     protected UserStatus userStatus;
 
