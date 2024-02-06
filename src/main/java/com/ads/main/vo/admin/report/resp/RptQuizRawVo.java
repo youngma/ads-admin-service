@@ -2,6 +2,7 @@ package com.ads.main.vo.admin.report.resp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.io.Serial;
@@ -151,6 +152,18 @@ public class RptQuizRawVo extends DailyReportVo implements Serializable {
      * 사용자 지급 포인트
      */
     private Long adReword;
+
+
+    /**
+     * 리워드 포스트백 상태
+     */
+    private Long postBackStatus;
+
+
+    /**
+     * 리워드 포스트백 결과
+     */
+    private String postBackResult;
 
 
     public Long getAdReword() {

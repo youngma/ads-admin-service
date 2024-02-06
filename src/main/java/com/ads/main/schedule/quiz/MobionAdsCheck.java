@@ -48,6 +48,7 @@ public class MobionAdsCheck {
                 .toList();
 
         qAdvertiserCampaignMasterRepository.adCampaignClosed("889361", keys);
+        qAdvertiserCampaignMasterRepository.adCampaignOpen("889361", keys);
 
     }
 

@@ -93,7 +93,7 @@ public class PartnerAdGroupVo implements Serializable {
     /**
      * 포인트 교환 비율
      */
-    private Integer rewordRate;
+    private Double rewordRate;
 
 
     /**

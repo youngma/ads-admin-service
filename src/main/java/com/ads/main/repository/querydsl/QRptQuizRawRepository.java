@@ -63,7 +63,9 @@ public class QRptQuizRawRepository {
                                 rptQuizRawEntity.adCost,
                                 rptQuizRawEntity.partnerCommission,
                                 rptQuizRawEntity.userCommission,
-                                rptQuizRawEntity.adReword
+                                rptQuizRawEntity.adReword,
+                                rptQuizRawEntity.postBackStatus,
+                                rptQuizRawEntity.postBackResult
 
                         )
                 )
@@ -128,7 +130,9 @@ public class QRptQuizRawRepository {
                                 rptQuizRawEntity.adCost,
                                 rptQuizRawEntity.partnerCommission,
                                 rptQuizRawEntity.userCommission,
-                                rptQuizRawEntity.adReword
+                                rptQuizRawEntity.adReword,
+                                rptQuizRawEntity.postBackStatus,
+                                rptQuizRawEntity.postBackResult
 
                         )
                 )

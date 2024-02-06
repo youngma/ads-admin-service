@@ -119,7 +119,7 @@ public class PartnerAdGroupEntity extends BaseEntity implements Serializable {
      * 포인트 교환 비율
      */
     @Column(name = "REWORD_RATE", nullable = false)
-    private Integer rewordRate;
+    private Double rewordRate;
 
     /**
      * 서비스 상태

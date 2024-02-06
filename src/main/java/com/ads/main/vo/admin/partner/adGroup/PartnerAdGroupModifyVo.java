@@ -84,7 +84,7 @@ public class PartnerAdGroupModifyVo implements Serializable {
      */
     @Min(value = 0, message = "포인트 교환 비율 0보다 커다 합니다.")
     @Max(value = 100, message = "포인트 교환 비율 100보다 작아야 합니다.")
-    private Integer rewordRate;
+    private Double rewordRate;
 
 
 }

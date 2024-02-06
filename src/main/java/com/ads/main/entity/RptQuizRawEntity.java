@@ -149,6 +149,21 @@ public class RptQuizRawEntity implements Serializable {
     @Column(name = "AD_REWORD")
     private Long adReword;
 
+
+    /**
+     * 리워드 포스트백 상태
+     */
+    @Column(name = "POST_BACK_STATUS")
+    private Long postBackStatus;
+
+
+    /**
+     * 리워드 포스트백 결과
+     */
+    @Column(name = "POST_BACK_RESULT")
+    private String postBackResult;
+
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

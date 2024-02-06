@@ -36,14 +36,18 @@ public class RptQuizRawTemplate {
                             0 as AD_COST,
                             0 as PARTNER_COMMISSION,
                             0 as USER_COMMISSION,
-                            0 as AD_REWORD
+                            0 as AD_REWORD,
+                            null as POST_BACK_STATUS,
+                        null  as POST_BACK_RESULT
                         from RPT_AD_REQUEST REQ
                         join PARTNER_AD_GROUP AD_GROUP
                          on REQ.GROUP_CODE = AD_GROUP.GROUP_CODE
                          and AD_GROUP.AD_TYPE in ('QUIZ01','QUIZ02', 'ALL')
                         where REQ.REQUEST_AT between ? and ?
                     ) as RAW
-                    ON DUPLICATE KEY UPDATE  REQ_CNT = RAW.REQ_CNT
+                    ON DUPLICATE KEY UPDATE  REQ_CNT = RAW.REQ_CNT,
+                    REQUEST_AT = RAW.REQUEST_AT
+
                     ;
                     """
                 ,startDate, endDate
@@ -76,7 +80,9 @@ public class RptQuizRawTemplate {
                         0 as AD_COST,
                         0 as PARTNER_COMMISSION,
                         0 as USER_COMMISSION,
-                        0 as AD_REWORD
+                        0 as AD_REWORD,
+                        null as POST_BACK_STATUS,
+                        null  as POST_BACK_RESULT
                     from RPT_QUIZ_RAW RAW
                     inner join (
                         select
@@ -124,7 +130,9 @@ public class RptQuizRawTemplate {
                         0 as AD_COST,
                         0 as PARTNER_COMMISSION,
                         0 as USER_COMMISSION,
-                        0 as AD_REWORD
+                        0 as AD_REWORD,
+                        null as POST_BACK_STATUS,
+                        null  as POST_BACK_RESULT
                     from RPT_QUIZ_RAW RAW
                     inner join (
                         select
@@ -170,7 +178,9 @@ public class RptQuizRawTemplate {
                         0 as AD_COST,
                         0 as PARTNER_COMMISSION,
                         0 as USER_COMMISSION,
-                        0 as AD_REWORD
+                        0 as AD_REWORD,
+                        null as POST_BACK_STATUS,
+                        null  as POST_BACK_RESULT
                     from RPT_QUIZ_RAW RAW
                     inner join (
                         select
@@ -217,7 +227,9 @@ public class RptQuizRawTemplate {
                         0 as AD_COST,
                         0 as PARTNER_COMMISSION,
                         0 as USER_COMMISSION,
-                        0 as AD_REWORD
+                        0 as AD_REWORD,
+                        null as POST_BACK_STATUS,
+                        null  as POST_BACK_RESULT
                     from RPT_QUIZ_RAW RAW
                     inner  join (
                         select
@@ -264,13 +276,17 @@ public class RptQuizRawTemplate {
                             null as CLICK_AT,               /* click at */
                             REQUEST.AD_COST as AD_COST,
                             REQUEST.PARTNER_COMMISSION as PARTNER_COMMISSION,
-                            REQUEST.USER_COMMISSION as USER_COMMISSION, 
-                            REQUEST.AD_REWORD as AD_REWORD
+                            REQUEST.USER_COMMISSION as USER_COMMISSION,
+                            REQUEST.AD_REWORD as AD_REWORD,
+                            ANSWER.POST_BACK_STATUS as POST_BACK_STATUS,
+                            ANSWER.POST_BACK_RESULT as POST_BACK_RESULT
                         from RPT_QUIZ_RAW RAW
                         inner join (
                             select
                                 REQUEST_ID as ANSWER_ID,
-                                ANSWER_AT
+                                ANSWER_AT,
+                                POST_BACK_STATUS,
+                                POST_BACK_RESULT
                             from RPT_AD_ANSWER
                         ) ANSWER
                            on RAW.REQUEST_ID = ANSWER_ID
@@ -284,6 +300,8 @@ public class RptQuizRawTemplate {
                     , PARTNER_COMMISSION = RAW.PARTNER_COMMISSION
                     , USER_COMMISSION = RAW.USER_COMMISSION
                     , AD_REWORD = RAW.AD_REWORD
+                    , POST_BACK_STATUS = RAW.POST_BACK_STATUS
+                    , POST_BACK_RESULT = RAW.POST_BACK_RESULT
                     ;
                     """
                 ,startDate, endDate

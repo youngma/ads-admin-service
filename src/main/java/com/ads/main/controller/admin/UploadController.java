@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -119,48 +121,65 @@ public class UploadController {
 
         FileVo fileVO = new FileVo();
 
-
         String fileName = url.substring(url.lastIndexOf("/"));
         String fileExt = url.substring(url.lastIndexOf("."));
 
-        try(InputStream in = new URL(url).openStream()){
+        try {
 
-            log.debug("UPLOAD_LOCATION : {}", UPLOAD_LOCATION);
-            log.debug("파일 이름 : {}", fileName);
-            log.debug("파일 확장자 : {}", fileExt);
+            URL image = new URL(url);
 
-            String uuidFile = UUID.randomUUID().toString().replaceAll("-", "") + fileExt;
+            HttpURLConnection connection = ((HttpURLConnection)image.openConnection());
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+            connection.setRequestProperty("Referer", "https://admin.quizclick.io/");
 
-            log.debug("UUID 파일명 : {}", uuidFile);
+//            if (connection.getResponseCode() == 200) {
+                // this must be called before 'getErrorStream()' works
+                try (InputStream in = connection.getInputStream()) {
 
-            String uploadFolder = UPLOAD_LOCATION + "/" + target;
-            String uploadFile = uploadFolder + "/" + uuidFile;
+                    log.debug("UPLOAD_LOCATION : {}", UPLOAD_LOCATION);
+                    log.debug("파일 이름 : {}", fileName);
+                    log.debug("파일 확장자 : {}", fileExt);
 
-            log.debug("업로드 파일 : {}", uploadFile);
+                    String uuidFile = UUID.randomUUID().toString().replaceAll("-", "") + fileExt;
 
-            Path imagePath = Paths.get(uploadFile);
+                    log.debug("UUID 파일명 : {}", uuidFile);
 
-            File Folder = new File(uploadFolder);
+                    String uploadFolder = UPLOAD_LOCATION + "/" + target;
+                    String uploadFile = uploadFolder + "/" + uuidFile;
 
-            if ( !Folder.exists() ) {
-                try {
-                    Folder.mkdirs();
-                    log.debug("폴더가 생성 되었습니다.");
-                } catch (Exception e) {
-                    e.getStackTrace();
+                    log.debug("업로드 파일 : {}", uploadFile);
+
+                    Path imagePath = Paths.get(uploadFile);
+
+                    File Folder = new File(uploadFolder);
+
+                    if (!Folder.exists()) {
+                        try {
+                            Folder.mkdirs();
+                            log.debug("폴더가 생성 되었습니다.");
+                        } catch (Exception e) {
+                            e.getStackTrace();
+                        }
+                    }
+
+                    Files.copy(in, imagePath, StandardCopyOption.REPLACE_EXISTING);
+
+                    fileVO.setOriginFileName(fileName); // file
+                    fileVO.setNewFileName(uuidFile); // new file
+                    fileVO.setTarget(target); // new file
+                    fileVO.setUploadFile(uploadFile); // 경로 + 변경된 파일명
                 }
-            }
+//            } else {
 
-            Files.copy(in, imagePath, StandardCopyOption.REPLACE_EXISTING);
-
-            fileVO.setOriginFileName(fileName); // file
-            fileVO.setNewFileName(uuidFile); // new file
-            fileVO.setTarget(target); // new file
-            fileVO.setUploadFile(uploadFile); // 경로 + 변경된 파일명
+//            }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
+
 
         return new RespVo<>(List.of(fileVO));
     }

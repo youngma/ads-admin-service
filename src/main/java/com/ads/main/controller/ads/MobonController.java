@@ -24,7 +24,6 @@ public class MobonController {
             @RequestParam(value = "s") @NotNull(message = "지면 코드는 필수 값입니다.") String code
             ) {
         MobonApi mobonApi = appClientFactory.load(DOMAIN.MOBON_API);
-        String content =  mobonApi.search(code, "100","0","99", "Y", "false");
-        return content;
+        return mobonApi.search(code, "100","0","99", "Y", "false");
     }
 }
