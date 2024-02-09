@@ -3,8 +3,6 @@ package com.ads.main.core.security.auditor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.AuditorAware;
-import org.springframework.lang.NonNullApi;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,6 @@ import java.util.Optional;
 @Slf4j
 public class UserAuditorAware implements AuditorAware<String> {
     public static final String ADMIN_SYSTEM = "ADMIN_SYSTEM";
-
 
     @Override
     public Optional<String> getCurrentAuditor() {

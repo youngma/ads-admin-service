@@ -61,8 +61,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider  {
         GrantedAuthority grantedAuthority = appUser.getAuthorities().stream().findFirst().get();
         Role role = Role.findRole(grantedAuthority.getAuthority());
 
-
-
         LoginInfo loginInfo = new LoginInfo(
                 appUser.getUserVo().getUserSeq(),
                 appUser.getUserVo().getUserId(),

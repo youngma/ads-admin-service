@@ -34,7 +34,7 @@ public class PartnerBusinessModifyVo implements Serializable {
      * 사업자 번호
      */
     @NotBlank(message = "사업자 번호는 필수 입니다.")
-    @Pattern(regexp = "([0-2])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])", message = "사업자 번호를 다시 확인해주세요.")
+    @Pattern(regexp = "([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])", message = "사업자 번호를 다시 확인해주세요.")
     private String businessNumber;
 
 

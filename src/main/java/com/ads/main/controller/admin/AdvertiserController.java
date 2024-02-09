@@ -59,7 +59,7 @@ public class AdvertiserController {
     @GetMapping("/businessNumber/check")
     public RespVo<Boolean> duplicateCheckByBusinessNumber(
             @RequestParam(value = "businessNumber")
-            @Pattern(regexp = "([0-2])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])", message = "사업자 번호를 다시 확인 해주세요.")
+            @Pattern(regexp = "([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])", message = "사업자 번호를 다시 확인 해주세요.")
             String businessNumber
     ) {
         boolean userCheck = advertiserService.checkBusinessNumber(businessNumber);

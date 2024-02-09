@@ -1,6 +1,5 @@
 package com.ads.main.core.security.fillter;
 
-import com.ads.main.core.config.exception.ServiceException;
 import com.ads.main.core.enums.exception.AuthException;
 import com.ads.main.core.security.config.SecurityProperties;
 import com.ads.main.core.security.config.dto.LoginInfo;
@@ -14,13 +13,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
