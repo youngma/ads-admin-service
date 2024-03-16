@@ -1,5 +1,6 @@
 package com.ads.main.core.security.config.dto;
 
+import com.ads.main.vo.admin.advertiser.AdvertiserVo;
 import com.ads.main.vo.admin.partner.PartnerVo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -44,5 +45,10 @@ public class LoginInfo implements Serializable {
     public void setPartner(PartnerVo partnerVo) {
         this.partnerName = partnerVo.getBusinessName();
         this.partnerSeq = partnerVo.getPartnerSeq();
+    }
+
+    public void setAdvertiser(AdvertiserVo advertiserVo) {
+        this.partnerName = advertiserVo.getBusinessName();
+        this.advertiserSeq = advertiserVo.getAdvertiserSeq();
     }
 }

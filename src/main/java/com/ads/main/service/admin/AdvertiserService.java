@@ -15,6 +15,7 @@ import com.ads.main.repository.jpa.AdvertiserUserRepository;
 import com.ads.main.repository.querydsl.QAdvertiserRepository;
 import com.ads.main.repository.querydsl.QAdvertiserUserRepository;
 import com.ads.main.vo.admin.FilesVo;
+import com.ads.main.vo.admin.partner.PartnerVo;
 import com.ads.main.vo.admin.user.UserVo;
 import com.ads.main.vo.admin.advertiser.AdvertiserBusinessModifyVo;
 import com.ads.main.vo.admin.advertiser.AdvertiserModifyVo;
@@ -82,6 +83,11 @@ public class AdvertiserService {
         AdvertiserEntity advertiserEntity = findUserEntityByAdvertiserSeq(advertiserSeq)
                 .orElseThrow(ADVERTISER_NOT_FOUND::throwErrors);
         return advertiserConvert.toDto(advertiserEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public AdvertiserVo findAdvertiserByUserSeq(long userSeq) {
+        return qAdvertiserRepository.findAdvertiserByUserSeq(userSeq);
     }
 
     @Transactional(readOnly = true)

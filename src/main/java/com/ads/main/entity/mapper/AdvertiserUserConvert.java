@@ -21,8 +21,8 @@ public interface AdvertiserUserConvert extends GenericMapper<AdvertiserUserVo, A
 
     @Override
     @Mappings({
-        @Mapping(source = "advertiserEntity", target = "advertiser"),
-        @Mapping(source = "userEntity", target = "user"),
+            @Mapping(source = "advertiserEntity", target = "advertiser"),
+            @Mapping(source = "userEntity", target = "user"),
     })
     AdvertiserUserVo toDto(AdvertiserUserEntity e);
 

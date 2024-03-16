@@ -9,6 +9,7 @@ import com.ads.main.repository.jpa.UserRepository;
 import com.ads.main.repository.querydsl.QAdvertiserUserRepository;
 import com.ads.main.repository.querydsl.QPartnerUserRepository;
 import com.ads.main.repository.querydsl.QUserRepository;
+import com.ads.main.vo.admin.advertiser.AdvertiserVo;
 import com.ads.main.vo.admin.partner.PartnerVo;
 import com.ads.main.vo.admin.user.*;
 import jakarta.annotation.PostConstruct;
@@ -105,6 +106,15 @@ public class UserService {
         PartnerVo partnerVo = qPartnerUserRepository.findPartnerByUserSeq(userSeq);
         partnerUserDto.setPartnerVo(partnerVo);
         return partnerUserDto;
+    }
+
+    @Transactional(readOnly = true)
+    public AdvertiserUserVo findAdvertiserUser(Long userSeq, Role role) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findUserEntityByUserSeqAndUserRole(userSeq, role).orElseThrow(USER_NOT_FOUND::throwErrors);
+       AdvertiserUserVo advertiserUserVo = userConverter.toAdvertiserUserDto(userEntity);
+        AdvertiserVo advertiserVo = qAdvertiserUserRepository.findAdvertiserUserSeq(userSeq);
+        advertiserUserVo.setAdvertiserVo(advertiserVo);
+        return advertiserUserVo;
     }
     @Transactional(readOnly = true)
     public UserVo findUser(String userid, String password) throws UsernameNotFoundException {

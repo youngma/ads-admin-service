@@ -54,6 +54,8 @@ public class ReportService {
     }
 
     public Page<? extends DailyReportVo> searchReportByDaily(RptSearchVo rptSearchVo, Pageable pageable) {
+
+        log.info("# {}", rptSearchVo);
         return switch (rptSearchVo.getRole()) {
             case ADMIN -> qRptQuizReportRepository.searchRptQuizAdminDaily(rptSearchVo, pageable);
             case PARTNER -> qRptQuizReportRepository.searchRptQuizPartnerDaily(rptSearchVo, pageable);

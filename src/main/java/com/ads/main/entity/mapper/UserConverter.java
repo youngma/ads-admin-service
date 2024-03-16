@@ -3,6 +3,7 @@ package com.ads.main.entity.mapper;
 import com.ads.main.core.config.convert.GenericMapper;
 import com.ads.main.core.enums.user.UserStatus;
 import com.ads.main.entity.UserEntity;
+import com.ads.main.vo.admin.user.AdvertiserUserVo;
 import com.ads.main.vo.admin.user.PartnerUserVo;
 import com.ads.main.vo.admin.user.UserModifyVo;
 import com.ads.main.vo.admin.user.UserVo;
@@ -19,10 +20,17 @@ public interface UserConverter extends GenericMapper<UserVo, UserEntity> {
     @Override
     UserVo toDto(UserEntity e);
 
+    @Named("toPartnerUserDto")
     @Mapping(target = "partnerVo", ignore = true)
     @Mapping(target = "userStatusName", ignore = true)
     @Mapping(target = "userStatus", source = "userStatus", qualifiedByName = "userStatusToValue")
     PartnerUserVo toPartnerUserDto(UserEntity e);
+
+    @Named("toAdvertiserUserDto")
+    @Mapping(target = "advertiserVo", ignore = true)
+    @Mapping(target = "userStatusName", ignore = true)
+    @Mapping(target = "userStatus", source = "userStatus", qualifiedByName = "userStatusToValue")
+    AdvertiserUserVo toAdvertiserUserDto(UserEntity e);
 
     @Mapping(target = "userStatus", source = "userStatus", qualifiedByName = "userStatusToEnum")
     @Override

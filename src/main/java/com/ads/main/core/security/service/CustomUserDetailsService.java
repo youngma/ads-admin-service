@@ -3,8 +3,10 @@ package com.ads.main.core.security.service;
 import com.ads.main.core.enums.user.UserStatus;
 import com.ads.main.core.security.config.dto.AppUser;
 import com.ads.main.core.security.config.dto.Role;
+import com.ads.main.service.admin.AdvertiserService;
 import com.ads.main.service.admin.PartnerService;
 import com.ads.main.service.admin.UserService;
+import com.ads.main.vo.admin.advertiser.AdvertiserVo;
 import com.ads.main.vo.admin.partner.PartnerVo;
 import com.ads.main.vo.admin.user.UserVo;
 import lombok.AllArgsConstructor;
@@ -22,6 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
     private final PartnerService partnerService;
+    private final AdvertiserService advertiserService;
 
 
     @Override
@@ -43,6 +46,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public PartnerVo loadPartnerByUserSeq(Long userSeq) {
        return partnerService.findPartnerByUserSeq(userSeq);
+    }
+    public AdvertiserVo loadAdvertiserByUserSeq(Long userSeq) {
+       return advertiserService.findAdvertiserByUserSeq(userSeq);
     }
 
 }

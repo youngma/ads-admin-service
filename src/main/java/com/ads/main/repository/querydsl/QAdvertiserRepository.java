@@ -1,5 +1,8 @@
 package com.ads.main.repository.querydsl;
 
+import com.ads.main.vo.admin.advertiser.AdvertiserVo;
+import com.ads.main.vo.admin.partner.PartnerVo;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ads.main.entity.AdvertiserEntity;
 import com.ads.main.entity.AdvertiserUserEntity;
@@ -16,6 +19,8 @@ import java.util.Objects;
 
 import static com.ads.main.entity.QAdvertiserEntity.advertiserEntity;
 import static com.ads.main.entity.QAdvertiserUserEntity.advertiserUserEntity;
+import static com.ads.main.entity.QPartnerEntity.partnerEntity;
+import static com.ads.main.entity.QPartnerUserEntity.partnerUserEntity;
 import static com.ads.main.entity.QUserEntity.userEntity;
 
 @Repository
@@ -36,6 +41,20 @@ public class QAdvertiserRepository {
                 .leftJoin(userEntity).fetchJoin()
                 .where(advertiserEntity.advertiserSeq.eq(advertiserSeq))
                 .fetch();
+    }
+
+    public AdvertiserVo findAdvertiserByUserSeq(Long userSeq) {
+        return jpaQueryFactory.select(
+                        Projections.bean(
+                                AdvertiserVo.class,
+                                advertiserEntity.advertiserSeq,
+                                advertiserEntity.businessName
+                        )
+                )
+                .from(advertiserUserEntity)
+                .join(advertiserEntity).on(advertiserUserEntity.advertiserEntity.advertiserSeq.eq(advertiserEntity.advertiserSeq))
+                .where(advertiserUserEntity.userEntity.userSeq.eq(userSeq))
+                .fetchFirst();
     }
 
     public Page<AdvertiserEntity> searchAdvertisers(AdvertiserSearchVo searchVo, Pageable pageable) {

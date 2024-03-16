@@ -5,6 +5,8 @@ import com.ads.main.core.security.config.dto.AppUser;
 import com.ads.main.core.security.config.dto.LoginInfo;
 import com.ads.main.core.security.config.dto.Role;
 import com.ads.main.core.security.service.CustomUserDetailsService;
+import com.ads.main.service.admin.AdvertiserService;
+import com.ads.main.vo.admin.advertiser.AdvertiserVo;
 import com.ads.main.vo.admin.partner.PartnerVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -72,12 +74,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider  {
 
         if (role == Role.PARTNER) {
             PartnerVo partnerVo = userDetailsService.loadPartnerByUserSeq(appUser.getUserVo().getUserSeq());
-
             loginInfo.setPartner(partnerVo);
         }
 
         if (role == Role.ADVERTISER) {
-
+            AdvertiserVo advertiserVo = userDetailsService.loadAdvertiserByUserSeq(appUser.getUserVo().getUserSeq());
+            loginInfo.setAdvertiser(advertiserVo);
         }
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(appUser.getUsername(), null, appUser.getAuthorities());
