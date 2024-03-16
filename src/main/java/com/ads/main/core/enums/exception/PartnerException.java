@@ -20,11 +20,8 @@ public enum PartnerException {
         this.message = message;
     }
 
-
     public RuntimeException throwErrors() {
         return new RuntimeException(this.message);
     }
-
-
 
 }

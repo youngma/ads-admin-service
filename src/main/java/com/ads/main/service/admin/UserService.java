@@ -9,10 +9,8 @@ import com.ads.main.repository.jpa.UserRepository;
 import com.ads.main.repository.querydsl.QAdvertiserUserRepository;
 import com.ads.main.repository.querydsl.QPartnerUserRepository;
 import com.ads.main.repository.querydsl.QUserRepository;
-import com.ads.main.vo.admin.user.UserModifyVo;
-import com.ads.main.vo.admin.user.UserPasswordVo;
-import com.ads.main.vo.admin.user.UserSearchVo;
-import com.ads.main.vo.admin.user.UserVo;
+import com.ads.main.vo.admin.partner.PartnerVo;
+import com.ads.main.vo.admin.user.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -100,7 +98,14 @@ public class UserService {
         return userConverter.toDto(userEntity);
     }
 
-
+    @Transactional(readOnly = true)
+    public PartnerUserVo findPartnerUser(Long userSeq, Role role) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findUserEntityByUserSeqAndUserRole(userSeq, role).orElseThrow(USER_NOT_FOUND::throwErrors);
+        PartnerUserVo partnerUserDto = userConverter.toPartnerUserDto(userEntity);
+        PartnerVo partnerVo = qPartnerUserRepository.findPartnerByUserSeq(userSeq);
+        partnerUserDto.setPartnerVo(partnerVo);
+        return partnerUserDto;
+    }
     @Transactional(readOnly = true)
     public UserVo findUser(String userid, String password) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findUserEntityByUserIdAndUserPassword(userid, password).orElseThrow(USER_NOT_FOUND::throwErrors);

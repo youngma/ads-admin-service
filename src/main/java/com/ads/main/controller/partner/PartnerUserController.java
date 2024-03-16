@@ -6,6 +6,7 @@ import com.ads.main.core.security.config.dto.Role;
 import com.ads.main.core.vo.RespVo;
 import com.ads.main.service.admin.UserService;
 import com.ads.main.vo.admin.user.*;
+import jakarta.servlet.http.Part;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +52,7 @@ public class PartnerUserController {
     @GetMapping("/info")
     public RespVo<UserVo> check() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserVo user = userService.findUserBySeqAndRole(Long.valueOf(authentication.getName()), Role.PARTNER);
+        PartnerUserVo user = userService.findPartnerUser(Long.valueOf(authentication.getName()), Role.PARTNER);
         return new RespVo<>(user);
     }
 

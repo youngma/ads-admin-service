@@ -58,7 +58,7 @@ public class RptSearchVo implements Serializable {
 
                 if(partnerSeq != null && !partnerSeq.isEmpty()) {
                     builder
-                            .and(partnerAdGroupEntity.partnerEntity.partnerSeq.in(advertiserSeq));
+                            .and(partnerAdGroupEntity.partnerEntity.partnerSeq.in(partnerSeq));
                 }
 
                 if (groupName != null&& !groupName.isBlank()) {

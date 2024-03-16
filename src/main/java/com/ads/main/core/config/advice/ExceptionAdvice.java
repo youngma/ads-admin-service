@@ -12,6 +12,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -101,6 +102,15 @@ public class ExceptionAdvice {
     public HttpEntity<RespVo> exception_403(Exception e) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new RespVo(e.getMessage()));
     }
+
+
+    @ExceptionHandler({
+            AuthorizationServiceException.class
+    })
+    public HttpEntity<RespVo> exception_401(Exception e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new RespVo(e.getMessage()));
+    }
+
 
 //    @ExceptionHandler({
 //        HttpRequestMethodNotSupportedException.class,

@@ -3,6 +3,7 @@ package com.ads.main.entity.mapper;
 import com.ads.main.core.config.convert.GenericMapper;
 import com.ads.main.core.enums.user.UserStatus;
 import com.ads.main.entity.UserEntity;
+import com.ads.main.vo.admin.user.PartnerUserVo;
 import com.ads.main.vo.admin.user.UserModifyVo;
 import com.ads.main.vo.admin.user.UserVo;
 import org.mapstruct.*;
@@ -12,10 +13,16 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface UserConverter extends GenericMapper<UserVo, UserEntity> {
 
+    @Named("toDto")
     @Mapping(target = "userStatusName", ignore = true)
     @Mapping(target = "userStatus", source = "userStatus", qualifiedByName = "userStatusToValue")
     @Override
     UserVo toDto(UserEntity e);
+
+    @Mapping(target = "partnerVo", ignore = true)
+    @Mapping(target = "userStatusName", ignore = true)
+    @Mapping(target = "userStatus", source = "userStatus", qualifiedByName = "userStatusToValue")
+    PartnerUserVo toPartnerUserDto(UserEntity e);
 
     @Mapping(target = "userStatus", source = "userStatus", qualifiedByName = "userStatusToEnum")
     @Override
